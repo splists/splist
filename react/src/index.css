@@ -1,0 +1,849 @@
+:root {
+  --bg-dark: #0f172a;
+  --bg-panel: rgba(30, 41, 59, 0.7);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent: #3b82f6;
+  --accent-hover: #60a5fa;
+  --border-light: rgba(255, 255, 255, 0.1);
+  --border-focus: rgba(59, 130, 246, 0.5);
+  --success: #10b981;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  width: 100%;
+}
+
+body {
+  font-family: "Sofia Sans Extra Condensed", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  background-color: var(--bg-dark);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+/* Custom Scrollbar - Modern UI */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--text-muted);
+  border-radius: 6px;
+  border: 3px solid rgba(15, 23, 42, 0.8);
+  background-clip: padding-box;
+  transition: background-color 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--accent);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* SVG Icon Styling */
+.btn-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.4rem;
+  flex-shrink: 0;
+}
+
+.file-icon-svg {
+  color: #61afef;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.folder-icon-svg {
+  color: #dcb67a;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.watermark-icon-svg {
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+  opacity: 0.6;
+}
+
+.empty-icon-svg {
+  color: #64748b;
+  margin-bottom: 0.75rem;
+  opacity: 0.7;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* VS Code Titlebar Header */
+.vscode-titlebar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1.5rem;
+  background: #181818;
+  border-bottom: 1px solid #2d2d2d;
+  user-select: none;
+}
+
+.titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.app-logo-icon {
+  font-size: 2.2rem;
+}
+
+.app-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+}
+
+.app-title span {
+  color: #60a5fa;
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-left: 0.3rem;
+}
+
+.version-badge {
+  background: rgba(59, 130, 246, 0.25);
+  color: #93c5fd;
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  padding: 0.25rem 0.75rem;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.titlebar-center {
+  color: #cbd5e1;
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+.titlebar-right {
+  display: flex;
+  align-items: center;
+}
+
+.github-link-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #cccccc;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 2rem;
+  transition: all 0.2s;
+}
+
+.github-link-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Workspace Grid Layout */
+.workspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  flex: 1;
+  padding: 0.75rem 0;
+  overflow: hidden;
+}
+
+.panel {
+  background: var(--bg-panel);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.panel-header {
+  padding: 0.85rem 1.25rem;
+  min-height: 68px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.panel-header h2 {
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #e2e8f0;
+}
+
+.mode-selector {
+  display: flex;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 6px;
+  padding: 0.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.radio-label input {
+  display: none;
+}
+
+.radio-btn {
+  padding: 0.35rem 0.85rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid transparent;
+}
+
+.radio-btn.is-active {
+  background: #007acc;
+  color: #ffffff;
+  font-weight: 600;
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 2px 8px rgba(0, 122, 204, 0.4);
+}
+
+.active-check-icon {
+  color: #ffffff;
+  stroke-width: 3;
+  animation: checkPop 0.2s ease-out;
+}
+
+@keyframes checkPop {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.check-placeholder {
+  width: 0px;
+}
+
+/* Mode Description Guide Bar */
+.mode-guide-bar {
+  padding: 0.4rem 1.25rem;
+  background: #1e2430;
+  border-bottom: 1px solid #2d2d2d;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.5rem;
+  color: #94a3b8;
+  letter-spacing: 0.03em;
+}
+
+.mode-guide-label {
+  color: #38bdf8;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.mode-guide-text {
+  color: #e2e8f0;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+/* Input File Bar - IDE Tab / Header Style */
+.input-file-bar {
+  padding: 0.5rem 1.25rem;
+  background: #252526;
+  border-bottom: 1px solid #333333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Fira Code', Consolas, Monaco, monospace;
+  font-size: 0.85rem;
+  user-select: none;
+}
+
+.input-file-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.input-file-name {
+  color: #61afef;
+  font-weight: 600;
+}
+
+.input-file-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.input-file-stats {
+  font-size: 0.75rem;
+  color: #858585;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+.quick-action-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cccccc;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.quick-action-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.clear-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+/* Editor Container & Textarea Fix (16px / 1rem font) */
+.editor-container {
+  flex: 1;
+  position: relative;
+  display: flex;
+  background: #1e1e1e;
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  padding: 1.25rem;
+  color: #d4d4d4;
+  font-family: 'Fira Code', Consolas, Monaco, monospace;
+  font-size: 1rem; /* Fixed: 16px instead of 32px */
+  line-height: 1.6;
+  resize: none;
+  outline: none;
+}
+
+textarea::placeholder {
+  color: rgba(148, 163, 184, 0.3);
+}
+
+/* Empty Dropzone Watermark Prompt */
+.empty-dropzone-watermark {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  margin: 1rem;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.watermark-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.6;
+}
+
+.watermark-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+.watermark-sub {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-top: 0.25rem;
+}
+
+.editor-container.drag-over .empty-dropzone-watermark {
+  border-color: var(--accent);
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.overlay-msg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--accent-hover);
+  pointer-events: none;
+  border: 2px dashed var(--accent);
+  margin: 0.5rem;
+  border-radius: 8px;
+}
+
+/* Action Bar */
+.action-bar {
+  padding: 0.8rem 1.25rem;
+  border-top: 1px solid #333333;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  background: #252526;
+}
+
+/* Toggle Switch */
+.toggle {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 0.6rem;
+}
+
+.toggle input {
+  display: none;
+}
+
+.slider {
+  width: 44px;
+  height: 24px;
+  background-color: rgba(255,255,255,0.15);
+  border-radius: 24px;
+  position: relative;
+  transition: 0.3s;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  top: 3px;
+  left: 3px;
+  transition: 0.3s;
+}
+
+.toggle input:checked + .slider {
+  background-color: var(--accent);
+}
+
+.toggle input:checked + .slider::before {
+  transform: translateX(20px);
+  background: white;
+}
+
+.label-text {
+  font-size: 2rem;
+  color: #cccccc;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, var(--accent), #4f46e5);
+  color: white;
+  border: none;
+  padding: 0.55rem 1.25rem;
+  border-radius: 6px;
+  font-size: 2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+}
+
+.primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(59, 130, 246, 0.5);
+}
+
+.primary-btn:active {
+  transform: translateY(0);
+}
+
+/* Results Area - IDE Explorer View */
+.results-container {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: #181818;
+}
+
+.empty-state {
+  margin: auto;
+  text-align: center;
+  color: var(--text-muted);
+  padding: 2rem;
+}
+
+.empty-state .icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+  opacity: 0.7;
+}
+
+.empty-title {
+  font-size: 1.1rem;
+  color: #cccccc;
+  margin-bottom: 0.4rem;
+}
+
+.empty-sub {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+/* IDE Explorer Folder Block */
+.explorer-folder-block {
+  background: #1e1e1e;
+  border: 1px solid #333333;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.explorer-folder-header {
+  padding: 0.6rem 0.85rem;
+  background: #252526;
+  border-bottom: 1px solid #333333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.explorer-folder-header:hover {
+  background: #2a2d2e;
+}
+
+.folder-left-info {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #cccccc;
+}
+
+.chevron-icon {
+  font-size: 0.65rem;
+  color: #858585;
+  width: 12px;
+}
+
+.folder-icon {
+  font-size: 1rem;
+}
+
+.folder-name-text {
+  color: #e2e8f0;
+  font-family: 'Fira Code', monospace;
+}
+
+.file-count-badge {
+  background: #333333;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 10px;
+  margin-left: 0.25rem;
+}
+
+.download-zip-btn {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  font-size: 2rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.download-zip-btn:hover {
+  background: #10b981;
+  color: white;
+}
+
+/* IDE Explorer Tree File List */
+.explorer-tree-files {
+  display: flex;
+  flex-direction: column;
+  background: #1e1e1e;
+  padding: 0.2rem 0;
+  border-bottom: 1px solid #2d2d2d;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.explorer-file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.85rem 0.4rem 1.5rem;
+  font-family: 'Fira Code', Consolas, Monaco, monospace;
+  font-size: 0.85rem;
+  color: #cccccc;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: background 0.15s, color 0.15s;
+  user-select: none;
+}
+
+.explorer-file-item:hover {
+  background: #2a2d2e;
+  color: #ffffff;
+}
+
+.explorer-file-item.active {
+  background: #04395e;
+  color: #ffffff;
+  font-weight: 500;
+  border-left-color: #007acc;
+}
+
+.file-item-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-item-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.file-lines-meta {
+  font-size: 0.72rem;
+  color: #64748b;
+}
+
+.active-preview-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #007acc;
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  box-shadow: 0 0 8px rgba(0, 122, 204, 0.5);
+}
+
+.active-badge-dot {
+  width: 6px;
+  height: 6px;
+  background: #ffffff;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
+.file-name-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-download-action-btn {
+  background: transparent;
+  border: none;
+  color: #858585;
+  font-size: 0.82rem;
+  cursor: pointer;
+  opacity: 0.5;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+
+.explorer-file-item:hover .file-download-action-btn {
+  opacity: 1;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* File Preview Box - Connected Active Styling */
+.file-preview-box {
+  background: #181818;
+  border-top: 2px solid #007acc;
+  border-left: 3px solid #007acc;
+  margin-top: 0.2rem;
+  box-shadow: 0 4px 15px rgba(0, 122, 204, 0.15);
+}
+
+.preview-header {
+  padding: 0.55rem 0.9rem;
+  background: #1f242d;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #2d2d2d;
+  font-size: 0.85rem;
+  color: #cccccc;
+}
+
+.active-glow-dot {
+  width: 8px;
+  height: 8px;
+  background: #38bdf8;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 8px #38bdf8;
+  margin-right: 0.4rem;
+}
+
+.preview-label-tag {
+  color: #38bdf8;
+  font-weight: 600;
+  font-size: 0.78rem;
+  margin-right: 0.4rem;
+  letter-spacing: 0.04em;
+}
+
+.preview-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Fira Code', monospace;
+}
+
+.download-single-btn {
+  background: #0e639c;
+  color: white;
+  border: none;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 2rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.download-single-btn:hover {
+  background: #1177bb;
+}
+
+.code-preview {
+  margin: 0;
+  padding: 0.85rem;
+  max-height: 260px;
+  overflow: auto;
+  font-family: 'Fira Code', Consolas, Monaco, monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #d4d4d4;
+  background: #1e1e1e;
+}
+
+/* VS Code Bottom Statusbar */
+.vscode-statusbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 1rem;
+  background: #007acc;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.75rem;
+  user-select: none;
+}
+
+.statusbar-left, .statusbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.statusbar-item {
+  opacity: 0.9;
+}
+
+.statusbar-brand {
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .workspace {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .editor-container {
+    min-height: 350px;
+  }
+  .titlebar-center {
+    display: none;
+  }
+}

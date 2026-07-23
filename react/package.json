@@ -1,0 +1,30 @@
+{
+  "name": "react",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "homepage": "https://<USERNAME>.github.io/<REPO>/",
+  "scripts": {
+    "predev": "node build-web.cjs",
+    "dev": "vite",
+    "prebuild": "node build-web.cjs",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "dependencies": {
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.3",
+    "oxlint": "^1.71.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.1.1"
+  }
+}

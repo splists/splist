@@ -1,13 +1,61 @@
 {
-  "name": "splist",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "@splists/splist",
+  "version": "2.0.0",
+  "description": "Split massive Markdown and text files into manageable chunks with an auto-generated TOC. A powerful CLI and local Web GUI utility for text processing.",
+  "main": "src/core/splist/splist.js",
+  "bin": {
+    "splist": "src/cli/cli.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "scripts": {
+    "demo": "node demo_cases/demo_cases_gen.js && node demo_cases/demo_cases_raw/demo_cases_run.js",
+    "test": "node demo_cases/demo_cases_raw/demo_cases_run.js",
+    "build:manual": "node src/cli/cli.js USAGE.md -f",
+    "build:web": "npm --prefix react run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/splists/splist.git"
+  },
+  "homepage": "https://splists.github.io/splist",
+  "bugs": {
+    "url": "https://github.com/splists/splist/issues"
+  },
+  "files": [
+    "src",
+    "USAGE.md"
+  ],
+  "keywords": [
+    "split",
+    "list",
+    "markdown",
+    "md",
+    "chunk",
+    "chunking",
+    "separator",
+    "heading",
+    "chapter",
+    "table-of-contents",
+    "toc",
+    "large-file",
+    "text-processing",
+    "file-organizer",
+    "note-taking",
+    "documentation",
+    "docs",
+    "doc",
+    "cli",
+    "command-line",
+    "command",
+    "terminal",
+    "console",
+    "utility",
+    "backend",
+    "zero-dependency"
+  ],
+  "author": "1abcdefggs",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "license": "MIT",
   "type": "commonjs"
 }
