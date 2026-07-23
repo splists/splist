@@ -37,15 +37,17 @@ In other words, simply typing `splist memo.md` will initiate the perfect split!
 
 ---
 
-## 🎯 The Ultimate Tutorial: Split This README!
+## 🎯 The Ultimate Tutorial: Split This Manual!
 
-Want to see the magic right now? **Run the `splist` command with the `toc` option on this very `README.md` file!**
+Want to see the magic right now? **Run the `splist` command on this very `USAGE.md` (or `README.md`) file!**
 
 ```bash
-splist README.md toc
+splist USAGE.md
+# or
+splist README.md
 ```
 
-When you do this, SPLIST will automatically extract the complete Official Manual (written below) into beautiful folders and files, and generate a Table of Contents. Try it now!
+When you do this, SPLIST will automatically extract the complete text into beautiful folders and files. Try it now!
 
 ---
 
