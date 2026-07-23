@@ -15,7 +15,7 @@ const INVALID_CHAR = /[\\/:*?"<>|]/g, H_CLEAN = /^#+\s+/;
 /** Creates a rule object for splistEngine. @param {string|null} [customMarker] @param {Object} [config] @returns {{ test: Function, isExactMatch: Function, extractTitle: Function }} */
 const createMarkerRule = (customMarker = null, config = {}) => {
     if ((config.mode || 'sp') === 'list' && !customMarker) {
-        return { test: line => H_CLEAN.test(line), isExactMatch: () => false, extractTitle: line => line };
+        return { test: line => /^##\s+/.test(line), isExactMatch: () => false, extractTitle: line => line };
     }
     const p = customMarker || '✄|✂️|cut|v';
     const testRegex = new RegExp(`^(?:${p})(?:\\s+|$)`, 'i');

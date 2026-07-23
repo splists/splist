@@ -4,6 +4,8 @@
 ![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
+![Splist Demo](assets/splistgif.gif)
+
 ## Overview
 Split massive Markdown and text files into manageable chunks with an auto-generated TOC (Table of Contents). A powerful CLI and local Web GUI utility for text processing.
 

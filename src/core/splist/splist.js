@@ -64,6 +64,27 @@ const runSplist = async (targetFile, config = {}, customOptions = {}) => {
 
         // ──── [Phase 4-A] Save Chunk ────
         let finalContent = chunk + '\n';
+
+        // --- Markdown Heading Auto-Promotion (Lint > RAW) ---
+        // Elevate the top heading of the chunk to H1, and shift all child headings accordingly.
+        if (ext.toLowerCase() === '.md') {
+            const linesArr = chunk.split('\n');
+            const match = linesArr[0].match(/^(#+)\s/);
+            if (match) {
+                const shift = match[1].length - 1;
+                if (shift > 0) {
+                    finalContent = linesArr.map(l => {
+                        const m = l.match(/^(#+)(\s.*)/);
+                        if (m) {
+                            const newCount = Math.max(1, m[1].length - shift);
+                            return '#'.repeat(newCount) + m[2];
+                        }
+                        return l;
+                    }).join('\n') + '\n';
+                }
+            }
+        }
+
         if (config.frontmatterMode !== 'exclude' && frontMatter) finalContent = frontMatter + finalContent;
         if (customOptions.transformChunk) {
             finalContent = customOptions.transformChunk(finalContent, { chunkIndex, title, outDir }) || finalContent;
