@@ -1,6 +1,6 @@
 {
   "name": "@splists/splist",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Split massive Markdown and text files into manageable chunks with an auto-generated TOC. A powerful CLI and local Web GUI utility for text processing.",
   "main": "src/core/splist/splist.js",
   "bin": {
