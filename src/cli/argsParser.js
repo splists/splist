@@ -6,7 +6,7 @@
 const path = require('path');
 
 // Regular expression for recognized options
-const OPTIONS_REGEX = /^(-*)(or|un|d|date|t|time|s|skip|f|force|toc|fmex|fm00|fm01|o|out|output|keep|ext|extension)$/i;
+const OPTIONS_REGEX = /^(-*)(or|un|u|d|date|t|time|s|skip|f|force|toc|fmex|fm00|fm01|o|out|output|k|keep|ext|extension|m|mode|h|header|marker)$/i;
 
 /**
  * Generates a config object from the command arguments entered in the terminal
@@ -92,11 +92,37 @@ const parseOptions = (args = [], targetFile = '') => {
                 case 'fm01':
                     config.frontmatterMode = 'extract01';
                     break;
+                case 'k':
                 case 'keep':
                     config.keep = true;
                     break;
+                case 'u':
                 case 'un':
                     config.un = true;
+                    break;
+                case 'h':
+                case 'header':
+                case 'marker':
+                    let markerVal = valueFromDelimiter;
+                    if (markerVal === null && i + 1 < args.length && !args[i + 1].match(OPTIONS_REGEX)) {
+                        markerVal = args[i + 1];
+                        i++;
+                    }
+                    if (markerVal) config.customMarker = markerVal;
+                    break;
+                case 'm':
+                case 'mode':
+                    let modeVal = valueFromDelimiter;
+                    if (modeVal === null && i + 1 < args.length && !args[i + 1].match(OPTIONS_REGEX)) {
+                        modeVal = args[i + 1];
+                        i++;
+                    }
+                    if (modeVal) {
+                        const lower = modeVal.toLowerCase();
+                        if (lower === 'un') config.un = true;
+                        else if (lower === 'or') config.un = false;
+                        else config.customMarker = modeVal;
+                    }
                     break;
                 case 'ext':
                 case 'extension':
