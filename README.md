@@ -28,16 +28,16 @@ Before: A single massive file (Raw). Divided into ## units using a typical Markd
 
 ### After: Auto-organized folders (Splisted!)
 
-- The original file name becomes the directory name.
+- The original file name with a `✂️` prefix becomes the output directory name (e.g., `✂️My_Project`).
 - The heading in the original text becomes the file name.
-- A sequential number is added to the PREFIX of the file name.
+- A sequential number is added to the prefix of the file name.
 
 ```text
-My_Project/
-├── 001_SECTION001.md
+✂️My_Project/
+├── 01_SECTION001.md
 ├── ...
-├── 099_SECTION099.md
-└── 100_SECTION100.md
+├── 09_SECTION099.md
+└── 10_SECTION100.md
 ```
 
 ### 🤖 LLM Prompt (Copy & Paste)
