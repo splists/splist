@@ -1,14 +1,19 @@
-# SPLIST (sp & list)
+# SPLIST (split & list)
 ![npm version](https://img.shields.io/npm/v/@splists/splist.svg?color=blue)
 ![Node.js](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen)
 ![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-<img src="assets/splist_demo-001.png" alt="Long Document Example" width="50%">
-![Splist Demo](assets/splist-gif.gif)
-
 ## Overview
-Split massive Markdown and text files into manageable chunks with an auto-generated TOC (Table of Contents). A powerful CLI and local Web GUI utility for text processing.
+Splitting large Markdown or text files into a table of contents.
+
+Scrolling through such long documents is a real chore. ⇩
+
+<img src="assets/splist_demo-001.png" alt="Long Document Example" width="50%">
+
+See how SPLIST splits a file in action ⇩
+
+![Splist Demo](assets/splist-gif.gif)
 
 It takes documents that have fallen into "scrolling hell" and safely, instantaneously carves them into separate files based on headings (`#`) or dividing emojis (`✂️`).
 
@@ -33,6 +38,8 @@ My_Project/
 
 ### 🤖 LLM Prompt (Copy & Paste)
 Want an AI assistant to help you split a file or organize your workspace using SPLIST? Just copy and paste the prompt below to your LLM:
+
+<img src="assets/splist-demo-ai.png" alt="AI Agent Demo" width="70%">
 
 <details>
 <summary>Click to copy the LLM Prompt</summary>
