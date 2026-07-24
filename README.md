@@ -210,7 +210,10 @@ Parses Markdown heading hierarchy and splits it logically.
   * `-h, --header <level>`: Heading level to base the split on (e.g., `"###"`)
   * `-k, --keep`: Keeps the header hierarchy of the output files as-is without auto-promoting them
   * `-ext, --extension <ext>`: Force the output file extension (e.g., `txt` or `.txt`)
-  * `--conflict <option>`: Collision avoidance rules (see Common Options)
+  * `-o, --out, --output <dir>`: Custom output folder path
+  * `-toc`: Auto-generate Table of Contents (`00_TOC.md`)
+  * `-fmex, -fm00, -fm01`: Frontmatter handling (`fmex`: exclude, `fm00`: separate file, `fm01`: keep in 1st chunk)
+  * `--conflict <option>`: Collision avoidance rules (`v`: versioning, `d`: date, `t`: time, `s`: skip, `f`: force)
 
 
 ### `splist <file> sp` Command
@@ -223,7 +226,9 @@ Physically cuts using dividing markers (specified strings).
 * **Options**:
   * `-m, --marker <string>`: Custom marker (e.g., `"==="`). When unspecified, `✂️`, `CUT`, and `cut` are applied.
   * `-ext, --extension <ext>`: Force the output file extension (e.g., `md` or `.md`)
-  * `--conflict <option>`: Collision avoidance rules (see Common Options)
+  * `-o, --out, --output <dir>`: Custom output folder path
+  * `-toc`: Auto-generate Table of Contents (`00_TOC.md`)
+  * `--conflict <option>`: Collision avoidance rules (`v`: versioning, `d`: date, `t`: time, `s`: skip, `f`: force)
 
 
 ---

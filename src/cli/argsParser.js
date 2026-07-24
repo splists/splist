@@ -6,7 +6,7 @@
 const path = require('path');
 
 // Regular expression for recognized options
-const OPTIONS_REGEX = /^(-*)(or|un|u|d|date|t|time|s|skip|f|force|toc|fmex|fm00|fm01|o|out|output|k|keep|ext|extension|m|mode|h|header|marker)$/i;
+const OPTIONS_REGEX = /^(-*)(or|un|u|d|date|t|time|s|skip|f|force|toc|fmex|fm00|fm01|o|out|output|k|keep|ext|extension|m|mode|h|header|marker|conflict)$/i;
 
 /**
  * Generates a config object from the command arguments entered in the terminal
@@ -122,6 +122,19 @@ const parseOptions = (args = [], targetFile = '') => {
                         if (lower === 'un') config.un = true;
                         else if (lower === 'or') config.un = false;
                         else config.customMarker = modeVal;
+                    }
+                    break;
+                case 'conflict':
+                    let conflictVal = valueFromDelimiter;
+                    if (conflictVal === null && i + 1 < args.length && !args[i + 1].match(OPTIONS_REGEX)) {
+                        conflictVal = args[i + 1];
+                        i++;
+                    }
+                    if (conflictVal) {
+                        const firstChar = conflictVal.toLowerCase()[0];
+                        if (['v', 'd', 't', 's', 'f'].includes(firstChar)) {
+                            config.conflictMode = firstChar;
+                        }
                     }
                     break;
                 case 'ext':
