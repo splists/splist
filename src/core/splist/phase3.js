@@ -11,13 +11,16 @@
 'use strict';
 const INVALID_CHAR = /[\\/:*?"<>|]/g, H_CLEAN = /^#+\s+/;
 
+/** Escapes regex metacharacters so user-provided marker is treated as a literal string. @param {string} value @returns {string} */
+const escapeRegExp = (value = '') => String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 // ──── [Phase 3-A] Rule Generation ────START
 /** Creates a rule object for splistEngine. @param {string|null} [customMarker] @param {Object} [config] @returns {{ test: Function, isExactMatch: Function, extractTitle: Function }} */
 const createMarkerRule = (customMarker = null, config = {}) => {
     if ((config.mode || 'sp') === 'list' && !customMarker) {
         return { test: line => /^##\s+/.test(line), isExactMatch: () => false, extractTitle: line => line };
     }
-    const p = customMarker || '✄|✂️|cut|v';
+    const p = customMarker ? escapeRegExp(customMarker) : '✄|✂️|cut|v';
     const testRegex = new RegExp(`^(?:${p})(?:\\s+|$)`, 'i');
     const exactRegex = new RegExp(`^(?:${p})\\s*$`, 'i');
     const replaceRegex = new RegExp(`^\\s*(?:${p})\\s*`, 'i');
