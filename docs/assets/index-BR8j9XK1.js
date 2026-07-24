@@ -1355,644 +1355,661 @@ This version is skipped.
 A big thanks to contributors.
 ### @mui/material@7.3.8
 Details here.
-`,He=`# SPLIST (split & list)
-![npm version](https://img.shields.io/npm/v/@splists/splist.svg?color=blue)
-![Node.js](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen)
-![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-[![Browser](https://img.shields.io/badge/Browser-Try%20Now!-ff69b4.svg)](https://splists.github.io/)
-
-✨ **Try SPLIST instantly in your browser:** [https://splists.github.io/](https://splists.github.io/)
-
-<p align="center">
-<img src="demo_cases/demo_cases_img/demo00.png" width="400">
-</p>
-
-> 🌐 **Try it now in your browser!**
-> SPLIST is available as a full local Web UI at **[splists.github.io](https://splists.github.io/)**! No installation required—just drag and drop your markdown files to process them securely in your browser.
-
-## Overview
-Splitting large Markdown or text files into a table of contents.
-
-<p align="left">
-  <img src="assets/splist_demo-001.png" alt="Long Document Example" height="280" style="margin-right: 15px;">
-  <img src="assets/splist-gif.gif" alt="Splist Demo" height="280">
-</p>
-
-It takes documents that have fallen into "scrolling hell" and safely, instantaneously carves them into separate files based on headings (\`#\`) or dividing emojis (\`✂️\`).
-
-### Before: A single massive file (Raw)
-
-Before: A single massive file (Raw). Divided into ## units using a typical Markdown structure.
-
-\`\`\`markdown
-  # My Project
-  ## SECTION001
-  ~(long text)~
-  ## SECTION099
-  ## SECTION100
-\`\`\`
-
-### After: Auto-organized folders (Splisted!)
-
-- The original file name with a \`✂️\` prefix becomes the output directory name (e.g., \`✂️My_Project\`).
-- The heading in the original text becomes the file name.
-- A sequential number is added to the prefix of the file name.
-
-\`\`\`text
-✂️My_Project/
-├── 01_SECTION001.md
-├── ...
-├── 09_SECTION099.md
-└── 10_SECTION100.md
-\`\`\`
-
-### 🤖 LLM Prompt (Copy & Paste)
-Want an AI assistant to help you split a file or organize your workspace using SPLIST? Just copy and paste the prompt below to your LLM:
-
-<img src="assets/splist-demo-ai.png" alt="AI Agent Demo" width="70%">
-
-<details>
-<summary>Click to copy the LLM Prompt</summary>
-
-\`\`\`text
-I want to split a long document into smaller, organized files. 
-Please use the \`splist\` CLI tool available in my workspace.
-
-Here are the basic commands:
-- \`splist <file.md> list\` : Automatically split the Markdown file by its headings (H1, H2, etc.) into sequential files inside a new folder.
-- \`splist <file.md> sp\` : Split the file physically using custom cut markers (e.g. ✂️, CUT, V) placed in the document.
-
-Please read the target file, decide the best splitting strategy (list or sp), and run the \`splist\` command for me.
-\`\`\`
-</details>
-
----
-
-## Installation
-
-The \`splist\` command becomes globally executable from any directory on your PC. It works across all OS environments: Windows, Mac, and Linux.
-
-1. Open your terminal and navigate to the root folder of the repository:
-\`\`\`bash
-cd path/to/splist
-\`\`\`
-
-2. Link (register) the package globally using npm:
-\`\`\`bash
-npm link
-\`\`\`
-
-Setup is now complete!
-
----
-
-## 🌐 Web / Explorer Version (Browser GUI)
-
-Prefer a graphical interface over the command line? SPLIST offers a zero-dependency Web Application that runs entirely in your browser!
-
-### Running Locally:
-1. Start the local development server:
-   \`\`\`bash
-   npm --prefix react run dev
-   \`\`\`
-2. Open your browser at the displayed local URL (e.g., \`http://localhost:5173\`).
-
-### Features in the Web App:
-* **Drag & Drop**: Simply drop your \`.md\` or \`.txt\` file into the browser window.
-* **Interactive Preview**: Instantly preview how the document will be split into folders and files before downloading.
-* **Zero Server Uploads**: Processing happens 100% locally in your browser using Virtual File System mocks—your private documents never leave your machine!
-* **ZIP Download**: Download all split folders and files cleanly in a single \`.zip\` file.
-
----
-
-## Quick Start (Try splitting now)
-
-Once installed, let's immediately do a split test on this very \`README.md\` itself. (*The original README file remains untouched, and a new directory is safely created.*)
-
-\`\`\`bash
-  # Automatically split according to Markdown heading structure (#)
-  splist README.md list
-\`\`\`
-*(Note: With the v2 smart default, just typing \`splist README.md\` will also execute \`list\` automatically!)*
-
-### SPLIST's Powerful Default Features
-
-Even without specifying special options, the following features work safely by default:
-
-* **Auto Sequential Numbering:** Prepends sequential numbers like \`01_\` to split filenames, maintaining the original order.
-* **Safe Versioning:** If you run the command again on the same file, it automatically creates a new directory like \`_v02\` to avoid overwriting.
-* **Appropriate Hierarchical Split:** By default, it splits based on the \`##\` (H2 heading) hierarchy.
-
-For full feature details and a complete list of options, please see the **[Official Manual (USAGE.md)](USAGE.md)**.
-
----
-
-## Operation Tests (Demos and Feature Showcase)
-
-SPLIST comes bundled with demo data designed to test complex documents and extreme conditions.
-First, generate the demo data using the following command:
-
-\`\`\`bash
-# Batch generate demo files
-npm run demo
-\`\`\`
-
-By trying the following commands on the generated files in the \`demo_cases/demo_cases_raw\` folder, you can experience the true value of SPLIST.
-
-### 1. The Overwhelming Freedom of Physical Cut (sp)
-
-An engine that cleaves text completely in half exactly where dividing characters (markers) are located.
-
-* **Basic Multiple Cut**
-  * **Test File:** \`01_sp_showcase_single_cut_default.md\`
-  * **Overview:** Slices through a long text file where different markers like \`✂️\`, \`CUT\`, and \`cut\` are mixed together.
-  * **Command:** \`splist demo_cases/demo_cases_raw/01_sp_showcase_single_cut_default.md sp\`
-
-* **Cut with Custom Dividing Characters (Option)**
-  * **Test File:** \`03_sp_showcase_custom_marker_opt.md\`
-  * **Overview:** Splits chat logs or system export data by specifying arbitrary dividing lines (e.g., \`===\`).
-  * **Command:** \`splist demo_cases/demo_cases_raw/03_sp_showcase_custom_marker_opt.md sp -m "==="\`
-
-
-### 2. Logical Organization (list) and Smart Replacement
-
-An engine that parses Markdown structure (H1, H2 headings) to build beautiful hierarchical folders.
-
-* **Magical Lightning-Fast Typing Support**
-  * **Test File:** \`19_list_showcase_typing_support_default.md\`
-  * **Overview:** Instead of \`#\`, if a document is written with \`v \` or \`vv \` at the start of a line, it auto-replaces them with headings and splits them into folders.
-  * **Command:** \`splist demo_cases/demo_cases_raw/19_list_showcase_typing_support_default.md list\`
-
-* **Auto-Extraction of Intro Text (00_Overview)**
-  * **Test File:** \`26_list_safety_overview_logic_default.md\`
-  * **Overview:** Auto-detects the "overview text" before the first H2 heading begins, and beautifully extracts it independently as \`00_Overview.md\`.
-  * **Command:** \`splist demo_cases/demo_cases_raw/26_list_safety_overview_logic_default.md list\`
-
-
-### 3. Collision Avoidance and Versioning (-d, -t, -s, -f)
-
-Safety features ensuring that no matter how many times you run the same split, your past work is never overwritten and lost.
-
-\`\`\`bash
-# 1. Append today's date stamp to the end of the folder name (e.g., _20260716)
-splist demo_cases/demo_cases_raw/38_common_option_conflict_date_opt.md list -d
-
-# 2. If the folder already exists, "safely skip" processing without overwriting
-splist demo_cases/demo_cases_raw/40_common_option_conflict_skip_opt.md sp -s
-
-# 3. Clean up by "forcibly overwriting" the existing folder
-splist demo_cases/demo_cases_raw/41_common_option_conflict_force_opt.md list -f
-\`\`\`
-
-### 4. Survival Test for OS Forbidden Chars, Emojis, and Length Limits
-
-Even if malicious data or non-standard long texts arrive, it absolutely protects the system and cleanses the data.
-
-* **Safe Auto-Cleansing of Headings**
-  * **Test File:** \`27_list_safety_naming_limit_default.md\`
-  * **Overview:** Simultaneously tests auto-removal of OS forbidden characters (\`\\/:*?"<>|\`), prevention of garbled surrogate-pair emojis (\`👨‍👩‍👧‍👦\`), and safe auto-trimming of overly long headings.
-  * **Command:** \`splist demo_cases/demo_cases_raw/27_list_safety_naming_limit_default.md list\`
-
----
-
-## CLI Command Reference
-
-Commands are executed in the format \`splist <target file> <subcommand> [options]\`.
-Options (flags) can be written **in any order**.
-*(In v2, if the target file has a \`.md\` or \`.txt\` extension, the subcommand can be omitted thanks to Smart Defaults!)*
-
-### \`splist <file> list\` Command
-
-Parses Markdown heading hierarchy and splits it logically.
-
-\`splist <file> list [options]\`
-
-* **\`<file>\`**: Target Markdown file to split (Required)
-* **Options**:
-  * \`-m, --mode <type>\`: Split mode (\`or\`: add sequential numbers (default), \`un\`: no sequential numbers)
-  * \`-h, --header <level>\`: Heading level to base the split on (e.g., \`"###"\`)
-  * \`-k, --keep\`: Keeps the header hierarchy of the output files as-is without auto-promoting them
-  * \`-ext, --extension <ext>\`: Force the output file extension (e.g., \`txt\` or \`.txt\`)
-  * \`-o, --out, --output <dir>\`: Custom output folder path
-  * \`-toc\`: Auto-generate Table of Contents (\`00_TOC.md\`)
-  * \`-fmex, -fm00, -fm01\`: Frontmatter handling (\`fmex\`: exclude, \`fm00\`: separate file, \`fm01\`: keep in 1st chunk)
-  * \`--conflict <option>\`: Collision avoidance rules (\`v\`: versioning, \`d\`: date, \`t\`: time, \`s\`: skip, \`f\`: force)
-
-
-### \`splist <file> sp\` Command
-
-Physically cuts using dividing markers (specified strings).
-
-\`splist <file> sp [options]\`
-
-* **\`<file>\`**: Target text/Markdown file to split (Required)
-* **Options**:
-  * \`-m, --marker <string>\`: Custom marker (e.g., \`"==="\`). When unspecified, \`✂️\`, \`CUT\`, and \`cut\` are applied.
-  * \`-ext, --extension <ext>\`: Force the output file extension (e.g., \`md\` or \`.md\`)
-  * \`-o, --out, --output <dir>\`: Custom output folder path
-  * \`-toc\`: Auto-generate Table of Contents (\`00_TOC.md\`)
-  * \`--conflict <option>\`: Collision avoidance rules (\`v\`: versioning, \`d\`: date, \`t\`: time, \`s\`: skip, \`f\`: force)
-
-
----
-
-### Collision Avoidance Options (Common)
-
-Can be appended and used with either \`list\` or \`sp\` commands. If unspecified, sequential folders like \`_v02\` are created automatically.
-
-* \`-d\`: Appends current date to output folder name (e.g., \`_20260718\`)
-* \`-t\`: Appends current time to output folder name (e.g., \`_153045\`)
-* \`-s\`: Skips processing on collision (Safety First)
-* \`-f\`: Forcibly overwrites on collision (Clean up)
-
----
-
-> For even more detailed specifications and troubleshooting, please read the **[Official Manual (USAGE.md)](USAGE.md)**.
-`,Ue=`# ✂️ SPLIST (Overview & Installation)
-
-✨ **Try SPLIST instantly in your browser:** [https://splists.github.io/](https://splists.github.io/)
-
-## Welcome to SPLIST
-
-An ultra-fast, zero-dependency CLI toolset to split a single Markdown or text file into multiple beautifully organized files and automatically generate a dynamic Table of Contents (TOC).
-
-Optimized for rapid documentation, editing, and seamless integration with **VS Code**.
-
-## 🛠️ Installation
-
-Get the \`splist\` command globally on your machine in just a few seconds.
-
-**Official npm Installation (Recommended):**
-\`\`\`bash
-npm install -g @splists/splist
-\`\`\`
-
-**Local Development Installation:**
-1. Clone or download your repository: \`cd splist\`
-2. Link the package globally using npm: \`npm link\`
-
-Now, you can run the \`splist\` command directly from **any folder** on your computer!
-
-## 🔄 Migration Guide (v1 to v2)
-
-SPLIST has been updated to v2, evolving into a more intuitive and smarter command structure!
-
-\`\`\`diff
-- v1 old spec: splist list memo.md
-+ v2 new spec: splist memo.md list
-\`\`\`
-
-💡 **Incredibly Convenient "Smart Defaults" Feature**
-From v2, if the target file is **\`.md\`**, omitting the command will automatically execute \`list\` (logical organization).
-Conversely, if the file is **\`.txt\`**, it will automatically execute \`sp\` (physical cut).
-In other words, simply typing \`splist memo.md\` will initiate the perfect split!
-
----
-
-## 🎯 The Ultimate Tutorial: Split This Manual!
-
-Want to see the magic right now? **Run the \`splist\` command on this very \`USAGE.md\` (or \`README.md\`) file!**
-
-\`\`\`bash
-splist USAGE.md
-# or
-splist README.md
-\`\`\`
-
-When you do this, SPLIST will automatically extract the complete text into beautiful folders and files. Try it now!
-
----
-
-## 📖 Terminology and Worldview
-
-SPLIST provides the experience of "magically organizing" massive text data, not just merely splitting files. We have unique terminology to express this worldview.
-
-* **Raw:** Massive, hard-to-read text data before it has been processed by SPLIST.
-* **Splisted:** The completed state where data has been beautifully split, organized, and "magically transformed" by SPLIST. Just like saying "Googled" for searching on Google, the terminal will display a celebratory message **\`🎉 Splisted!\`** upon successful completion as the ultimate result.
-* **Output Folder Icons:**
-  * **\`✂️\` (Scissors):** Attached to folders that were "physically cut" using the \`sp\` command.
-  * **\`🔢\` (Numbers):** Attached to folders that were "logically organized and sequentially numbered" using the \`list\` command.
-
----
-
-# What This Tool Can Do
-
-## Overview
-
-💡 **Quick Tip:** If you're opening this file in VS Code, press \`Ctrl + Shift + V\` (Mac: \`Cmd + Shift + V\`) right now to read the manual in a beautiful preview screen!
-
-Welcome to the magical experience of SPLIST!
-SPLIST is a powerful CLI tool that instantly reconstructs massive, hard-to-read text data and Markdown files into beautiful structures that anyone can read intuitively.
-
-**Have you ever experienced this?**
-* A single document is so long it feels like scrolling hell.
-* You hastily copy-pasted info into Notepad to organize later, but now it's too long to find anything.
-* You're tired of manually repeating "select range, copy, create new file, paste, save as...".
-* While writing a massive Markdown document, you want to focus on fleshing out one specific chapter at a time.
-
-**"I just want to split this long text into pieces to work on and manage it!"**
-This tool was born from the developer's own intense frustration with this exact problem. If your document is cleanly written with Markdown headings, you can split it beautifully with a single command.
-
-## Forcibly Cut at Specific Locations with Scissors
-
-When you have a clear place where you want to "sever the text before and after"—such as system logs with no Markdown structure, scene changes in a novel, or exported chat logs—the forced physical cut feature shines.
-Just place \`✂️\` or a custom marker at the beginning of a line, and the file will be cleanly severed at that exact boundary.
-
-## Split Beautifully by Markdown Headings
-
-**Are you amazed by the beautiful folder structure of this manual?**
-
-Actually, the "hierarchical manual" you are currently looking at in your Explorer (or IDE) is a live example (demo) proving the power of SPLIST.
-Originally, it was just a single, long, hard-to-read text file. But SPLIST automatically detected \`#\` (H1) as folders and \`##\` (H2) as files in the text, instantly constructing this beautiful tree structure.
-
-# 💻 COMMAND
-
-## ✂️ splist Targetfilename sp
-
-The command to execute a "Forced Physical Cut".
-Regardless of heading structure, it severs the text before and after at locations marked with the scissors symbol (\`✂️\`), \`cut\`, or a custom marker (e.g., \`===\`) written in the file.
-**※ Collision avoidance options like \`-d\` and \`-s\` can be fully utilized with this command just like \`splist Targetfilename list\`!**
-
-### 💡 Features and Usage (Validation Demo Links)
-- **Basic single split using standard markers (✂️, V, v, cut)**: Validation File [[01_sp_showcase_single_cut_default.md](file:///c:/splist/demo_cases/success_cases/01_sp_showcase_single_cut_default.md)]
-- **Simultaneous split with different standard markers at multiple locations**: Validation File [[02_sp_showcase_multi_cut_default.md](file:///c:/splist/demo_cases/success_cases/02_sp_showcase_multi_cut_default.md)]
-- **Split using a user-specified custom marker**: Validation File [[03_sp_showcase_custom_marker_opt.md](file:///c:/splist/demo_cases/success_cases/03_sp_showcase_custom_marker_opt.md)]
-- **Feature to keep trailing text after the marker at the top of the next file**: Validation File [[04_sp_showcase_marker_trailing_text_default.md](file:///c:/splist/demo_cases/success_cases/04_sp_showcase_marker_trailing_text_default.md)]
-- **Split without sequential numbers using the un option**: Validation File [[05_sp_option_un_opt.md](file:///c:/splist/demo_cases/success_cases/05_sp_option_un_opt.md)]
-- **Auto-generate TOC using the -toc option**: Validation File [[06_sp_option_toc_opt.md](file:///c:/splist/demo_cases/success_cases/06_sp_option_toc_opt.md)]
-
-### ✂️ Physical Cut Image
-
-Even for text without Markdown headings like system logs or novels, you can cleanly sever them at any marker location.
-
-\`\`\`text
-(Original File: target_file.txt)
-This will be the first file.
-Prologue text...
-✂️
-This will be the second file.
-Chapter 1 text...
-cut
-This will be the third file.
-Chapter 2 text...
-\`\`\`
-
-#### 📂 Output Files (Image)
-
-\`\`\`text
-📂 Output Folder/
-├── 📄 01_Part.txt  (First block)
-├── 📄 02_Part.txt  (Second block)
-└── 📄 03_Part.txt  (Third block)
-\`\`\`
-
-💡 **Specifying Custom Markers**
-By specifying a symbol at the end like \`splist target.txt sp "==="\`, you can split using that custom symbol instead of the standard scissors. You can even chain options like \`splist target.txt sp "===" -d\`.
-
-## 💻 splist Targetfilename list (or omit)
-
-The command to execute "Smart Logical Organization".
-It reads the target Markdown file and automatically splits it into folders and files according to the \`#\` and \`##\` heading structure.
-
-### 💡 Features and Usage (Validation Demo Links)
-- **Basic split for a flat structure with only H1s**: Validation File [[16_list_showcase_flat_h1_default.md](file:///c:/splist/demo_cases/success_cases/16_list_showcase_flat_h1_default.md)]
-- **Standard nested configuration of # (Folder) and ## (File)**: Validation File [[17_list_showcase_nested_standard_default.md](file:///c:/splist/demo_cases/success_cases/17_list_showcase_nested_standard_default.md)]
-- **Cases with multiple H2s under a single H1**: Validation File [[18_list_showcase_nested_single_default.md](file:///c:/splist/demo_cases/success_cases/18_list_showcase_nested_single_default.md)]
-- **Typing support conversion for v (H1) / vv (H2)**: Validation File [[19_list_showcase_typing_support_default.md](file:///c:/splist/demo_cases/success_cases/19_list_showcase_typing_support_default.md)]
-- **Typing support conversion for vvv (H3)**: Validation File [[20_list_showcase_typing_support_vvv_default.md](file:///c:/splist/demo_cases/success_cases/20_list_showcase_typing_support_vvv_default.md)]
-- **Split specifying custom depths like "###"**: Validation File [[21_list_option_custom_depth_opt.md](file:///c:/splist/demo_cases/success_cases/21_list_option_custom_depth_opt.md)]
-- **keep option (maintain heading levels)**: Validation File [[22_list_option_keep_opt.md](file:///c:/splist/demo_cases/success_cases/22_list_option_keep_opt.md)]
-- **Split without sequential numbers using the un option**: Validation File [[23_list_option_un_opt.md](file:///c:/splist/demo_cases/success_cases/23_list_option_un_opt.md)]
-- **Auto-generate a structural TOC file using the -toc option**: Validation File [[24_list_option_toc_opt.md](file:///c:/splist/demo_cases/success_cases/24_list_option_toc_opt.md)]
-- **Correction feature where H2 automatically promotes to H1 after splitting**: Validation File [[25_list_option_heading_promotion_default.md](file:///c:/splist/demo_cases/success_cases/25_list_option_heading_promotion_default.md)]
-- **Exclude YAML Front Matter using the -fmex option**: Validation File [[32a_list_option_front_matter_fmex.md](file:///c:/splist/demo_cases/success_cases/32a_list_option_front_matter_fmex.md)]
-- **Extract YAML Front Matter independently (start from 01) using the -fm01 option**: Validation File [[32b_list_option_front_matter_fm01.md](file:///c:/splist/demo_cases/success_cases/32b_list_option_front_matter_fm01.md)]
-- **Extract YAML Front Matter rationally (start from 00 / Default) using the -fm00 option**: Validation File [[32c_list_option_front_matter_fm00.md](file:///c:/splist/demo_cases/success_cases/32c_list_option_front_matter_fm00.md)]
-
-💡 **Execution is Fastest and Surest via Drag & Drop!**
-Manually typing an absolute file path (\`C:\\...\`) on the keyboard is highly prone to typos and missing spaces, making it very tedious.
-From the VS Code Explorer (left sidebar), **drag & drop (D&D) the file you want to split directly into the terminal**. The exact file path will be auto-populated instantly!
-
-### 📂 Collision Avoidance and Versioning (New Feature!)
-
-SPLIST comes standard with **"safe version control per directory (folder)"**. No matter how many times you split the same file, existing files will never be overwritten and lost!
-
-By appending the following options at the end of the command, you can freely control the behavior:
-* **(No specify)**: Safely creates new folders with sequential suffixes like \`_v02\`, \`_v03\`. Validation File [[37_common_option_conflict_default_default.md](file:///c:/splist/demo_cases/success_cases/37_common_option_conflict_default_default.md)]
-* **\`-d\` (Date)**: Adds today's date to the folder name (e.g., \`_20260716\`). Validation File [[38_common_option_conflict_date_opt.md](file:///c:/splist/demo_cases/success_cases/38_common_option_conflict_date_opt.md)]
-* **\`-t\` (Time)**: Adds the current time to the folder name (e.g., \`_20260716_153000\`). Validation File [[39_common_option_conflict_time_opt.md](file:///c:/splist/demo_cases/success_cases/39_common_option_conflict_time_opt.md)]
-* **\`-s\` (Skip)**: If the folder already exists, it safely skips without overwriting. Validation File [[40_common_option_conflict_skip_opt.md](file:///c:/splist/demo_cases/success_cases/40_common_option_conflict_skip_opt.md)]
-* **\`-f\` (Force)**: [WARNING] Forcibly overwrites (resets) existing folders. Validation File [[41_common_option_conflict_force_opt.md](file:///c:/splist/demo_cases/success_cases/41_common_option_conflict_force_opt.md)]
-
-### 📝 Front Matter Processing Options
-
-You can control how the YAML Front Matter (metadata enclosed by \`---\`) at the top of a Markdown file is processed.
-
-* **(No specify) or \`-fm00\`**: Extracts the Front Matter independently as \`00_FrontMatter.md\`. H1 and intro text will become \`01_\`, resulting in rational classification.
-* **\`-fm01\`**: Extracts the Front Matter as \`01_FrontMatter.md\`, making the start of the body text \`02_\`.
-* **\`-fmex\`**: Completely excludes (Exclude) the Front Matter and outputs only the body text.
-
-### 📂 Output Management Philosophy: Switching Between Safety and Efficiency
-
-By default, SPLIST is designed with a **Safety-First architecture** that utilizes "version control (adding sequential numbers)" to prevent accidentally erasing existing files. However, depending on your development cycle or preferences, there may be times you want to customize this behavior.
-
-Choose from the following 3 management strategies based on your use case:
-
-#### 1. [Standard] Keep History (Default)
-When you run \`splist target.md list\` (or simply \`splist target.md\`), it assigns sequential suffixes like \`_v02\` or \`_v03\` to prevent conflicting with existing folders.
-*   **Use Case:** When you want to retain past backups as needed.
-*   **Command:** \`splist target.md\`
-
-#### 2. [Safe] Protect Existing (Skip)
-If a folder already exists, **SPLIST does nothing.** This completely eliminates the risk of accidentally overwriting files you have already hand-tweaked.
-*   **Use Case:** When you've already made fine adjustments manually and want to prevent auto-generated output from destroying your work.
-*   **Command:** \`splist target.md -s\`
-
-#### 3. [Aggressive] Destructive Overwrite (Force)
-Forcibly overwrites the folder if it exists. Previous files will be permanently deleted.
-*   **Use Case:** During extreme trial-and-error where you modify the Raw data, split, check the output, delete it, and try again over and over.
-*   **Command:** \`splist target.md -f\` (Use with caution)
-
-### 📑 Image of Heading Structure
-
-You are likely familiar with text written with hashtags (\`#\`) in Markdown files. They serve the same role as \`h1\` through \`h6\` tags in normal websites (HTML).
-
-\`\`\`markdown
-# Title
-
-## Heading h2
-Body text body text body text
-Body text body text body text
-
-## Heading h2
-Body text body text body text
-\`\`\`
-
-#### 📂 Split Folder Tree (Image)
-
-\`\`\`text
-📂 01_Title/
-├── 📄 01_Heading_h2.md
-├── 📄 02_Heading_h2.md   ← (※ "### Heading h3" will be preserved inside this)
-└── 📄 03_Heading_h2.md
-\`\`\`
-
-In standard Markdown, H1 (\`#\`) corresponds to the article title, so it's typically used only once.
-Therefore, each section within the body usually uses headings up to \`##\` or \`###\`.
-However, **this tool splits at the \`##\` (H2) unit by default**. Splitting down to \`###\` could result in pieces that are too fragmented.
-
-💡 **Over 50 Experimental Playground Files to Try**
-The SPLIST repository includes 53 practical test data cases covering extreme conditions and convenient usages. Running \`npm run demo\` in the root directory generates all demo files into \`demo_cases/demo_cases_raw/\`. Drag & drop these files directly into your VS Code terminal and experience the magic of splitting right now!
-
-# When You Want to Forcibly Sever by Specified Symbols
-
-## Cut with the Standard Scissors Symbol
-
-Simply writing \`✂️\` or \`cut\` at the beginning of a line establishes a boundary to split the file before and after it.
-The resulting split files are automatically assigned sequential numbers like \`01_Part.md\`. Unnecessary blank lines before and after are cleanly trimmed, and the scissors symbol itself is neatly removed from the output files.
-
-## Cut by Specifying Custom Characters or Symbols
-
-When you want to use a "custom symbol" as the cut criteria—such as for scene transitions in a novel, chat logs, or system output data—you can specify a custom marker.
-
-For instance, specifying \`===\` will detect every location where a line starts with \`===\` and forcefully split there. You can specify any string you like, including patterns common in novels like \`***\` or \`◆◆◆\`, log files' \`[EOF]\`, or chat logs' \`[Date/Time]\`.
-
-**Execution Example:** \`splist target_file.txt sp "==="\`
-
-## 🛠️ Secret Trick: Hardcoding Your Default Cut Symbol
-
-For heavy users who find it tedious to specify \`"==="\` or \`"◆◆◆"\` as an option argument every time, there is a secret trick to make your own custom scissors the default.
-
-Open SPLIST's core logic file \`src/commands/sp_default.js\`, directly edit the constant for the regex cut marker at the beginning of lines to your preferred symbol, and save. Simply by running \`splist target.txt\` without arguments (thanks to the \`.txt\` smart default), you'll be able to tear through texts with your very own custom marker anytime.
-
-# When You Want to Organize Using Heading Structure
-
-## The Classic Pattern Split
-
-The most fundamental usage is splitting meeting minutes or manuals composed of \`#\` and \`##\`.
-When executed, the tool creates a "Parent Folder" from the topmost \`#\` (H1), carves out files for each \`##\` (H2) within it, and tucks them neatly inside the folder.
-Furthermore, it automatically prepends sequential numbers like \`01_\` to all files and folders so they naturally line up in the order of the original text.
-
-### 🌟 Real-World Data Split Example
-
-As a practical validation, when the authentic VS Code official documentation draft \`vscode-docs/color-theme.md\` (published by Microsoft) was fed into SPLIST, it instantly reconstructed into the following magical hierarchical structure.
-
-**Folder Tree After SPLIST Execution:**
-
-\`\`\`text
-📂 🔢color-theme/
-└── 📁 03_Color Theme/
-    ├── 📄 00_Overview.md                               (Intro text right below heading)
-    ├── 📄 01_Workbench colors.md                       (Each section is individually)
-    ├── 📄 02_Syntax colors.md                          (carved into independent files)
-    ├── 📄 03_Semantic colors.md
-    └── 📄 04_Create a new Color Theme.md ... (continues)
-\`\`\`
-
-No more endless, manual copying, pasting, and saving new files. Raw technical documents are instantly reborn as beautiful assets.
-
-## Maintaining Deep Hierarchies and Complex Structures
-
-**Auto-Correction of Markdown Syntax and Bypassing It (\`keep\` Option)**
-
-Generally, in Markdown, \`#\` (H1) is used as the overall title, and \`##\` (H2) as the heading for each section. When SPLIST carves out \`##\` sections into separate files, leaving them as-is would result in "files without an H1 (grammatically unnatural)". Therefore, SPLIST has a default **correction feature that automatically converts (promotes) \`##\` to \`#\` when saving**.
-
-**Execution Example:** \`splist target.md keep\`
-※ If you specify \`keep\`, auto-promotion is disabled, and the extraction remains pure, fully maintaining the original \`##\` or \`###\` hierarchies.
-
-## Removing Sequential Numbers / Extracting Specific Hierarchies
-
-You can fine-tune SPLIST's behavior even further to match your goals.
-
-### 🔢 1. Remove Sequential Numbers (\`un\` Option)
-
-Disables the sequential numbers like \`01_\` that are prepended by default.
-Perfect for splitting "dictionary data to be sorted alphabetically" or "API documentation where you want filenames to match function names exactly."
-
-**Execution Example:** \`splist dictionary.md un\`
-
-### 🔍 2. Split at Arbitrary Depth (\`"###"\` Option)
-
-The default splitting criteria is \`##\` (H2), but you can target deeper hierarchies.
-For example, by specifying \`"###"\`, you can finely dice the files down to the third-tier subheading level.
-
-## 💡 Typing Support to Accelerate Writing
-
-Typing \`#\`—the staple of Markdown—on a PC keyboard requires stretching fingers (like Shift + 3), which is a significant typing burden.
-Thus, SPLIST comes standard with smart input shortcuts designed to skyrocket your document writing speed. If you place the following at the beginning of a line while writing, they will automatically be converted to correct Markdown symbols upon processing.
-
-* Type \`v \` (lowercase v + half-width space) at start of line = **\`# \` (H1)**
-* Type \`vv \` at start of line = **\`## \` (H2)**
-
-With hardly any movement from the home position, you can blast through building heading structures just by gliding over the keyboard.
-
-# Edge Cases and Limit Test Results
-
-## Safe Design of Forced Cut (\`sp\`) and Empirical Results
-
-Because it handles text without a structure like Markdown, powerful guardrails are implemented to prevent unexpected misfires.
-
-- **Does not process files with zero markers**: Validation File [[11_sp_safety_no_cuts_default.md](file:///c:/splist/demo_cases/success_cases/11_sp_safety_no_cuts_default.md)]
-- **Does not process even if line 1 is a marker**: Validation File [[08_sp_safety_start_with_cut_default.md](file:///c:/splist/demo_cases/success_cases/08_sp_safety_start_with_cut_default.md)]
-- **Does not process even if the last line is a marker**: Validation File [[09_sp_safety_end_with_cut_default.md](file:///c:/splist/demo_cases/success_cases/09_sp_safety_end_with_cut_default.md)]
-- **Ignores consecutive markers**: Validation File [[07_sp_safety_consecutive_cuts_default.md](file:///c:/splist/demo_cases/success_cases/07_sp_safety_consecutive_cuts_default.md)]
-- **Ignores markers mid-sentence**: Validation File [[10_sp_safety_false_scissors_default.md](file:///c:/splist/demo_cases/success_cases/10_sp_safety_false_scissors_default.md)]
-- **Processes markers inside code blocks**: Validation File [[12_sp_safety_cut_in_codeblock_default.md](file:///c:/splist/demo_cases/success_cases/12_sp_safety_cut_in_codeblock_default.md)]
-- **Removes invalid characters / Trims overly long headings to 50 chars**: Validation File [[13_sp_safety_long_and_invalid_chars_default.md](file:///c:/splist/demo_cases/success_cases/13_sp_safety_long_and_invalid_chars_default.md)]
-
-### 1. Ignoring Cut Marks Mid-Sentence (Inline)
-
-It absolutely will not split at \`===\` or \`✂️\` accidentally used mid-sentence in a chat log or conversation. To prevent misfires, a safety check ensures it triggers ONLY when placed independently at the "start of a line."
-Validation Anti-Pattern [[15_sp_warn_inline_cut_default.md](file:///c:/splist/demo_cases/success_cases/15_sp_warn_inline_cut_default.md)]
-
-### 2. Preventing Consecutive Markers and Empty File Generation
-
-If scissors symbols or \`cut\`s are placed consecutively over multiple lines, or if there are useless markers at the very beginning or end of a file, the tool automatically detects and smartly skips them. This prevents polluting the disk by mass-generating empty "0-byte garbage files."
-
----
-## Safe Design of Logical Organize (\`list\`) and Empirical Results
-
-To prevent data destruction or errors unintended by the user, a robust safety design has cleared limit tests utilizing various edge cases and raw real-world data.
-
-- **Carves out document intros before the first H2 into an Overview**: Validation File [[26_list_safety_overview_logic_default.md](file:///c:/splist/demo_cases/success_cases/26_list_safety_overview_logic_default.md)]
-- **Auto-cleanses invalid chars, preserves surrogate pair emojis, trims at 50 chars**: Validation File [[27_list_safety_naming_limit_default.md](file:///c:/splist/demo_cases/success_cases/27_list_safety_naming_limit_default.md)]
-- **Validates deep nesting up to H6 level remains intact on output**: Validation File [[28_list_safety_deep_nesting_default.md](file:///c:/splist/demo_cases/success_cases/28_list_safety_deep_nesting_default.md)]
-- **Collision avoidance for identical heading names (safe save via renaming)**: Validation File [[29_list_safety_duplicate_headings_default.md](file:///c:/splist/demo_cases/success_cases/29_list_safety_duplicate_headings_default.md)]
-- **Validates list bullets and other Markdown elements do not disrupt the heading parser**: Validation File [[30_list_safety_mixed_markers_default.md](file:///c:/splist/demo_cases/success_cases/30_list_safety_mixed_markers_default.md)]
-- **Validates completely ignoring fake headings inside code blocks**: Validation File [[31_list_safety_codeblock_trap_default.md](file:///c:/splist/demo_cases/success_cases/31_list_safety_codeblock_trap_default.md)]
-- **Validates ignoring YAML Front Matter (---)**: Validation File [[32_list_safety_front_matter_default.md](file:///c:/splist/demo_cases/success_cases/32_list_safety_front_matter_default.md)]
-- **Safe fallback processing for invalid markdown space headings, etc.**: Validation File [[33_list_safety_bad_markdown_default.md](file:///c:/splist/demo_cases/success_cases/33_list_safety_bad_markdown_default.md)]
-- **Structural parsing load test on massive volume Markdown**: Validation File [[34_list_safety_massive_volume_default.md](file:///c:/splist/demo_cases/success_cases/34_list_safety_massive_volume_default.md)]
-- **Warning Case: Ignores headings missing a space**: Validation File [[35_list_warn_no_space_heading_default.md](file:///c:/splist/demo_cases/success_cases/35_list_warn_no_space_heading_default.md)]
-- **Warning Case: Prevents heading loss caused by unclosed code blocks**: Validation File [[36_list_warn_unclosed_codeblock_default.md](file:///c:/splist/demo_cases/success_cases/36_list_warn_unclosed_codeblock_default.md)]
-
-### 1. Completely Ignoring "Fake Headings" Inside Code Blocks
-
-Prevents erroneously generating folders by mistaking \`# Comments\` or \`## Samples\` written within program source code or Markdown tutorials as structural headings. Anything inside a code block wrapped by triple backticks is treated as a total safe zone and parsing is skipped.
-
-### 2. Auto-Cleansing of Invalid Characters in Filenames
-
-Even if a heading contains forbidden NG characters that OSes reject as filenames like \`\\ / : * ? " < > |\`, the system will not crash. It automatically removes/replaces them, generating and saving a safe filename.
-
-### 3. Emoji Support and Character Limit
-
-Even if special surrogate-pair Kanji or complex emojis exist in a heading, it accurately determines character boundaries to prevent garbling, smartly cutting at a safe maximum of 50 characters to avoid exceeding OS limits.
-
-### 💡 Integration Cases
-- **Structural parsing proof on VS Code official specs (mixed YAML/code block data)**: Validation File [[42_integration_vscode_color_theme_default.md](file:///c:/splist/demo_cases/success_cases/42_integration_vscode_color_theme_default.md)]
-- **Self-build split proof on SPLIST Official Manual**: Validation File [[43_integration_official_manual_default.md](file:///c:/splist/demo_cases/success_cases/43_integration_official_manual_default.md)]
-
-### 💡 Operations Become Dramatically Easier
-
-Now that you have these independent Markdown files, you can open them directly in VS Code, enjoying a comfortable writing and editing experience while viewing previews.
-Once you've finished tweaking the text, just toss the file directly into the \`splist\` engine via the terminal, and your usual beautiful hierarchical folders will be completed instantly.
-
-
-
-
-
-* **Empirical Record:** During the validation of the aforementioned VS Code official documentation (\`color-theme.md\`), it brilliantly ignored all hashtag headings inside the massive amount of Markdown code samples (\`\`\`markdown ...\`\`\`) contained within, succeeding in extracting 100% accurately ONLY the true table of contents structure of the document itself.`,We={name:`@splists/splist`,version:`2.0.0`,description:`Split massive Markdown and text files into manageable chunks with an auto-generated TOC. A powerful CLI and local Web GUI utility for text processing.`,main:`src/core/splist/splist.js`,bin:{splist:`src/cli/cli.js`},scripts:{demo:`node demo_cases/demo_cases_gen.js && node demo_cases/demo_cases_raw/demo_cases_run.js`,test:`node demo_cases/demo_cases_raw/demo_cases_run.js`,"build:manual":`node src/cli/cli.js USAGE.md -f`,"build:web":`npm --prefix react run build`},repository:{type:`git`,url:`git+https://github.com/splists/splist.git`},homepage:`https://splists.github.io/`,bugs:{url:`https://github.com/splists/splist/issues`},files:[`src`,`USAGE.md`],keywords:`split.list.markdown.md.chunk.chunking.separator.heading.chapter.table-of-contents.toc.large-file.text-processing.file-organizer.note-taking.documentation.docs.doc.cli.command-line.command.terminal.console.utility.backend.zero-dependency`.split(`.`),author:`1abcdefggs`,engines:{node:`>=16.0.0`},license:`MIT`,type:`commonjs`},Ge=o((e=>{var t=Symbol.for(`react.transitional.element`),n=Symbol.for(`react.fragment`);function r(e,n,r){var i=null;if(r!==void 0&&(i=``+r),n.key!==void 0&&(i=``+n.key),`key`in n)for(var a in r={},n)a!==`key`&&(r[a]=n[a]);else r=n;return n=r.ref,{$$typeof:t,type:e,key:i,ref:n===void 0?null:n,props:r}}e.Fragment=n,e.jsx=r,e.jsxs=r})),j=o(((e,t)=>{t.exports=Ge()}))();function Ke({onOpenDocs:e}){return(0,j.jsxs)(`header`,{className:`app-header vscode-titlebar`,children:[(0,j.jsxs)(`div`,{className:`titlebar-left`,children:[(0,j.jsx)(`img`,{src:`/favicon.png`,alt:`Splist Logo`,className:`app-logo-icon`,style:{width:`24px`,height:`24px`,borderRadius:`4px`}}),(0,j.jsxs)(`h1`,{className:`app-title`,children:[`SPLIST `,(0,j.jsx)(`span`,{children:`BROWSER`})]}),(0,j.jsxs)(`span`,{className:`badge version-badge`,children:[`V`,We.version.toUpperCase()]})]}),(0,j.jsx)(`div`,{className:`titlebar-center`,children:(0,j.jsx)(`span`,{className:`app-tagline`,children:`ULTRA-FAST MARKDOWN SPLITTER & STRUCTURER`})}),(0,j.jsxs)(`div`,{className:`titlebar-right`,children:[(0,j.jsx)(`button`,{onClick:e,className:`docs-btn`,title:`View Documentation`,children:`📖 DOCS`}),(0,j.jsxs)(`a`,{href:`https://github.com/splists/splist`,target:`_blank`,rel:`noopener noreferrer`,className:`github-link-btn`,title:`View source on GitHub`,children:[(0,j.jsx)(`svg`,{className:`github-icon`,viewBox:`0 0 16 16`,width:`16`,height:`16`,fill:`currentColor`,children:(0,j.jsx)(`path`,{d:`M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z`})}),(0,j.jsx)(`span`,{children:`GITHUB`})]})]})]})}function qe({inputText:e,setInputText:t,inputFileName:n,setInputFileName:r,splitMode:i,setSplitMode:a,generateToc:o,setGenerateToc:s,isDragging:c,setIsDragging:l,onSplit:u,onLoadSample:d,onClear:f,selectedFile:p,onSelectInput:m,onFileDrop:h}){let g=!p||p.isInput;return(0,v.useEffect)(()=>{let e=e=>{(e.ctrlKey||e.metaKey)&&e.key===`Enter`&&(e.preventDefault(),u())};return window.addEventListener(`keydown`,e),()=>window.removeEventListener(`keydown`,e)},[u]),(0,j.jsxs)(`section`,{className:`panel editor-main-panel`,children:[(0,j.jsxs)(`div`,{className:`editor-tabs-bar`,children:[(0,j.jsxs)(`div`,{className:`editor-tab-item ${g?`active`:``}`,onClick:m,children:[(0,j.jsxs)(`svg`,{className:`file-icon-svg`,width:`14`,height:`14`,viewBox:`0 0 24 24`,fill:`none`,stroke:`currentColor`,strokeWidth:`2`,children:[(0,j.jsx)(`path`,{d:`M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z`}),(0,j.jsx)(`polyline`,{points:`14 2 14 8 20 8`})]}),(0,j.jsx)(`span`,{className:`tab-title`,children:n||`input.md`}),(0,j.jsx)(`span`,{className:`tab-badge`,children:`EDITING`})]}),!g&&p&&(0,j.jsxs)(`div`,{className:`editor-tab-item active output-preview-tab`,children:[(0,j.jsxs)(`svg`,{className:`file-icon-svg`,width:`14`,height:`14`,viewBox:`0 0 24 24`,fill:`none`,stroke:`currentColor`,strokeWidth:`2`,children:[(0,j.jsx)(`path`,{d:`M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z`}),(0,j.jsx)(`polyline`,{points:`14 2 14 8 20 8`})]}),(0,j.jsx)(`span`,{className:`tab-title`,children:p.name}),(0,j.jsx)(`span`,{className:`tab-badge preview-tag`,children:`OUTPUT PREVIEW`})]})]}),(0,j.jsxs)(`div`,{className:`panel-header editor-header-controls`,children:[(0,j.jsxs)(`div`,{className:`mode-selector`,children:[(0,j.jsxs)(`label`,{className:`radio-label`,title:`Split by custom markers (✂️)`,children:[(0,j.jsx)(`input`,{type:`radio`,name:`splitMode`,value:`sp`,checked:i===`sp`,onChange:e=>a(e.target.value)}),(0,j.jsx)(`span`,{className:`radio-btn ${i===`sp`?`is-active`:``}`,children:`SP (✂️ MARKERS)`})]}),(0,j.jsxs)(`label`,{className:`radio-label`,title:`Split by Markdown H1/H2 Headings`,children:[(0,j.jsx)(`input`,{type:`radio`,name:`splitMode`,value:`list`,checked:i===`list`,onChange:e=>a(e.target.value)}),(0,j.jsx)(`span`,{className:`radio-btn ${i===`list`?`is-active`:``}`,children:`LIST (# HEADINGS)`})]})]}),(0,j.jsxs)(`div`,{className:`input-file-actions`,style:{display:`flex`,alignItems:`center`,gap:`15px`},children:[(0,j.jsxs)(`label`,{className:`toggle`,title:`Add index file (00_TOC.md) inside output`,children:[(0,j.jsx)(`input`,{type:`checkbox`,checked:o,onChange:e=>s(e.target.checked)}),(0,j.jsx)(`span`,{className:`slider`}),(0,j.jsx)(`span`,{className:`label-text`,style:{fontSize:`0.75rem`,fontWeight:`bold`},children:`+ 00_TOC.MD`})]}),(0,j.jsx)(`button`,{className:`quick-action-btn sample-btn`,onClick:d,title:`Load Sample README.md`,children:`README SAMPLE`}),e&&(0,j.jsx)(`button`,{className:`quick-action-btn clear-btn`,onClick:f,title:`Clear editor text`,children:`CLEAR`})]})]}),g?(0,j.jsxs)(`div`,{className:`editor-container ${c?`drag-over`:``}`,onDragEnter:()=>l(!0),onDragOver:()=>l(!0),onDragLeave:()=>l(!1),onDrop:e=>{if(l(!1),e.dataTransfer.files&&e.dataTransfer.files.length>0){let t=e.dataTransfer.files[0],n=new FileReader;n.onload=e=>{e.target?.result&&h(t.name,e.target.result.toString())},n.readAsText(t)}else{let t=e.dataTransfer.getData(`text`);t&&h(`pasted_input.md`,t)}},style:{position:`relative`},children:[e&&!c&&(0,j.jsx)(`div`,{style:{position:`absolute`,top:`10px`,right:`15px`,fontSize:`0.75rem`,color:`#6a9955`,pointerEvents:`none`,fontStyle:`italic`},children:`💡 Drag & Drop your own .md file here to split it!`}),(0,j.jsx)(`textarea`,{value:e,onChange:e=>t(e.target.value),placeholder:`Drag & Drop your Markdown file here, or paste text to split...`}),!e&&!c&&(0,j.jsxs)(`div`,{className:`empty-dropzone-watermark`,onClick:()=>document.querySelector(`textarea`)?.focus(),children:[(0,j.jsxs)(`svg`,{className:`watermark-icon-svg`,width:`48`,height:`48`,viewBox:`0 0 24 24`,fill:`none`,stroke:`currentColor`,strokeWidth:`1.5`,children:[(0,j.jsx)(`path`,{d:`M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4`}),(0,j.jsx)(`polyline`,{points:`7 10 12 15 17 10`}),(0,j.jsx)(`line`,{x1:`12`,y1:`15`,x2:`12`,y2:`3`})]}),(0,j.jsx)(`div`,{className:`watermark-title`,children:`DRAG & DROP MARKDOWN FILE HERE`}),(0,j.jsx)(`div`,{className:`watermark-sub`,children:`OR PASTE TEXT DIRECTLY INTO THIS EDITOR`})]}),c&&(0,j.jsx)(`div`,{className:`overlay-msg`,children:`DROP FILE TO LOAD`})]}):(0,j.jsxs)(`div`,{className:`editor-output-preview`,children:[(0,j.jsxs)(`div`,{className:`preview-banner`,children:[(0,j.jsxs)(`span`,{children:[`PREVIEWING SPLISTED GENERATED FILE: `,(0,j.jsx)(`strong`,{children:p?.name})]}),(0,j.jsx)(`button`,{className:`back-to-edit-btn`,onClick:m,children:`✏️ Back to Edit Input Document`})]}),(0,j.jsx)(`pre`,{className:`output-preview-code`,children:(0,j.jsx)(`code`,{children:p?.content})})]})]})}function Je({splitMode:e,generateToc:t,totalFiles:n}){return(0,j.jsxs)(`footer`,{className:`vscode-statusbar`,children:[(0,j.jsxs)(`div`,{className:`statusbar-left`,children:[(0,j.jsx)(`span`,{className:`statusbar-item statusbar-brand`,children:`⚡ SPLIST V2.0.0`}),(0,j.jsxs)(`span`,{className:`statusbar-item`,children:[`MODE: `,e===`sp`?`SP (✂️ MARKERS)`:`LIST (# HEADINGS)`]}),(0,j.jsx)(`span`,{className:`statusbar-item`,children:t?`TOC: 00_TOC.MD`:`TOC: OFF`})]}),(0,j.jsxs)(`div`,{className:`statusbar-right`,children:[(0,j.jsx)(`span`,{className:`statusbar-item`,children:n>0?`SPLISTED: ${n} FILES`:`READY`}),(0,j.jsx)(`span`,{className:`statusbar-item`,children:`UTF-8`}),(0,j.jsx)(`span`,{className:`statusbar-item`,children:`MARKDOWN`})]})]})}function Ye(e,t){let n=t||{};return(e[e.length-1]===``?[...e,``]:e).join((n.padRight?` `:``)+`,`+(n.padLeft===!1?``:` `)).trim()}var Xe=/^[$_\p{ID_Start}][$_\u{200C}\u{200D}\p{ID_Continue}]*$/u,Ze=/^[$_\p{ID_Start}][-$_\u{200C}\u{200D}\p{ID_Continue}]*$/u,Qe={};function $e(e,t){return((t||Qe).jsx?Ze:Xe).test(e)}var et=/[ \t\n\f\r]/g;function tt(e){return typeof e==`object`?e.type===`text`&&nt(e.value):nt(e)}function nt(e){return e.replace(et,``)===``}var rt=class{constructor(e,t,n){this.normal=t,this.property=e,n&&(this.space=n)}};rt.prototype.normal={},rt.prototype.property={},rt.prototype.space=void 0;function it(e,t){let n={},r={};for(let t of e)Object.assign(n,t.property),Object.assign(r,t.normal);return new rt(n,r,t)}function at(e){return e.toLowerCase()}var ot=class{constructor(e,t){this.attribute=t,this.property=e}};ot.prototype.attribute=``,ot.prototype.booleanish=!1,ot.prototype.boolean=!1,ot.prototype.commaOrSpaceSeparated=!1,ot.prototype.commaSeparated=!1,ot.prototype.defined=!1,ot.prototype.mustUseProperty=!1,ot.prototype.number=!1,ot.prototype.overloadedBoolean=!1,ot.prototype.property=``,ot.prototype.spaceSeparated=!1,ot.prototype.space=void 0;var st=s({boolean:()=>M,booleanish:()=>lt,commaOrSpaceSeparated:()=>ft,commaSeparated:()=>dt,number:()=>N,overloadedBoolean:()=>ut,spaceSeparated:()=>P}),ct=0,M=pt(),lt=pt(),ut=pt(),N=pt(),P=pt(),dt=pt(),ft=pt();function pt(){return 2**++ct}var mt=Object.keys(st),ht=class extends ot{constructor(e,t,n,r){let i=-1;if(super(e,t),gt(this,`space`,r),typeof n==`number`)for(;++i<mt.length;){let e=mt[i];gt(this,mt[i],(n&st[e])===st[e])}}};ht.prototype.defined=!0;function gt(e,t,n){n&&(e[t]=n)}function _t(e){let t={},n={};for(let[r,i]of Object.entries(e.properties)){let a=new ht(r,e.transform(e.attributes||{},r),i,e.space);e.mustUseProperty&&e.mustUseProperty.includes(r)&&(a.mustUseProperty=!0),t[r]=a,n[at(r)]=r,n[at(a.attribute)]=r}return new rt(t,n,e.space)}var vt=_t({properties:{ariaActiveDescendant:null,ariaAtomic:lt,ariaAutoComplete:null,ariaBusy:lt,ariaChecked:lt,ariaColCount:N,ariaColIndex:N,ariaColSpan:N,ariaControls:P,ariaCurrent:null,ariaDescribedBy:P,ariaDetails:null,ariaDisabled:lt,ariaDropEffect:P,ariaErrorMessage:null,ariaExpanded:lt,ariaFlowTo:P,ariaGrabbed:lt,ariaHasPopup:null,ariaHidden:lt,ariaInvalid:null,ariaKeyShortcuts:null,ariaLabel:null,ariaLabelledBy:P,ariaLevel:N,ariaLive:null,ariaModal:lt,ariaMultiLine:lt,ariaMultiSelectable:lt,ariaOrientation:null,ariaOwns:P,ariaPlaceholder:null,ariaPosInSet:N,ariaPressed:lt,ariaReadOnly:lt,ariaRelevant:null,ariaRequired:lt,ariaRoleDescription:P,ariaRowCount:N,ariaRowIndex:N,ariaRowSpan:N,ariaSelected:lt,ariaSetSize:N,ariaSort:null,ariaValueMax:N,ariaValueMin:N,ariaValueNow:N,ariaValueText:null,role:null},transform(e,t){return t===`role`?t:`aria-`+t.slice(4).toLowerCase()}});function yt(e,t){return t in e?e[t]:t}function bt(e,t){return yt(e,t.toLowerCase())}var xt=_t({attributes:{acceptcharset:`accept-charset`,classname:`class`,htmlfor:`for`,httpequiv:`http-equiv`},mustUseProperty:[`checked`,`multiple`,`muted`,`selected`],properties:{abbr:null,accept:dt,acceptCharset:P,accessKey:P,action:null,allow:null,allowFullScreen:M,allowPaymentRequest:M,allowUserMedia:M,alpha:M,alt:null,as:null,async:M,autoCapitalize:null,autoComplete:P,autoFocus:M,autoPlay:M,blocking:P,capture:null,charSet:null,checked:M,cite:null,className:P,closedBy:null,colorSpace:null,cols:N,colSpan:N,command:null,commandFor:null,content:null,contentEditable:lt,controls:M,controlsList:P,coords:N|dt,crossOrigin:null,data:null,dateTime:null,decoding:null,default:M,defer:M,dir:null,dirName:null,disabled:M,download:ut,draggable:lt,encType:null,enterKeyHint:null,fetchPriority:null,form:null,formAction:null,formEncType:null,formMethod:null,formNoValidate:M,formTarget:null,headers:P,height:N,hidden:ut,high:N,href:null,hrefLang:null,htmlFor:P,httpEquiv:P,id:null,imageSizes:null,imageSrcSet:null,inert:M,inputMode:null,integrity:null,is:null,isMap:M,itemId:null,itemProp:P,itemRef:P,itemScope:M,itemType:P,kind:null,label:null,lang:null,language:null,list:null,loading:null,loop:M,low:N,manifest:null,max:null,maxLength:N,media:null,method:null,min:null,minLength:N,multiple:M,muted:M,name:null,nonce:null,noModule:M,noValidate:M,onAbort:null,onAfterPrint:null,onAuxClick:null,onBeforeMatch:null,onBeforePrint:null,onBeforeToggle:null,onBeforeUnload:null,onBlur:null,onCancel:null,onCanPlay:null,onCanPlayThrough:null,onChange:null,onClick:null,onClose:null,onContextLost:null,onContextMenu:null,onContextRestored:null,onCopy:null,onCueChange:null,onCut:null,onDblClick:null,onDrag:null,onDragEnd:null,onDragEnter:null,onDragExit:null,onDragLeave:null,onDragOver:null,onDragStart:null,onDrop:null,onDurationChange:null,onEmptied:null,onEnded:null,onError:null,onFocus:null,onFormData:null,onHashChange:null,onInput:null,onInvalid:null,onKeyDown:null,onKeyPress:null,onKeyUp:null,onLanguageChange:null,onLoad:null,onLoadedData:null,onLoadedMetadata:null,onLoadEnd:null,onLoadStart:null,onMessage:null,onMessageError:null,onMouseDown:null,onMouseEnter:null,onMouseLeave:null,onMouseMove:null,onMouseOut:null,onMouseOver:null,onMouseUp:null,onOffline:null,onOnline:null,onPageHide:null,onPageShow:null,onPaste:null,onPause:null,onPlay:null,onPlaying:null,onPopState:null,onProgress:null,onRateChange:null,onRejectionHandled:null,onReset:null,onResize:null,onScroll:null,onScrollEnd:null,onSecurityPolicyViolation:null,onSeeked:null,onSeeking:null,onSelect:null,onSlotChange:null,onStalled:null,onStorage:null,onSubmit:null,onSuspend:null,onTimeUpdate:null,onToggle:null,onUnhandledRejection:null,onUnload:null,onVolumeChange:null,onWaiting:null,onWheel:null,open:M,optimum:N,pattern:null,ping:P,placeholder:null,playsInline:M,popover:null,popoverTarget:null,popoverTargetAction:null,poster:null,preload:null,readOnly:M,referrerPolicy:null,rel:P,required:M,reversed:M,rows:N,rowSpan:N,sandbox:P,scope:null,scoped:M,seamless:M,selected:M,shadowRootClonable:M,shadowRootCustomElementRegistry:M,shadowRootDelegatesFocus:M,shadowRootMode:null,shadowRootSerializable:M,shape:null,size:N,sizes:null,slot:null,span:N,spellCheck:lt,src:null,srcDoc:null,srcLang:null,srcSet:null,start:N,step:null,style:null,tabIndex:N,target:null,title:null,translate:null,type:null,typeMustMatch:M,useMap:null,value:lt,width:N,wrap:null,writingSuggestions:null,align:null,aLink:null,archive:P,axis:null,background:null,bgColor:null,border:N,borderColor:null,bottomMargin:N,cellPadding:null,cellSpacing:null,char:null,charOff:null,classId:null,clear:null,code:null,codeBase:null,codeType:null,color:null,compact:M,declare:M,event:null,face:null,frame:null,frameBorder:null,hSpace:N,leftMargin:N,link:null,longDesc:null,lowSrc:null,marginHeight:N,marginWidth:N,noResize:M,noHref:M,noShade:M,noWrap:M,object:null,profile:null,prompt:null,rev:null,rightMargin:N,rules:null,scheme:null,scrolling:lt,standby:null,summary:null,text:null,topMargin:N,valueType:null,version:null,vAlign:null,vLink:null,vSpace:N,allowTransparency:null,autoCorrect:null,autoSave:null,credentialless:M,disablePictureInPicture:M,disableRemotePlayback:M,exportParts:dt,part:P,prefix:null,property:null,results:N,security:null,unselectable:null},space:`html`,transform:bt}),St=_t({attributes:{accentHeight:`accent-height`,alignmentBaseline:`alignment-baseline`,arabicForm:`arabic-form`,baselineShift:`baseline-shift`,capHeight:`cap-height`,className:`class`,clipPath:`clip-path`,clipRule:`clip-rule`,colorInterpolation:`color-interpolation`,colorInterpolationFilters:`color-interpolation-filters`,colorProfile:`color-profile`,colorRendering:`color-rendering`,crossOrigin:`crossorigin`,dataType:`datatype`,dominantBaseline:`dominant-baseline`,enableBackground:`enable-background`,fillOpacity:`fill-opacity`,fillRule:`fill-rule`,floodColor:`flood-color`,floodOpacity:`flood-opacity`,fontFamily:`font-family`,fontSize:`font-size`,fontSizeAdjust:`font-size-adjust`,fontStretch:`font-stretch`,fontStyle:`font-style`,fontVariant:`font-variant`,fontWeight:`font-weight`,glyphName:`glyph-name`,glyphOrientationHorizontal:`glyph-orientation-horizontal`,glyphOrientationVertical:`glyph-orientation-vertical`,hrefLang:`hreflang`,horizAdvX:`horiz-adv-x`,horizOriginX:`horiz-origin-x`,horizOriginY:`horiz-origin-y`,imageRendering:`image-rendering`,letterSpacing:`letter-spacing`,lightingColor:`lighting-color`,markerEnd:`marker-end`,markerMid:`marker-mid`,markerStart:`marker-start`,maskType:`mask-type`,navDown:`nav-down`,navDownLeft:`nav-down-left`,navDownRight:`nav-down-right`,navLeft:`nav-left`,navNext:`nav-next`,navPrev:`nav-prev`,navRight:`nav-right`,navUp:`nav-up`,navUpLeft:`nav-up-left`,navUpRight:`nav-up-right`,onAbort:`onabort`,onActivate:`onactivate`,onAfterPrint:`onafterprint`,onBeforePrint:`onbeforeprint`,onBegin:`onbegin`,onCancel:`oncancel`,onCanPlay:`oncanplay`,onCanPlayThrough:`oncanplaythrough`,onChange:`onchange`,onClick:`onclick`,onClose:`onclose`,onCopy:`oncopy`,onCueChange:`oncuechange`,onCut:`oncut`,onDblClick:`ondblclick`,onDrag:`ondrag`,onDragEnd:`ondragend`,onDragEnter:`ondragenter`,onDragExit:`ondragexit`,onDragLeave:`ondragleave`,onDragOver:`ondragover`,onDragStart:`ondragstart`,onDrop:`ondrop`,onDurationChange:`ondurationchange`,onEmptied:`onemptied`,onEnd:`onend`,onEnded:`onended`,onError:`onerror`,onFocus:`onfocus`,onFocusIn:`onfocusin`,onFocusOut:`onfocusout`,onHashChange:`onhashchange`,onInput:`oninput`,onInvalid:`oninvalid`,onKeyDown:`onkeydown`,onKeyPress:`onkeypress`,onKeyUp:`onkeyup`,onLoad:`onload`,onLoadedData:`onloadeddata`,onLoadedMetadata:`onloadedmetadata`,onLoadStart:`onloadstart`,onMessage:`onmessage`,onMouseDown:`onmousedown`,onMouseEnter:`onmouseenter`,onMouseLeave:`onmouseleave`,onMouseMove:`onmousemove`,onMouseOut:`onmouseout`,onMouseOver:`onmouseover`,onMouseUp:`onmouseup`,onMouseWheel:`onmousewheel`,onOffline:`onoffline`,onOnline:`ononline`,onPageHide:`onpagehide`,onPageShow:`onpageshow`,onPaste:`onpaste`,onPause:`onpause`,onPlay:`onplay`,onPlaying:`onplaying`,onPopState:`onpopstate`,onProgress:`onprogress`,onRateChange:`onratechange`,onRepeat:`onrepeat`,onReset:`onreset`,onResize:`onresize`,onScroll:`onscroll`,onSeeked:`onseeked`,onSeeking:`onseeking`,onSelect:`onselect`,onShow:`onshow`,onStalled:`onstalled`,onStorage:`onstorage`,onSubmit:`onsubmit`,onSuspend:`onsuspend`,onTimeUpdate:`ontimeupdate`,onToggle:`ontoggle`,onUnload:`onunload`,onVolumeChange:`onvolumechange`,onWaiting:`onwaiting`,onZoom:`onzoom`,overlinePosition:`overline-position`,overlineThickness:`overline-thickness`,paintOrder:`paint-order`,panose1:`panose-1`,pointerEvents:`pointer-events`,referrerPolicy:`referrerpolicy`,renderingIntent:`rendering-intent`,shapeRendering:`shape-rendering`,stopColor:`stop-color`,stopOpacity:`stop-opacity`,strikethroughPosition:`strikethrough-position`,strikethroughThickness:`strikethrough-thickness`,strokeDashArray:`stroke-dasharray`,strokeDashOffset:`stroke-dashoffset`,strokeLineCap:`stroke-linecap`,strokeLineJoin:`stroke-linejoin`,strokeMiterLimit:`stroke-miterlimit`,strokeOpacity:`stroke-opacity`,strokeWidth:`stroke-width`,tabIndex:`tabindex`,textAnchor:`text-anchor`,textDecoration:`text-decoration`,textRendering:`text-rendering`,transformOrigin:`transform-origin`,typeOf:`typeof`,underlinePosition:`underline-position`,underlineThickness:`underline-thickness`,unicodeBidi:`unicode-bidi`,unicodeRange:`unicode-range`,unitsPerEm:`units-per-em`,vAlphabetic:`v-alphabetic`,vHanging:`v-hanging`,vIdeographic:`v-ideographic`,vMathematical:`v-mathematical`,vectorEffect:`vector-effect`,vertAdvY:`vert-adv-y`,vertOriginX:`vert-origin-x`,vertOriginY:`vert-origin-y`,wordSpacing:`word-spacing`,writingMode:`writing-mode`,xHeight:`x-height`,playbackOrder:`playbackorder`,timelineBegin:`timelinebegin`},properties:{about:ft,accentHeight:N,accumulate:null,additive:null,alignmentBaseline:null,alphabetic:N,amplitude:N,arabicForm:null,ascent:N,attributeName:null,attributeType:null,azimuth:N,bandwidth:null,baselineShift:null,baseFrequency:null,baseProfile:null,bbox:null,begin:null,bias:N,by:null,calcMode:null,capHeight:N,className:P,clip:null,clipPath:null,clipPathUnits:null,clipRule:null,color:null,colorInterpolation:null,colorInterpolationFilters:null,colorProfile:null,colorRendering:null,content:null,contentScriptType:null,contentStyleType:null,crossOrigin:null,cursor:null,cx:null,cy:null,d:null,dataType:null,defaultAction:null,descent:N,diffuseConstant:N,direction:null,display:null,dur:null,divisor:N,dominantBaseline:null,download:M,dx:null,dy:null,edgeMode:null,editable:null,elevation:N,enableBackground:null,end:null,event:null,exponent:N,externalResourcesRequired:null,fill:null,fillOpacity:N,fillRule:null,filter:null,filterRes:null,filterUnits:null,floodColor:null,floodOpacity:null,focusable:null,focusHighlight:null,fontFamily:null,fontSize:null,fontSizeAdjust:null,fontStretch:null,fontStyle:null,fontVariant:null,fontWeight:null,format:null,fr:null,from:null,fx:null,fy:null,g1:dt,g2:dt,glyphName:dt,glyphOrientationHorizontal:null,glyphOrientationVertical:null,glyphRef:null,gradientTransform:null,gradientUnits:null,handler:null,hanging:N,hatchContentUnits:null,hatchUnits:null,height:null,href:null,hrefLang:null,horizAdvX:N,horizOriginX:N,horizOriginY:N,id:null,ideographic:N,imageRendering:null,initialVisibility:null,in:null,in2:null,intercept:N,k:N,k1:N,k2:N,k3:N,k4:N,kernelMatrix:ft,kernelUnitLength:null,keyPoints:null,keySplines:null,keyTimes:null,kerning:null,lang:null,lengthAdjust:null,letterSpacing:null,lightingColor:null,limitingConeAngle:N,local:null,markerEnd:null,markerMid:null,markerStart:null,markerHeight:null,markerUnits:null,markerWidth:null,mask:null,maskContentUnits:null,maskType:null,maskUnits:null,mathematical:null,max:null,media:null,mediaCharacterEncoding:null,mediaContentEncodings:null,mediaSize:N,mediaTime:null,method:null,min:null,mode:null,name:null,navDown:null,navDownLeft:null,navDownRight:null,navLeft:null,navNext:null,navPrev:null,navRight:null,navUp:null,navUpLeft:null,navUpRight:null,numOctaves:null,observer:null,offset:null,onAbort:null,onActivate:null,onAfterPrint:null,onBeforePrint:null,onBegin:null,onCancel:null,onCanPlay:null,onCanPlayThrough:null,onChange:null,onClick:null,onClose:null,onCopy:null,onCueChange:null,onCut:null,onDblClick:null,onDrag:null,onDragEnd:null,onDragEnter:null,onDragExit:null,onDragLeave:null,onDragOver:null,onDragStart:null,onDrop:null,onDurationChange:null,onEmptied:null,onEnd:null,onEnded:null,onError:null,onFocus:null,onFocusIn:null,onFocusOut:null,onHashChange:null,onInput:null,onInvalid:null,onKeyDown:null,onKeyPress:null,onKeyUp:null,onLoad:null,onLoadedData:null,onLoadedMetadata:null,onLoadStart:null,onMessage:null,onMouseDown:null,onMouseEnter:null,onMouseLeave:null,onMouseMove:null,onMouseOut:null,onMouseOver:null,onMouseUp:null,onMouseWheel:null,onOffline:null,onOnline:null,onPageHide:null,onPageShow:null,onPaste:null,onPause:null,onPlay:null,onPlaying:null,onPopState:null,onProgress:null,onRateChange:null,onRepeat:null,onReset:null,onResize:null,onScroll:null,onSeeked:null,onSeeking:null,onSelect:null,onShow:null,onStalled:null,onStorage:null,onSubmit:null,onSuspend:null,onTimeUpdate:null,onToggle:null,onUnload:null,onVolumeChange:null,onWaiting:null,onZoom:null,opacity:null,operator:null,order:null,orient:null,orientation:null,origin:null,overflow:null,overlay:null,overlinePosition:N,overlineThickness:N,paintOrder:null,panose1:null,path:null,pathLength:N,patternContentUnits:null,patternTransform:null,patternUnits:null,phase:null,ping:P,pitch:null,playbackOrder:null,pointerEvents:null,points:null,pointsAtX:N,pointsAtY:N,pointsAtZ:N,preserveAlpha:null,preserveAspectRatio:null,primitiveUnits:null,propagate:null,property:ft,r:null,radius:null,referrerPolicy:null,refX:null,refY:null,rel:ft,rev:ft,renderingIntent:null,repeatCount:null,repeatDur:null,requiredExtensions:ft,requiredFeatures:ft,requiredFonts:ft,requiredFormats:ft,resource:null,restart:null,result:null,rotate:null,rx:null,ry:null,scale:null,seed:null,shapeRendering:null,side:null,slope:null,snapshotTime:null,specularConstant:N,specularExponent:N,spreadMethod:null,spacing:null,startOffset:null,stdDeviation:null,stemh:null,stemv:null,stitchTiles:null,stopColor:null,stopOpacity:null,strikethroughPosition:N,strikethroughThickness:N,string:null,stroke:null,strokeDashArray:ft,strokeDashOffset:null,strokeLineCap:null,strokeLineJoin:null,strokeMiterLimit:N,strokeOpacity:N,strokeWidth:null,style:null,surfaceScale:N,syncBehavior:null,syncBehaviorDefault:null,syncMaster:null,syncTolerance:null,syncToleranceDefault:null,systemLanguage:ft,tabIndex:N,tableValues:null,target:null,targetX:N,targetY:N,textAnchor:null,textDecoration:null,textRendering:null,textLength:null,timelineBegin:null,title:null,transformBehavior:null,type:null,typeOf:ft,to:null,transform:null,transformOrigin:null,u1:null,u2:null,underlinePosition:N,underlineThickness:N,unicode:null,unicodeBidi:null,unicodeRange:null,unitsPerEm:N,values:null,vAlphabetic:N,vMathematical:N,vectorEffect:null,vHanging:N,vIdeographic:N,version:null,vertAdvY:N,vertOriginX:N,vertOriginY:N,viewBox:null,viewTarget:null,visibility:null,width:null,widths:null,wordSpacing:null,writingMode:null,x:null,x1:null,x2:null,xChannelSelector:null,xHeight:N,y:null,y1:null,y2:null,yChannelSelector:null,z:null,zoomAndPan:null},space:`svg`,transform:yt}),Ct=_t({properties:{xLinkActuate:null,xLinkArcRole:null,xLinkHref:null,xLinkRole:null,xLinkShow:null,xLinkTitle:null,xLinkType:null},space:`xlink`,transform(e,t){return`xlink:`+t.slice(5).toLowerCase()}}),wt=_t({attributes:{xmlnsxlink:`xmlns:xlink`},properties:{xmlnsXLink:null,xmlns:null},space:`xmlns`,transform:bt}),Tt=_t({properties:{xmlBase:null,xmlLang:null,xmlSpace:null},space:`xml`,transform(e,t){return`xml:`+t.slice(3).toLowerCase()}}),Et={classId:`classID`,dataType:`datatype`,itemId:`itemID`,strokeDashArray:`strokeDasharray`,strokeDashOffset:`strokeDashoffset`,strokeLineCap:`strokeLinecap`,strokeLineJoin:`strokeLinejoin`,strokeMiterLimit:`strokeMiterlimit`,typeOf:`typeof`,xLinkActuate:`xlinkActuate`,xLinkArcRole:`xlinkArcrole`,xLinkHref:`xlinkHref`,xLinkRole:`xlinkRole`,xLinkShow:`xlinkShow`,xLinkTitle:`xlinkTitle`,xLinkType:`xlinkType`,xmlnsXLink:`xmlnsXlink`},Dt=/[A-Z]/g,Ot=/-[a-z]/g,kt=/^data[-\w.:]+$/i;function At(e,t){let n=at(t),r=t,i=ot;if(n in e.normal)return e.property[e.normal[n]];if(n.length>4&&n.slice(0,4)===`data`&&kt.test(t)){if(t.charAt(4)===`-`){let e=t.slice(5).replace(Ot,Mt);r=`data`+e.charAt(0).toUpperCase()+e.slice(1)}else{let e=t.slice(4);if(!Ot.test(e)){let n=e.replace(Dt,jt);n.charAt(0)!==`-`&&(n=`-`+n),t=`data`+n}}i=ht}return new i(r,t)}function jt(e){return`-`+e.toLowerCase()}function Mt(e){return e.charAt(1).toUpperCase()}var Nt=it([vt,xt,Ct,wt,Tt],`html`),Pt=it([vt,St,Ct,wt,Tt],`svg`);function Ft(e){return e.join(` `).trim()}var It=o(((e,t)=>{var n=/\/\*[^*]*\*+([^/*][^*]*\*+)*\//g,r=/\n/g,i=/^\s*/,a=/^(\*?[-#/*\\\w]+(\[[0-9a-z_-]+\])?)\s*/,o=/^:\s*/,s=/^((?:'(?:\\'|.)*?'|"(?:\\"|.)*?"|\([^)]*?\)|[^};])+)/,c=/^[;\s]*/,l=/^\s+|\s+$/g;function u(e,t){if(typeof e!=`string`)throw TypeError(`First argument must be a string`);if(!e)return[];t||={};var l=1,u=1;function f(e){var t=e.match(r);t&&(l+=t.length);var n=e.lastIndexOf(`
+`,He=`# SPLIST (split & list)\r
+![npm version](https://img.shields.io/npm/v/@splists/splist.svg?color=blue)\r
+![Node.js](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen)\r
+![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)\r
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)\r
+[![Browser](https://img.shields.io/badge/Browser-Try%20Now!-ff69b4.svg)](https://splists.github.io/)\r
+\r
+✨ **Try SPLIST instantly in your browser:** [https://splists.github.io/](https://splists.github.io/)\r
+\r
+<p align="center">\r
+<img src="demo_cases/demo_cases_img/demo00.png" width="400">\r
+</p>\r
+\r
+> 🌐 **Try it now in your browser!**\r
+> SPLIST is available as a full local Web UI at **[splists.github.io](https://splists.github.io/)**! No installation required—just drag and drop your markdown files to process them securely in your browser.\r
+\r
+## Overview\r
+Splitting large Markdown or text files into a table of contents.\r
+\r
+<p align="left">\r
+  <img src="assets/splist_demo-001.png" alt="Long Document Example" height="280" style="margin-right: 15px;">\r
+  <img src="assets/splist-gif.gif" alt="Splist Demo" height="280">\r
+</p>\r
+\r
+It takes documents that have fallen into "scrolling hell" and safely, instantaneously carves them into separate files based on headings (\`#\`) or dividing emojis (\`✂️\`).\r
+\r
+### Before: A single massive file (Raw)\r
+\r
+Before: A single massive file (Raw). Divided into ## units using a typical Markdown structure.\r
+\r
+\`\`\`markdown\r
+  # My Project\r
+  ## SECTION001\r
+  ~(long text)~\r
+  ## SECTION099\r
+  ## SECTION100\r
+\`\`\`\r
+\r
+### After: Auto-organized folders (Splisted!)\r
+\r
+- The original file name with a \`✂️\` prefix becomes the output directory name (e.g., \`✂️My_Project\`).\r
+- The heading in the original text becomes the file name.\r
+- A sequential number is added to the prefix of the file name.\r
+\r
+\`\`\`text\r
+✂️My_Project/\r
+├── 01_SECTION001.md\r
+├── ...\r
+├── 09_SECTION099.md\r
+└── 10_SECTION100.md\r
+\`\`\`\r
+\r
+### 🤖 LLM Prompt (Copy & Paste)\r
+Want an AI assistant to help you split a file or organize your workspace using SPLIST? Just copy and paste the prompt below to your LLM:\r
+\r
+<img src="assets/splist-demo-ai.png" alt="AI Agent Demo" width="70%">\r
+\r
+<details>\r
+<summary>Click to copy the LLM Prompt</summary>\r
+\r
+\`\`\`text\r
+I want to split a long document into smaller, organized files. \r
+Please use the \`splist\` CLI tool available in my workspace.\r
+\r
+Here are the basic commands:\r
+- \`splist <file.md> list\` : Automatically split the Markdown file by its headings (H1, H2, etc.) into sequential files inside a new folder.\r
+- \`splist <file.md> sp\` : Split the file physically using custom cut markers (e.g. ✂️, CUT, V) placed in the document.\r
+\r
+Please read the target file, decide the best splitting strategy (list or sp), and run the \`splist\` command for me.\r
+\`\`\`\r
+</details>\r
+\r
+---\r
+\r
+## Installation\r
+\r
+The \`splist\` command becomes globally executable from any directory on your PC. It works across all OS environments: Windows, Mac, and Linux.\r
+\r
+### Method 1: Install via npm (Recommended)\r
+You can easily install the latest version directly from the npm registry:\r
+\`\`\`bash\r
+npm install -g @splists/splist\r
+\`\`\`\r
+\r
+After installation, verify that it was installed successfully by checking the version:\r
+\`\`\`bash\r
+splist -v\r
+\`\`\`\r
+You should see an output confirming the version like this:\r
+\`\`\`text\r
+🚀 SPLIST v2.1.1\r
+\r
+💡 Note: When splitting a file, '-v' is used as a flag for the default folder conflict resolution (e.g., appending _v02).\r
+\`\`\`\r
+\r
+### Method 2: Local Installation (For Developers)\r
+1. Open your terminal and navigate to the root folder of the repository:\r
+\`\`\`bash\r
+cd path/to/splist\r
+\`\`\`\r
+2. Link (register) the package globally using npm:\r
+\`\`\`bash\r
+npm link\r
+\`\`\`\r
+\r
+Setup is now complete!\r
+\r
+---\r
+\r
+## 🌐 Web / Explorer Version (Browser GUI)\r
+\r
+Prefer a graphical interface over the command line? SPLIST offers a zero-dependency Web Application that runs entirely in your browser!\r
+\r
+### Running Locally:\r
+1. Start the local development server:\r
+   \`\`\`bash\r
+   npm --prefix react run dev\r
+   \`\`\`\r
+2. Open your browser at the displayed local URL (e.g., \`http://localhost:5173\`).\r
+\r
+### Features in the Web App:\r
+* **Drag & Drop**: Simply drop your \`.md\` or \`.txt\` file into the browser window.\r
+* **Interactive Preview**: Instantly preview how the document will be split into folders and files before downloading.\r
+* **Zero Server Uploads**: Processing happens 100% locally in your browser using Virtual File System mocks—your private documents never leave your machine!\r
+* **ZIP Download**: Download all split folders and files cleanly in a single \`.zip\` file.\r
+\r
+---\r
+\r
+## Quick Start (Try splitting now)\r
+\r
+Once installed, let's immediately do a split test on this very \`README.md\` itself. (*The original README file remains untouched, and a new directory is safely created.*)\r
+\r
+\`\`\`bash\r
+  # Automatically split according to Markdown heading structure (#)\r
+  splist README.md list\r
+\`\`\`\r
+*(Note: With the v2 smart default, just typing \`splist README.md\` will also execute \`list\` automatically!)*\r
+\r
+### SPLIST's Powerful Default Features\r
+\r
+Even without specifying special options, the following features work safely by default:\r
+\r
+* **Auto Sequential Numbering:** Prepends sequential numbers like \`01_\` to split filenames, maintaining the original order.\r
+* **Safe Versioning:** If you run the command again on the same file, it automatically creates a new directory like \`_v02\` to avoid overwriting.\r
+* **Appropriate Hierarchical Split:** By default, it splits based on the \`##\` (H2 heading) hierarchy.\r
+\r
+For full feature details and a complete list of options, please see the **[Official Manual (USAGE.md)](USAGE.md)**.\r
+\r
+---\r
+\r
+## Operation Tests (Demos and Feature Showcase)\r
+\r
+SPLIST comes bundled with demo data designed to test complex documents and extreme conditions.\r
+First, generate the demo data using the following command:\r
+\r
+\`\`\`bash\r
+# Batch generate demo files\r
+npm run demo\r
+\`\`\`\r
+\r
+By trying the following commands on the generated files in the \`demo_cases/demo_cases_raw\` folder, you can experience the true value of SPLIST.\r
+\r
+### 1. The Overwhelming Freedom of Physical Cut (sp)\r
+\r
+An engine that cleaves text completely in half exactly where dividing characters (markers) are located.\r
+\r
+* **Basic Multiple Cut**\r
+  * **Test File:** \`01_sp_showcase_single_cut_default.md\`\r
+  * **Overview:** Slices through a long text file where different markers like \`✂️\`, \`CUT\`, and \`cut\` are mixed together.\r
+  * **Command:** \`splist demo_cases/demo_cases_raw/01_sp_showcase_single_cut_default.md sp\`\r
+\r
+* **Cut with Custom Dividing Characters (Option)**\r
+  * **Test File:** \`03_sp_showcase_custom_marker_opt.md\`\r
+  * **Overview:** Splits chat logs or system export data by specifying arbitrary dividing lines (e.g., \`===\`).\r
+  * **Command:** \`splist demo_cases/demo_cases_raw/03_sp_showcase_custom_marker_opt.md sp -m "==="\`\r
+\r
+\r
+### 2. Logical Organization (list) and Smart Replacement\r
+\r
+An engine that parses Markdown structure (H1, H2 headings) to build beautiful hierarchical folders.\r
+\r
+* **Magical Lightning-Fast Typing Support**\r
+  * **Test File:** \`19_list_showcase_typing_support_default.md\`\r
+  * **Overview:** Instead of \`#\`, if a document is written with \`v \` or \`vv \` at the start of a line, it auto-replaces them with headings and splits them into folders.\r
+  * **Command:** \`splist demo_cases/demo_cases_raw/19_list_showcase_typing_support_default.md list\`\r
+\r
+* **Auto-Extraction of Intro Text (00_Overview)**\r
+  * **Test File:** \`26_list_safety_overview_logic_default.md\`\r
+  * **Overview:** Auto-detects the "overview text" before the first H2 heading begins, and beautifully extracts it independently as \`00_Overview.md\`.\r
+  * **Command:** \`splist demo_cases/demo_cases_raw/26_list_safety_overview_logic_default.md list\`\r
+\r
+\r
+### 3. Collision Avoidance and Versioning (-d, -t, -s, -f)\r
+\r
+Safety features ensuring that no matter how many times you run the same split, your past work is never overwritten and lost.\r
+\r
+\`\`\`bash\r
+# 1. Append today's date stamp to the end of the folder name (e.g., _20260716)\r
+splist demo_cases/demo_cases_raw/38_common_option_conflict_date_opt.md list -d\r
+\r
+# 2. If the folder already exists, "safely skip" processing without overwriting\r
+splist demo_cases/demo_cases_raw/40_common_option_conflict_skip_opt.md sp -s\r
+\r
+# 3. Clean up by "forcibly overwriting" the existing folder\r
+splist demo_cases/demo_cases_raw/41_common_option_conflict_force_opt.md list -f\r
+\`\`\`\r
+\r
+### 4. Survival Test for OS Forbidden Chars, Emojis, and Length Limits\r
+\r
+Even if malicious data or non-standard long texts arrive, it absolutely protects the system and cleanses the data.\r
+\r
+* **Safe Auto-Cleansing of Headings**\r
+  * **Test File:** \`27_list_safety_naming_limit_default.md\`\r
+  * **Overview:** Simultaneously tests auto-removal of OS forbidden characters (\`\\/:*?"<>|\`), prevention of garbled surrogate-pair emojis (\`👨‍👩‍👧‍👦\`), and safe auto-trimming of overly long headings.\r
+  * **Command:** \`splist demo_cases/demo_cases_raw/27_list_safety_naming_limit_default.md list\`\r
+\r
+---\r
+\r
+## CLI Command Reference\r
+\r
+Commands are executed in the format \`splist <target file> <subcommand> [options]\`.\r
+Options (flags) can be written **in any order**.\r
+*(In v2, if the target file has a \`.md\` or \`.txt\` extension, the subcommand can be omitted thanks to Smart Defaults!)*\r
+\r
+### \`splist <file> list\` Command\r
+\r
+Parses Markdown heading hierarchy and splits it logically.\r
+\r
+\`splist <file> list [options]\`\r
+\r
+* **\`<file>\`**: Target Markdown file to split (Required)\r
+* **Options**:\r
+  * \`-m, --mode <type>\`: Split mode (\`or\`: add sequential numbers (default), \`un\`: no sequential numbers)\r
+  * \`-h, --header <level>\`: Heading level to base the split on (e.g., \`"###"\`)\r
+  * \`-k, --keep\`: Keeps the header hierarchy of the output files as-is without auto-promoting them\r
+  * \`-ext, --extension <ext>\`: Force the output file extension (e.g., \`txt\` or \`.txt\`)\r
+  * \`-o, --out, --output <dir>\`: Custom output folder path\r
+  * \`-toc\`: Auto-generate Table of Contents (\`00_TOC.md\`)\r
+  * \`-fmex, -fm00, -fm01\`: Frontmatter handling (\`fmex\`: exclude, \`fm00\`: separate file, \`fm01\`: keep in 1st chunk)\r
+  * \`--conflict <option>\`: Collision avoidance rules (\`v\`: versioning, \`d\`: date, \`t\`: time, \`s\`: skip, \`f\`: force)\r
+\r
+\r
+### \`splist <file> sp\` Command\r
+\r
+Physically cuts using dividing markers (specified strings).\r
+\r
+\`splist <file> sp [options]\`\r
+\r
+* **\`<file>\`**: Target text/Markdown file to split (Required)\r
+* **Options**:\r
+  * \`-m, --marker <string>\`: Custom marker (e.g., \`"==="\`). When unspecified, \`✂️\`, \`CUT\`, and \`cut\` are applied.\r
+  * \`-ext, --extension <ext>\`: Force the output file extension (e.g., \`md\` or \`.md\`)\r
+  * \`-o, --out, --output <dir>\`: Custom output folder path\r
+  * \`-toc\`: Auto-generate Table of Contents (\`00_TOC.md\`)\r
+  * \`--conflict <option>\`: Collision avoidance rules (\`v\`: versioning, \`d\`: date, \`t\`: time, \`s\`: skip, \`f\`: force)\r
+\r
+\r
+---\r
+\r
+### Collision Avoidance Options (Common)\r
+\r
+Can be appended and used with either \`list\` or \`sp\` commands. If unspecified, sequential folders like \`_v02\` are created automatically.\r
+\r
+* \`-d\`: Appends current date to output folder name (e.g., \`_20260718\`)\r
+* \`-t\`: Appends current time to output folder name (e.g., \`_153045\`)\r
+* \`-s\`: Skips processing on collision (Safety First)\r
+* \`-f\`: Forcibly overwrites on collision (Clean up)\r
+\r
+---\r
+\r
+> For even more detailed specifications and troubleshooting, please read the **[Official Manual (USAGE.md)](USAGE.md)**.\r
+`,Ue=`# ✂️ SPLIST (Overview & Installation)\r
+\r
+✨ **Try SPLIST instantly in your browser:** [https://splists.github.io/](https://splists.github.io/)\r
+\r
+## Welcome to SPLIST\r
+\r
+An ultra-fast, zero-dependency CLI toolset to split a single Markdown or text file into multiple beautifully organized files and automatically generate a dynamic Table of Contents (TOC).\r
+\r
+Optimized for rapid documentation, editing, and seamless integration with **VS Code**.\r
+\r
+## 🛠️ Installation\r
+\r
+Get the \`splist\` command globally on your machine in just a few seconds.\r
+\r
+**Official npm Installation (Recommended):**\r
+\`\`\`bash\r
+npm install -g @splists/splist\r
+\`\`\`\r
+\r
+**Local Development Installation:**\r
+1. Clone or download your repository: \`cd splist\`\r
+2. Link the package globally using npm: \`npm link\`\r
+\r
+Now, you can run the \`splist\` command directly from **any folder** on your computer!\r
+\r
+## 🔄 Migration Guide (v1 to v2)\r
+\r
+SPLIST has been updated to v2, evolving into a more intuitive and smarter command structure!\r
+\r
+\`\`\`diff\r
+- v1 old spec: splist list memo.md\r
++ v2 new spec: splist memo.md list\r
+\`\`\`\r
+\r
+💡 **Incredibly Convenient "Smart Defaults" Feature**\r
+From v2, if the target file is **\`.md\`**, omitting the command will automatically execute \`list\` (logical organization).\r
+Conversely, if the file is **\`.txt\`**, it will automatically execute \`sp\` (physical cut).\r
+In other words, simply typing \`splist memo.md\` will initiate the perfect split!\r
+\r
+---\r
+\r
+## 🎯 The Ultimate Tutorial: Split This Manual!\r
+\r
+Want to see the magic right now? **Run the \`splist\` command on this very \`USAGE.md\` (or \`README.md\`) file!**\r
+\r
+\`\`\`bash\r
+splist USAGE.md\r
+# or\r
+splist README.md\r
+\`\`\`\r
+\r
+When you do this, SPLIST will automatically extract the complete text into beautiful folders and files. Try it now!\r
+\r
+---\r
+\r
+## 📖 Terminology and Worldview\r
+\r
+SPLIST provides the experience of "magically organizing" massive text data, not just merely splitting files. We have unique terminology to express this worldview.\r
+\r
+* **Raw:** Massive, hard-to-read text data before it has been processed by SPLIST.\r
+* **Splisted:** The completed state where data has been beautifully split, organized, and "magically transformed" by SPLIST. Just like saying "Googled" for searching on Google, the terminal will display a celebratory message **\`🎉 Splisted!\`** upon successful completion as the ultimate result.\r
+* **Output Folder Icons:**\r
+  * **\`✂️\` (Scissors):** Attached to folders that were "physically cut" using the \`sp\` command.\r
+  * **\`🔢\` (Numbers):** Attached to folders that were "logically organized and sequentially numbered" using the \`list\` command.\r
+\r
+---\r
+\r
+# What This Tool Can Do\r
+\r
+## Overview\r
+\r
+💡 **Quick Tip:** If you're opening this file in VS Code, press \`Ctrl + Shift + V\` (Mac: \`Cmd + Shift + V\`) right now to read the manual in a beautiful preview screen!\r
+\r
+Welcome to the magical experience of SPLIST!\r
+SPLIST is a powerful CLI tool that instantly reconstructs massive, hard-to-read text data and Markdown files into beautiful structures that anyone can read intuitively.\r
+\r
+**Have you ever experienced this?**\r
+* A single document is so long it feels like scrolling hell.\r
+* You hastily copy-pasted info into Notepad to organize later, but now it's too long to find anything.\r
+* You're tired of manually repeating "select range, copy, create new file, paste, save as...".\r
+* While writing a massive Markdown document, you want to focus on fleshing out one specific chapter at a time.\r
+\r
+**"I just want to split this long text into pieces to work on and manage it!"**\r
+This tool was born from the developer's own intense frustration with this exact problem. If your document is cleanly written with Markdown headings, you can split it beautifully with a single command.\r
+\r
+## Forcibly Cut at Specific Locations with Scissors\r
+\r
+When you have a clear place where you want to "sever the text before and after"—such as system logs with no Markdown structure, scene changes in a novel, or exported chat logs—the forced physical cut feature shines.\r
+Just place \`✂️\` or a custom marker at the beginning of a line, and the file will be cleanly severed at that exact boundary.\r
+\r
+## Split Beautifully by Markdown Headings\r
+\r
+**Are you amazed by the beautiful folder structure of this manual?**\r
+\r
+Actually, the "hierarchical manual" you are currently looking at in your Explorer (or IDE) is a live example (demo) proving the power of SPLIST.\r
+Originally, it was just a single, long, hard-to-read text file. But SPLIST automatically detected \`#\` (H1) as folders and \`##\` (H2) as files in the text, instantly constructing this beautiful tree structure.\r
+\r
+# 💻 COMMAND\r
+\r
+## ✂️ splist Targetfilename sp\r
+\r
+The command to execute a "Forced Physical Cut".\r
+Regardless of heading structure, it severs the text before and after at locations marked with the scissors symbol (\`✂️\`), \`cut\`, or a custom marker (e.g., \`===\`) written in the file.\r
+**※ Collision avoidance options like \`-d\` and \`-s\` can be fully utilized with this command just like \`splist Targetfilename list\`!**\r
+\r
+### 💡 Features and Usage (Validation Demo Links)\r
+- **Basic single split using standard markers (✂️, V, v, cut)**: Validation File [[01_sp_showcase_single_cut_default.md](file:///c:/splist/demo_cases/success_cases/01_sp_showcase_single_cut_default.md)]\r
+- **Simultaneous split with different standard markers at multiple locations**: Validation File [[02_sp_showcase_multi_cut_default.md](file:///c:/splist/demo_cases/success_cases/02_sp_showcase_multi_cut_default.md)]\r
+- **Split using a user-specified custom marker**: Validation File [[03_sp_showcase_custom_marker_opt.md](file:///c:/splist/demo_cases/success_cases/03_sp_showcase_custom_marker_opt.md)]\r
+- **Feature to keep trailing text after the marker at the top of the next file**: Validation File [[04_sp_showcase_marker_trailing_text_default.md](file:///c:/splist/demo_cases/success_cases/04_sp_showcase_marker_trailing_text_default.md)]\r
+- **Split without sequential numbers using the un option**: Validation File [[05_sp_option_un_opt.md](file:///c:/splist/demo_cases/success_cases/05_sp_option_un_opt.md)]\r
+- **Auto-generate TOC using the -toc option**: Validation File [[06_sp_option_toc_opt.md](file:///c:/splist/demo_cases/success_cases/06_sp_option_toc_opt.md)]\r
+\r
+### ✂️ Physical Cut Image\r
+\r
+Even for text without Markdown headings like system logs or novels, you can cleanly sever them at any marker location.\r
+\r
+\`\`\`text\r
+(Original File: target_file.txt)\r
+This will be the first file.\r
+Prologue text...\r
+✂️\r
+This will be the second file.\r
+Chapter 1 text...\r
+cut\r
+This will be the third file.\r
+Chapter 2 text...\r
+\`\`\`\r
+\r
+#### 📂 Output Files (Image)\r
+\r
+\`\`\`text\r
+📂 Output Folder/\r
+├── 📄 01_Part.txt  (First block)\r
+├── 📄 02_Part.txt  (Second block)\r
+└── 📄 03_Part.txt  (Third block)\r
+\`\`\`\r
+\r
+💡 **Specifying Custom Markers**\r
+By specifying a symbol at the end like \`splist target.txt sp "==="\`, you can split using that custom symbol instead of the standard scissors. You can even chain options like \`splist target.txt sp "===" -d\`.\r
+\r
+## 💻 splist Targetfilename list (or omit)\r
+\r
+The command to execute "Smart Logical Organization".\r
+It reads the target Markdown file and automatically splits it into folders and files according to the \`#\` and \`##\` heading structure.\r
+\r
+### 💡 Features and Usage (Validation Demo Links)\r
+- **Basic split for a flat structure with only H1s**: Validation File [[16_list_showcase_flat_h1_default.md](file:///c:/splist/demo_cases/success_cases/16_list_showcase_flat_h1_default.md)]\r
+- **Standard nested configuration of # (Folder) and ## (File)**: Validation File [[17_list_showcase_nested_standard_default.md](file:///c:/splist/demo_cases/success_cases/17_list_showcase_nested_standard_default.md)]\r
+- **Cases with multiple H2s under a single H1**: Validation File [[18_list_showcase_nested_single_default.md](file:///c:/splist/demo_cases/success_cases/18_list_showcase_nested_single_default.md)]\r
+- **Typing support conversion for v (H1) / vv (H2)**: Validation File [[19_list_showcase_typing_support_default.md](file:///c:/splist/demo_cases/success_cases/19_list_showcase_typing_support_default.md)]\r
+- **Typing support conversion for vvv (H3)**: Validation File [[20_list_showcase_typing_support_vvv_default.md](file:///c:/splist/demo_cases/success_cases/20_list_showcase_typing_support_vvv_default.md)]\r
+- **Split specifying custom depths like "###"**: Validation File [[21_list_option_custom_depth_opt.md](file:///c:/splist/demo_cases/success_cases/21_list_option_custom_depth_opt.md)]\r
+- **keep option (maintain heading levels)**: Validation File [[22_list_option_keep_opt.md](file:///c:/splist/demo_cases/success_cases/22_list_option_keep_opt.md)]\r
+- **Split without sequential numbers using the un option**: Validation File [[23_list_option_un_opt.md](file:///c:/splist/demo_cases/success_cases/23_list_option_un_opt.md)]\r
+- **Auto-generate a structural TOC file using the -toc option**: Validation File [[24_list_option_toc_opt.md](file:///c:/splist/demo_cases/success_cases/24_list_option_toc_opt.md)]\r
+- **Correction feature where H2 automatically promotes to H1 after splitting**: Validation File [[25_list_option_heading_promotion_default.md](file:///c:/splist/demo_cases/success_cases/25_list_option_heading_promotion_default.md)]\r
+- **Exclude YAML Front Matter using the -fmex option**: Validation File [[32a_list_option_front_matter_fmex.md](file:///c:/splist/demo_cases/success_cases/32a_list_option_front_matter_fmex.md)]\r
+- **Extract YAML Front Matter independently (start from 01) using the -fm01 option**: Validation File [[32b_list_option_front_matter_fm01.md](file:///c:/splist/demo_cases/success_cases/32b_list_option_front_matter_fm01.md)]\r
+- **Extract YAML Front Matter rationally (start from 00 / Default) using the -fm00 option**: Validation File [[32c_list_option_front_matter_fm00.md](file:///c:/splist/demo_cases/success_cases/32c_list_option_front_matter_fm00.md)]\r
+\r
+💡 **Execution is Fastest and Surest via Drag & Drop!**\r
+Manually typing an absolute file path (\`C:\\...\`) on the keyboard is highly prone to typos and missing spaces, making it very tedious.\r
+From the VS Code Explorer (left sidebar), **drag & drop (D&D) the file you want to split directly into the terminal**. The exact file path will be auto-populated instantly!\r
+\r
+### 📂 Collision Avoidance and Versioning (New Feature!)\r
+\r
+SPLIST comes standard with **"safe version control per directory (folder)"**. No matter how many times you split the same file, existing files will never be overwritten and lost!\r
+\r
+By appending the following options at the end of the command, you can freely control the behavior:\r
+* **(No specify)**: Safely creates new folders with sequential suffixes like \`_v02\`, \`_v03\`. Validation File [[37_common_option_conflict_default_default.md](file:///c:/splist/demo_cases/success_cases/37_common_option_conflict_default_default.md)]\r
+* **\`-d\` (Date)**: Adds today's date to the folder name (e.g., \`_20260716\`). Validation File [[38_common_option_conflict_date_opt.md](file:///c:/splist/demo_cases/success_cases/38_common_option_conflict_date_opt.md)]\r
+* **\`-t\` (Time)**: Adds the current time to the folder name (e.g., \`_20260716_153000\`). Validation File [[39_common_option_conflict_time_opt.md](file:///c:/splist/demo_cases/success_cases/39_common_option_conflict_time_opt.md)]\r
+* **\`-s\` (Skip)**: If the folder already exists, it safely skips without overwriting. Validation File [[40_common_option_conflict_skip_opt.md](file:///c:/splist/demo_cases/success_cases/40_common_option_conflict_skip_opt.md)]\r
+* **\`-f\` (Force)**: [WARNING] Forcibly overwrites (resets) existing folders. Validation File [[41_common_option_conflict_force_opt.md](file:///c:/splist/demo_cases/success_cases/41_common_option_conflict_force_opt.md)]\r
+\r
+### 📝 Front Matter Processing Options\r
+\r
+You can control how the YAML Front Matter (metadata enclosed by \`---\`) at the top of a Markdown file is processed.\r
+\r
+* **(No specify) or \`-fm00\`**: Extracts the Front Matter independently as \`00_FrontMatter.md\`. H1 and intro text will become \`01_\`, resulting in rational classification.\r
+* **\`-fm01\`**: Extracts the Front Matter as \`01_FrontMatter.md\`, making the start of the body text \`02_\`.\r
+* **\`-fmex\`**: Completely excludes (Exclude) the Front Matter and outputs only the body text.\r
+\r
+### 📂 Output Management Philosophy: Switching Between Safety and Efficiency\r
+\r
+By default, SPLIST is designed with a **Safety-First architecture** that utilizes "version control (adding sequential numbers)" to prevent accidentally erasing existing files. However, depending on your development cycle or preferences, there may be times you want to customize this behavior.\r
+\r
+Choose from the following 3 management strategies based on your use case:\r
+\r
+#### 1. [Standard] Keep History (Default)\r
+When you run \`splist target.md list\` (or simply \`splist target.md\`), it assigns sequential suffixes like \`_v02\` or \`_v03\` to prevent conflicting with existing folders.\r
+*   **Use Case:** When you want to retain past backups as needed.\r
+*   **Command:** \`splist target.md\`\r
+\r
+#### 2. [Safe] Protect Existing (Skip)\r
+If a folder already exists, **SPLIST does nothing.** This completely eliminates the risk of accidentally overwriting files you have already hand-tweaked.\r
+*   **Use Case:** When you've already made fine adjustments manually and want to prevent auto-generated output from destroying your work.\r
+*   **Command:** \`splist target.md -s\`\r
+\r
+#### 3. [Aggressive] Destructive Overwrite (Force)\r
+Forcibly overwrites the folder if it exists. Previous files will be permanently deleted.\r
+*   **Use Case:** During extreme trial-and-error where you modify the Raw data, split, check the output, delete it, and try again over and over.\r
+*   **Command:** \`splist target.md -f\` (Use with caution)\r
+\r
+### 📑 Image of Heading Structure\r
+\r
+You are likely familiar with text written with hashtags (\`#\`) in Markdown files. They serve the same role as \`h1\` through \`h6\` tags in normal websites (HTML).\r
+\r
+\`\`\`markdown\r
+# Title\r
+\r
+## Heading h2\r
+Body text body text body text\r
+Body text body text body text\r
+\r
+## Heading h2\r
+Body text body text body text\r
+\`\`\`\r
+\r
+#### 📂 Split Folder Tree (Image)\r
+\r
+\`\`\`text\r
+📂 01_Title/\r
+├── 📄 01_Heading_h2.md\r
+├── 📄 02_Heading_h2.md   ← (※ "### Heading h3" will be preserved inside this)\r
+└── 📄 03_Heading_h2.md\r
+\`\`\`\r
+\r
+In standard Markdown, H1 (\`#\`) corresponds to the article title, so it's typically used only once.\r
+Therefore, each section within the body usually uses headings up to \`##\` or \`###\`.\r
+However, **this tool splits at the \`##\` (H2) unit by default**. Splitting down to \`###\` could result in pieces that are too fragmented.\r
+\r
+💡 **Over 50 Experimental Playground Files to Try**\r
+The SPLIST repository includes 53 practical test data cases covering extreme conditions and convenient usages. Running \`npm run demo\` in the root directory generates all demo files into \`demo_cases/demo_cases_raw/\`. Drag & drop these files directly into your VS Code terminal and experience the magic of splitting right now!\r
+\r
+# When You Want to Forcibly Sever by Specified Symbols\r
+\r
+## Cut with the Standard Scissors Symbol\r
+\r
+Simply writing \`✂️\` or \`cut\` at the beginning of a line establishes a boundary to split the file before and after it.\r
+The resulting split files are automatically assigned sequential numbers like \`01_Part.md\`. Unnecessary blank lines before and after are cleanly trimmed, and the scissors symbol itself is neatly removed from the output files.\r
+\r
+## Cut by Specifying Custom Characters or Symbols\r
+\r
+When you want to use a "custom symbol" as the cut criteria—such as for scene transitions in a novel, chat logs, or system output data—you can specify a custom marker.\r
+\r
+For instance, specifying \`===\` will detect every location where a line starts with \`===\` and forcefully split there. You can specify any string you like, including patterns common in novels like \`***\` or \`◆◆◆\`, log files' \`[EOF]\`, or chat logs' \`[Date/Time]\`.\r
+\r
+**Execution Example:** \`splist target_file.txt sp "==="\`\r
+\r
+## 🛠️ Secret Trick: Hardcoding Your Default Cut Symbol\r
+\r
+For heavy users who find it tedious to specify \`"==="\` or \`"◆◆◆"\` as an option argument every time, there is a secret trick to make your own custom scissors the default.\r
+\r
+Open SPLIST's core logic file \`src/commands/sp_default.js\`, directly edit the constant for the regex cut marker at the beginning of lines to your preferred symbol, and save. Simply by running \`splist target.txt\` without arguments (thanks to the \`.txt\` smart default), you'll be able to tear through texts with your very own custom marker anytime.\r
+\r
+# When You Want to Organize Using Heading Structure\r
+\r
+## The Classic Pattern Split\r
+\r
+The most fundamental usage is splitting meeting minutes or manuals composed of \`#\` and \`##\`.\r
+When executed, the tool creates a "Parent Folder" from the topmost \`#\` (H1), carves out files for each \`##\` (H2) within it, and tucks them neatly inside the folder.\r
+Furthermore, it automatically prepends sequential numbers like \`01_\` to all files and folders so they naturally line up in the order of the original text.\r
+\r
+### 🌟 Real-World Data Split Example\r
+\r
+As a practical validation, when the authentic VS Code official documentation draft \`vscode-docs/color-theme.md\` (published by Microsoft) was fed into SPLIST, it instantly reconstructed into the following magical hierarchical structure.\r
+\r
+**Folder Tree After SPLIST Execution:**\r
+\r
+\`\`\`text\r
+📂 🔢color-theme/\r
+└── 📁 03_Color Theme/\r
+    ├── 📄 00_Overview.md                               (Intro text right below heading)\r
+    ├── 📄 01_Workbench colors.md                       (Each section is individually)\r
+    ├── 📄 02_Syntax colors.md                          (carved into independent files)\r
+    ├── 📄 03_Semantic colors.md\r
+    └── 📄 04_Create a new Color Theme.md ... (continues)\r
+\`\`\`\r
+\r
+No more endless, manual copying, pasting, and saving new files. Raw technical documents are instantly reborn as beautiful assets.\r
+\r
+## Maintaining Deep Hierarchies and Complex Structures\r
+\r
+**Auto-Correction of Markdown Syntax and Bypassing It (\`keep\` Option)**\r
+\r
+Generally, in Markdown, \`#\` (H1) is used as the overall title, and \`##\` (H2) as the heading for each section. When SPLIST carves out \`##\` sections into separate files, leaving them as-is would result in "files without an H1 (grammatically unnatural)". Therefore, SPLIST has a default **correction feature that automatically converts (promotes) \`##\` to \`#\` when saving**.\r
+\r
+**Execution Example:** \`splist target.md keep\`\r
+※ If you specify \`keep\`, auto-promotion is disabled, and the extraction remains pure, fully maintaining the original \`##\` or \`###\` hierarchies.\r
+\r
+## Removing Sequential Numbers / Extracting Specific Hierarchies\r
+\r
+You can fine-tune SPLIST's behavior even further to match your goals.\r
+\r
+### 🔢 1. Remove Sequential Numbers (\`un\` Option)\r
+\r
+Disables the sequential numbers like \`01_\` that are prepended by default.\r
+Perfect for splitting "dictionary data to be sorted alphabetically" or "API documentation where you want filenames to match function names exactly."\r
+\r
+**Execution Example:** \`splist dictionary.md un\`\r
+\r
+### 🔍 2. Split at Arbitrary Depth (\`"###"\` Option)\r
+\r
+The default splitting criteria is \`##\` (H2), but you can target deeper hierarchies.\r
+For example, by specifying \`"###"\`, you can finely dice the files down to the third-tier subheading level.\r
+\r
+## 💡 Typing Support to Accelerate Writing\r
+\r
+Typing \`#\`—the staple of Markdown—on a PC keyboard requires stretching fingers (like Shift + 3), which is a significant typing burden.\r
+Thus, SPLIST comes standard with smart input shortcuts designed to skyrocket your document writing speed. If you place the following at the beginning of a line while writing, they will automatically be converted to correct Markdown symbols upon processing.\r
+\r
+* Type \`v \` (lowercase v + half-width space) at start of line = **\`# \` (H1)**\r
+* Type \`vv \` at start of line = **\`## \` (H2)**\r
+\r
+With hardly any movement from the home position, you can blast through building heading structures just by gliding over the keyboard.\r
+\r
+# Edge Cases and Limit Test Results\r
+\r
+## Safe Design of Forced Cut (\`sp\`) and Empirical Results\r
+\r
+Because it handles text without a structure like Markdown, powerful guardrails are implemented to prevent unexpected misfires.\r
+\r
+- **Does not process files with zero markers**: Validation File [[11_sp_safety_no_cuts_default.md](file:///c:/splist/demo_cases/success_cases/11_sp_safety_no_cuts_default.md)]\r
+- **Does not process even if line 1 is a marker**: Validation File [[08_sp_safety_start_with_cut_default.md](file:///c:/splist/demo_cases/success_cases/08_sp_safety_start_with_cut_default.md)]\r
+- **Does not process even if the last line is a marker**: Validation File [[09_sp_safety_end_with_cut_default.md](file:///c:/splist/demo_cases/success_cases/09_sp_safety_end_with_cut_default.md)]\r
+- **Ignores consecutive markers**: Validation File [[07_sp_safety_consecutive_cuts_default.md](file:///c:/splist/demo_cases/success_cases/07_sp_safety_consecutive_cuts_default.md)]\r
+- **Ignores markers mid-sentence**: Validation File [[10_sp_safety_false_scissors_default.md](file:///c:/splist/demo_cases/success_cases/10_sp_safety_false_scissors_default.md)]\r
+- **Processes markers inside code blocks**: Validation File [[12_sp_safety_cut_in_codeblock_default.md](file:///c:/splist/demo_cases/success_cases/12_sp_safety_cut_in_codeblock_default.md)]\r
+- **Removes invalid characters / Trims overly long headings to 50 chars**: Validation File [[13_sp_safety_long_and_invalid_chars_default.md](file:///c:/splist/demo_cases/success_cases/13_sp_safety_long_and_invalid_chars_default.md)]\r
+\r
+### 1. Ignoring Cut Marks Mid-Sentence (Inline)\r
+\r
+It absolutely will not split at \`===\` or \`✂️\` accidentally used mid-sentence in a chat log or conversation. To prevent misfires, a safety check ensures it triggers ONLY when placed independently at the "start of a line."\r
+Validation Anti-Pattern [[15_sp_warn_inline_cut_default.md](file:///c:/splist/demo_cases/success_cases/15_sp_warn_inline_cut_default.md)]\r
+\r
+### 2. Preventing Consecutive Markers and Empty File Generation\r
+\r
+If scissors symbols or \`cut\`s are placed consecutively over multiple lines, or if there are useless markers at the very beginning or end of a file, the tool automatically detects and smartly skips them. This prevents polluting the disk by mass-generating empty "0-byte garbage files."\r
+\r
+---\r
+## Safe Design of Logical Organize (\`list\`) and Empirical Results\r
+\r
+To prevent data destruction or errors unintended by the user, a robust safety design has cleared limit tests utilizing various edge cases and raw real-world data.\r
+\r
+- **Carves out document intros before the first H2 into an Overview**: Validation File [[26_list_safety_overview_logic_default.md](file:///c:/splist/demo_cases/success_cases/26_list_safety_overview_logic_default.md)]\r
+- **Auto-cleanses invalid chars, preserves surrogate pair emojis, trims at 50 chars**: Validation File [[27_list_safety_naming_limit_default.md](file:///c:/splist/demo_cases/success_cases/27_list_safety_naming_limit_default.md)]\r
+- **Validates deep nesting up to H6 level remains intact on output**: Validation File [[28_list_safety_deep_nesting_default.md](file:///c:/splist/demo_cases/success_cases/28_list_safety_deep_nesting_default.md)]\r
+- **Collision avoidance for identical heading names (safe save via renaming)**: Validation File [[29_list_safety_duplicate_headings_default.md](file:///c:/splist/demo_cases/success_cases/29_list_safety_duplicate_headings_default.md)]\r
+- **Validates list bullets and other Markdown elements do not disrupt the heading parser**: Validation File [[30_list_safety_mixed_markers_default.md](file:///c:/splist/demo_cases/success_cases/30_list_safety_mixed_markers_default.md)]\r
+- **Validates completely ignoring fake headings inside code blocks**: Validation File [[31_list_safety_codeblock_trap_default.md](file:///c:/splist/demo_cases/success_cases/31_list_safety_codeblock_trap_default.md)]\r
+- **Validates ignoring YAML Front Matter (---)**: Validation File [[32_list_safety_front_matter_default.md](file:///c:/splist/demo_cases/success_cases/32_list_safety_front_matter_default.md)]\r
+- **Safe fallback processing for invalid markdown space headings, etc.**: Validation File [[33_list_safety_bad_markdown_default.md](file:///c:/splist/demo_cases/success_cases/33_list_safety_bad_markdown_default.md)]\r
+- **Structural parsing load test on massive volume Markdown**: Validation File [[34_list_safety_massive_volume_default.md](file:///c:/splist/demo_cases/success_cases/34_list_safety_massive_volume_default.md)]\r
+- **Warning Case: Ignores headings missing a space**: Validation File [[35_list_warn_no_space_heading_default.md](file:///c:/splist/demo_cases/success_cases/35_list_warn_no_space_heading_default.md)]\r
+- **Warning Case: Prevents heading loss caused by unclosed code blocks**: Validation File [[36_list_warn_unclosed_codeblock_default.md](file:///c:/splist/demo_cases/success_cases/36_list_warn_unclosed_codeblock_default.md)]\r
+\r
+### 1. Completely Ignoring "Fake Headings" Inside Code Blocks\r
+\r
+Prevents erroneously generating folders by mistaking \`# Comments\` or \`## Samples\` written within program source code or Markdown tutorials as structural headings. Anything inside a code block wrapped by triple backticks is treated as a total safe zone and parsing is skipped.\r
+\r
+### 2. Auto-Cleansing of Invalid Characters in Filenames\r
+\r
+Even if a heading contains forbidden NG characters that OSes reject as filenames like \`\\ / : * ? " < > |\`, the system will not crash. It automatically removes/replaces them, generating and saving a safe filename.\r
+\r
+### 3. Emoji Support and Character Limit\r
+\r
+Even if special surrogate-pair Kanji or complex emojis exist in a heading, it accurately determines character boundaries to prevent garbling, smartly cutting at a safe maximum of 50 characters to avoid exceeding OS limits.\r
+\r
+### 💡 Integration Cases\r
+- **Structural parsing proof on VS Code official specs (mixed YAML/code block data)**: Validation File [[42_integration_vscode_color_theme_default.md](file:///c:/splist/demo_cases/success_cases/42_integration_vscode_color_theme_default.md)]\r
+- **Self-build split proof on SPLIST Official Manual**: Validation File [[43_integration_official_manual_default.md](file:///c:/splist/demo_cases/success_cases/43_integration_official_manual_default.md)]\r
+\r
+### 💡 Operations Become Dramatically Easier\r
+\r
+Now that you have these independent Markdown files, you can open them directly in VS Code, enjoying a comfortable writing and editing experience while viewing previews.\r
+Once you've finished tweaking the text, just toss the file directly into the \`splist\` engine via the terminal, and your usual beautiful hierarchical folders will be completed instantly.\r
+\r
+\r
+\r
+\r
+\r
+* **Empirical Record:** During the validation of the aforementioned VS Code official documentation (\`color-theme.md\`), it brilliantly ignored all hashtag headings inside the massive amount of Markdown code samples (\`\`\`markdown ...\`\`\`) contained within, succeeding in extracting 100% accurately ONLY the true table of contents structure of the document itself.`,We={name:`@splists/splist`,version:`2.1.1`,description:`Split massive Markdown and text files into manageable chunks with an auto-generated TOC. A powerful CLI and local Web GUI utility for text processing.`,main:`src/core/splist/splist.js`,bin:{splist:`src/cli/cli.js`},scripts:{demo:`node demo_cases/demo_cases_gen.js && node demo_cases/demo_cases_raw/demo_cases_run.js`,test:`node demo_cases/demo_cases_raw/demo_cases_run.js`,"build:manual":`node src/cli/cli.js USAGE.md -f`,"build:web":`npm --prefix react run build`},repository:{type:`git`,url:`git+https://github.com/splists/splist.git`},homepage:`https://splists.github.io/`,bugs:{url:`https://github.com/splists/splist/issues`},files:[`src`,`USAGE.md`],keywords:`split.list.markdown.md.chunk.chunking.separator.heading.chapter.table-of-contents.toc.large-file.text-processing.file-organizer.note-taking.documentation.docs.doc.cli.command-line.command.terminal.console.utility.backend.zero-dependency`.split(`.`),author:`1abcdefggs`,engines:{node:`>=16.0.0`},license:`MIT`,type:`commonjs`},Ge=o((e=>{var t=Symbol.for(`react.transitional.element`),n=Symbol.for(`react.fragment`);function r(e,n,r){var i=null;if(r!==void 0&&(i=``+r),n.key!==void 0&&(i=``+n.key),`key`in n)for(var a in r={},n)a!==`key`&&(r[a]=n[a]);else r=n;return n=r.ref,{$$typeof:t,type:e,key:i,ref:n===void 0?null:n,props:r}}e.Fragment=n,e.jsx=r,e.jsxs=r})),j=o(((e,t)=>{t.exports=Ge()}))();function Ke({onOpenDocs:e}){return(0,j.jsxs)(`header`,{className:`app-header vscode-titlebar`,children:[(0,j.jsxs)(`div`,{className:`titlebar-left`,children:[(0,j.jsx)(`img`,{src:`/favicon.png`,alt:`Splist Logo`,className:`app-logo-icon`,style:{width:`24px`,height:`24px`,borderRadius:`4px`}}),(0,j.jsxs)(`h1`,{className:`app-title`,children:[`SPLIST `,(0,j.jsx)(`span`,{children:`BROWSER`})]}),(0,j.jsxs)(`span`,{className:`badge version-badge`,children:[`V`,We.version.toUpperCase()]})]}),(0,j.jsx)(`div`,{className:`titlebar-center`,children:(0,j.jsx)(`span`,{className:`app-tagline`,children:`ULTRA-FAST MARKDOWN SPLITTER & STRUCTURER`})}),(0,j.jsxs)(`div`,{className:`titlebar-right`,children:[(0,j.jsx)(`button`,{onClick:e,className:`docs-btn`,title:`View Documentation`,children:`📖 DOCS`}),(0,j.jsxs)(`a`,{href:`https://github.com/splists/splist`,target:`_blank`,rel:`noopener noreferrer`,className:`github-link-btn`,title:`View source on GitHub`,children:[(0,j.jsx)(`svg`,{className:`github-icon`,viewBox:`0 0 16 16`,width:`16`,height:`16`,fill:`currentColor`,children:(0,j.jsx)(`path`,{d:`M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z`})}),(0,j.jsx)(`span`,{children:`GITHUB`})]})]})]})}function qe({inputText:e,setInputText:t,inputFileName:n,setInputFileName:r,splitMode:i,setSplitMode:a,generateToc:o,setGenerateToc:s,isDragging:c,setIsDragging:l,onSplit:u,onLoadSample:d,onClear:f,selectedFile:p,onSelectInput:m,onFileDrop:h}){let g=!p||p.isInput;return(0,v.useEffect)(()=>{let e=e=>{(e.ctrlKey||e.metaKey)&&e.key===`Enter`&&(e.preventDefault(),u())};return window.addEventListener(`keydown`,e),()=>window.removeEventListener(`keydown`,e)},[u]),(0,j.jsxs)(`section`,{className:`panel editor-main-panel`,children:[(0,j.jsxs)(`div`,{className:`editor-tabs-bar`,children:[(0,j.jsxs)(`div`,{className:`editor-tab-item ${g?`active`:``}`,onClick:m,children:[(0,j.jsxs)(`svg`,{className:`file-icon-svg`,width:`14`,height:`14`,viewBox:`0 0 24 24`,fill:`none`,stroke:`currentColor`,strokeWidth:`2`,children:[(0,j.jsx)(`path`,{d:`M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z`}),(0,j.jsx)(`polyline`,{points:`14 2 14 8 20 8`})]}),(0,j.jsx)(`span`,{className:`tab-title`,children:n||`input.md`}),(0,j.jsx)(`span`,{className:`tab-badge`,children:`EDITING`})]}),!g&&p&&(0,j.jsxs)(`div`,{className:`editor-tab-item active output-preview-tab`,children:[(0,j.jsxs)(`svg`,{className:`file-icon-svg`,width:`14`,height:`14`,viewBox:`0 0 24 24`,fill:`none`,stroke:`currentColor`,strokeWidth:`2`,children:[(0,j.jsx)(`path`,{d:`M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z`}),(0,j.jsx)(`polyline`,{points:`14 2 14 8 20 8`})]}),(0,j.jsx)(`span`,{className:`tab-title`,children:p.name}),(0,j.jsx)(`span`,{className:`tab-badge preview-tag`,children:`OUTPUT PREVIEW`})]})]}),(0,j.jsxs)(`div`,{className:`panel-header editor-header-controls`,children:[(0,j.jsxs)(`div`,{className:`mode-selector`,children:[(0,j.jsxs)(`label`,{className:`radio-label`,title:`Split by custom markers (✂️)`,children:[(0,j.jsx)(`input`,{type:`radio`,name:`splitMode`,value:`sp`,checked:i===`sp`,onChange:e=>a(e.target.value)}),(0,j.jsx)(`span`,{className:`radio-btn ${i===`sp`?`is-active`:``}`,children:`SP (✂️ MARKERS)`})]}),(0,j.jsxs)(`label`,{className:`radio-label`,title:`Split by Markdown H1/H2 Headings`,children:[(0,j.jsx)(`input`,{type:`radio`,name:`splitMode`,value:`list`,checked:i===`list`,onChange:e=>a(e.target.value)}),(0,j.jsx)(`span`,{className:`radio-btn ${i===`list`?`is-active`:``}`,children:`LIST (# HEADINGS)`})]})]}),(0,j.jsxs)(`div`,{className:`input-file-actions`,style:{display:`flex`,alignItems:`center`,gap:`15px`},children:[(0,j.jsxs)(`label`,{className:`toggle`,title:`Add index file (00_TOC.md) inside output`,children:[(0,j.jsx)(`input`,{type:`checkbox`,checked:o,onChange:e=>s(e.target.checked)}),(0,j.jsx)(`span`,{className:`slider`}),(0,j.jsx)(`span`,{className:`label-text`,style:{fontSize:`0.75rem`,fontWeight:`bold`},children:`+ 00_TOC.MD`})]}),(0,j.jsx)(`button`,{className:`quick-action-btn sample-btn`,onClick:d,title:`Load Sample README.md`,children:`README SAMPLE`}),e&&(0,j.jsx)(`button`,{className:`quick-action-btn clear-btn`,onClick:f,title:`Clear editor text`,children:`CLEAR`})]})]}),g?(0,j.jsxs)(`div`,{className:`editor-container ${c?`drag-over`:``}`,onDragEnter:()=>l(!0),onDragOver:()=>l(!0),onDragLeave:()=>l(!1),onDrop:e=>{if(l(!1),e.dataTransfer.files&&e.dataTransfer.files.length>0){let t=e.dataTransfer.files[0],n=new FileReader;n.onload=e=>{e.target?.result&&h(t.name,e.target.result.toString())},n.readAsText(t)}else{let t=e.dataTransfer.getData(`text`);t&&h(`pasted_input.md`,t)}},style:{position:`relative`},children:[e&&!c&&(0,j.jsx)(`div`,{style:{position:`absolute`,top:`10px`,right:`15px`,fontSize:`0.75rem`,color:`#6a9955`,pointerEvents:`none`,fontStyle:`italic`},children:`💡 Drag & Drop your own .md file here to split it!`}),(0,j.jsx)(`textarea`,{value:e,onChange:e=>t(e.target.value),placeholder:`Drag & Drop your Markdown file here, or paste text to split...`}),!e&&!c&&(0,j.jsxs)(`div`,{className:`empty-dropzone-watermark`,onClick:()=>document.querySelector(`textarea`)?.focus(),children:[(0,j.jsxs)(`svg`,{className:`watermark-icon-svg`,width:`48`,height:`48`,viewBox:`0 0 24 24`,fill:`none`,stroke:`currentColor`,strokeWidth:`1.5`,children:[(0,j.jsx)(`path`,{d:`M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4`}),(0,j.jsx)(`polyline`,{points:`7 10 12 15 17 10`}),(0,j.jsx)(`line`,{x1:`12`,y1:`15`,x2:`12`,y2:`3`})]}),(0,j.jsx)(`div`,{className:`watermark-title`,children:`DRAG & DROP MARKDOWN FILE HERE`}),(0,j.jsx)(`div`,{className:`watermark-sub`,children:`OR PASTE TEXT DIRECTLY INTO THIS EDITOR`})]}),c&&(0,j.jsx)(`div`,{className:`overlay-msg`,children:`DROP FILE TO LOAD`})]}):(0,j.jsxs)(`div`,{className:`editor-output-preview`,children:[(0,j.jsxs)(`div`,{className:`preview-banner`,children:[(0,j.jsxs)(`span`,{children:[`PREVIEWING SPLISTED GENERATED FILE: `,(0,j.jsx)(`strong`,{children:p?.name})]}),(0,j.jsx)(`button`,{className:`back-to-edit-btn`,onClick:m,children:`✏️ Back to Edit Input Document`})]}),(0,j.jsx)(`pre`,{className:`output-preview-code`,children:(0,j.jsx)(`code`,{children:p?.content})})]})]})}function Je({splitMode:e,generateToc:t,totalFiles:n}){return(0,j.jsxs)(`footer`,{className:`vscode-statusbar`,children:[(0,j.jsxs)(`div`,{className:`statusbar-left`,children:[(0,j.jsx)(`span`,{className:`statusbar-item statusbar-brand`,children:`⚡ SPLIST V2.0.0`}),(0,j.jsxs)(`span`,{className:`statusbar-item`,children:[`MODE: `,e===`sp`?`SP (✂️ MARKERS)`:`LIST (# HEADINGS)`]}),(0,j.jsx)(`span`,{className:`statusbar-item`,children:t?`TOC: 00_TOC.MD`:`TOC: OFF`})]}),(0,j.jsxs)(`div`,{className:`statusbar-right`,children:[(0,j.jsx)(`span`,{className:`statusbar-item`,children:n>0?`SPLISTED: ${n} FILES`:`READY`}),(0,j.jsx)(`span`,{className:`statusbar-item`,children:`UTF-8`}),(0,j.jsx)(`span`,{className:`statusbar-item`,children:`MARKDOWN`})]})]})}function Ye(e,t){let n=t||{};return(e[e.length-1]===``?[...e,``]:e).join((n.padRight?` `:``)+`,`+(n.padLeft===!1?``:` `)).trim()}var Xe=/^[$_\p{ID_Start}][$_\u{200C}\u{200D}\p{ID_Continue}]*$/u,Ze=/^[$_\p{ID_Start}][-$_\u{200C}\u{200D}\p{ID_Continue}]*$/u,Qe={};function $e(e,t){return((t||Qe).jsx?Ze:Xe).test(e)}var et=/[ \t\n\f\r]/g;function tt(e){return typeof e==`object`?e.type===`text`&&nt(e.value):nt(e)}function nt(e){return e.replace(et,``)===``}var rt=class{constructor(e,t,n){this.normal=t,this.property=e,n&&(this.space=n)}};rt.prototype.normal={},rt.prototype.property={},rt.prototype.space=void 0;function it(e,t){let n={},r={};for(let t of e)Object.assign(n,t.property),Object.assign(r,t.normal);return new rt(n,r,t)}function at(e){return e.toLowerCase()}var ot=class{constructor(e,t){this.attribute=t,this.property=e}};ot.prototype.attribute=``,ot.prototype.booleanish=!1,ot.prototype.boolean=!1,ot.prototype.commaOrSpaceSeparated=!1,ot.prototype.commaSeparated=!1,ot.prototype.defined=!1,ot.prototype.mustUseProperty=!1,ot.prototype.number=!1,ot.prototype.overloadedBoolean=!1,ot.prototype.property=``,ot.prototype.spaceSeparated=!1,ot.prototype.space=void 0;var st=s({boolean:()=>M,booleanish:()=>lt,commaOrSpaceSeparated:()=>ft,commaSeparated:()=>dt,number:()=>N,overloadedBoolean:()=>ut,spaceSeparated:()=>P}),ct=0,M=pt(),lt=pt(),ut=pt(),N=pt(),P=pt(),dt=pt(),ft=pt();function pt(){return 2**++ct}var mt=Object.keys(st),ht=class extends ot{constructor(e,t,n,r){let i=-1;if(super(e,t),gt(this,`space`,r),typeof n==`number`)for(;++i<mt.length;){let e=mt[i];gt(this,mt[i],(n&st[e])===st[e])}}};ht.prototype.defined=!0;function gt(e,t,n){n&&(e[t]=n)}function _t(e){let t={},n={};for(let[r,i]of Object.entries(e.properties)){let a=new ht(r,e.transform(e.attributes||{},r),i,e.space);e.mustUseProperty&&e.mustUseProperty.includes(r)&&(a.mustUseProperty=!0),t[r]=a,n[at(r)]=r,n[at(a.attribute)]=r}return new rt(t,n,e.space)}var vt=_t({properties:{ariaActiveDescendant:null,ariaAtomic:lt,ariaAutoComplete:null,ariaBusy:lt,ariaChecked:lt,ariaColCount:N,ariaColIndex:N,ariaColSpan:N,ariaControls:P,ariaCurrent:null,ariaDescribedBy:P,ariaDetails:null,ariaDisabled:lt,ariaDropEffect:P,ariaErrorMessage:null,ariaExpanded:lt,ariaFlowTo:P,ariaGrabbed:lt,ariaHasPopup:null,ariaHidden:lt,ariaInvalid:null,ariaKeyShortcuts:null,ariaLabel:null,ariaLabelledBy:P,ariaLevel:N,ariaLive:null,ariaModal:lt,ariaMultiLine:lt,ariaMultiSelectable:lt,ariaOrientation:null,ariaOwns:P,ariaPlaceholder:null,ariaPosInSet:N,ariaPressed:lt,ariaReadOnly:lt,ariaRelevant:null,ariaRequired:lt,ariaRoleDescription:P,ariaRowCount:N,ariaRowIndex:N,ariaRowSpan:N,ariaSelected:lt,ariaSetSize:N,ariaSort:null,ariaValueMax:N,ariaValueMin:N,ariaValueNow:N,ariaValueText:null,role:null},transform(e,t){return t===`role`?t:`aria-`+t.slice(4).toLowerCase()}});function yt(e,t){return t in e?e[t]:t}function bt(e,t){return yt(e,t.toLowerCase())}var xt=_t({attributes:{acceptcharset:`accept-charset`,classname:`class`,htmlfor:`for`,httpequiv:`http-equiv`},mustUseProperty:[`checked`,`multiple`,`muted`,`selected`],properties:{abbr:null,accept:dt,acceptCharset:P,accessKey:P,action:null,allow:null,allowFullScreen:M,allowPaymentRequest:M,allowUserMedia:M,alpha:M,alt:null,as:null,async:M,autoCapitalize:null,autoComplete:P,autoFocus:M,autoPlay:M,blocking:P,capture:null,charSet:null,checked:M,cite:null,className:P,closedBy:null,colorSpace:null,cols:N,colSpan:N,command:null,commandFor:null,content:null,contentEditable:lt,controls:M,controlsList:P,coords:N|dt,crossOrigin:null,data:null,dateTime:null,decoding:null,default:M,defer:M,dir:null,dirName:null,disabled:M,download:ut,draggable:lt,encType:null,enterKeyHint:null,fetchPriority:null,form:null,formAction:null,formEncType:null,formMethod:null,formNoValidate:M,formTarget:null,headers:P,height:N,hidden:ut,high:N,href:null,hrefLang:null,htmlFor:P,httpEquiv:P,id:null,imageSizes:null,imageSrcSet:null,inert:M,inputMode:null,integrity:null,is:null,isMap:M,itemId:null,itemProp:P,itemRef:P,itemScope:M,itemType:P,kind:null,label:null,lang:null,language:null,list:null,loading:null,loop:M,low:N,manifest:null,max:null,maxLength:N,media:null,method:null,min:null,minLength:N,multiple:M,muted:M,name:null,nonce:null,noModule:M,noValidate:M,onAbort:null,onAfterPrint:null,onAuxClick:null,onBeforeMatch:null,onBeforePrint:null,onBeforeToggle:null,onBeforeUnload:null,onBlur:null,onCancel:null,onCanPlay:null,onCanPlayThrough:null,onChange:null,onClick:null,onClose:null,onContextLost:null,onContextMenu:null,onContextRestored:null,onCopy:null,onCueChange:null,onCut:null,onDblClick:null,onDrag:null,onDragEnd:null,onDragEnter:null,onDragExit:null,onDragLeave:null,onDragOver:null,onDragStart:null,onDrop:null,onDurationChange:null,onEmptied:null,onEnded:null,onError:null,onFocus:null,onFormData:null,onHashChange:null,onInput:null,onInvalid:null,onKeyDown:null,onKeyPress:null,onKeyUp:null,onLanguageChange:null,onLoad:null,onLoadedData:null,onLoadedMetadata:null,onLoadEnd:null,onLoadStart:null,onMessage:null,onMessageError:null,onMouseDown:null,onMouseEnter:null,onMouseLeave:null,onMouseMove:null,onMouseOut:null,onMouseOver:null,onMouseUp:null,onOffline:null,onOnline:null,onPageHide:null,onPageShow:null,onPaste:null,onPause:null,onPlay:null,onPlaying:null,onPopState:null,onProgress:null,onRateChange:null,onRejectionHandled:null,onReset:null,onResize:null,onScroll:null,onScrollEnd:null,onSecurityPolicyViolation:null,onSeeked:null,onSeeking:null,onSelect:null,onSlotChange:null,onStalled:null,onStorage:null,onSubmit:null,onSuspend:null,onTimeUpdate:null,onToggle:null,onUnhandledRejection:null,onUnload:null,onVolumeChange:null,onWaiting:null,onWheel:null,open:M,optimum:N,pattern:null,ping:P,placeholder:null,playsInline:M,popover:null,popoverTarget:null,popoverTargetAction:null,poster:null,preload:null,readOnly:M,referrerPolicy:null,rel:P,required:M,reversed:M,rows:N,rowSpan:N,sandbox:P,scope:null,scoped:M,seamless:M,selected:M,shadowRootClonable:M,shadowRootCustomElementRegistry:M,shadowRootDelegatesFocus:M,shadowRootMode:null,shadowRootSerializable:M,shape:null,size:N,sizes:null,slot:null,span:N,spellCheck:lt,src:null,srcDoc:null,srcLang:null,srcSet:null,start:N,step:null,style:null,tabIndex:N,target:null,title:null,translate:null,type:null,typeMustMatch:M,useMap:null,value:lt,width:N,wrap:null,writingSuggestions:null,align:null,aLink:null,archive:P,axis:null,background:null,bgColor:null,border:N,borderColor:null,bottomMargin:N,cellPadding:null,cellSpacing:null,char:null,charOff:null,classId:null,clear:null,code:null,codeBase:null,codeType:null,color:null,compact:M,declare:M,event:null,face:null,frame:null,frameBorder:null,hSpace:N,leftMargin:N,link:null,longDesc:null,lowSrc:null,marginHeight:N,marginWidth:N,noResize:M,noHref:M,noShade:M,noWrap:M,object:null,profile:null,prompt:null,rev:null,rightMargin:N,rules:null,scheme:null,scrolling:lt,standby:null,summary:null,text:null,topMargin:N,valueType:null,version:null,vAlign:null,vLink:null,vSpace:N,allowTransparency:null,autoCorrect:null,autoSave:null,credentialless:M,disablePictureInPicture:M,disableRemotePlayback:M,exportParts:dt,part:P,prefix:null,property:null,results:N,security:null,unselectable:null},space:`html`,transform:bt}),St=_t({attributes:{accentHeight:`accent-height`,alignmentBaseline:`alignment-baseline`,arabicForm:`arabic-form`,baselineShift:`baseline-shift`,capHeight:`cap-height`,className:`class`,clipPath:`clip-path`,clipRule:`clip-rule`,colorInterpolation:`color-interpolation`,colorInterpolationFilters:`color-interpolation-filters`,colorProfile:`color-profile`,colorRendering:`color-rendering`,crossOrigin:`crossorigin`,dataType:`datatype`,dominantBaseline:`dominant-baseline`,enableBackground:`enable-background`,fillOpacity:`fill-opacity`,fillRule:`fill-rule`,floodColor:`flood-color`,floodOpacity:`flood-opacity`,fontFamily:`font-family`,fontSize:`font-size`,fontSizeAdjust:`font-size-adjust`,fontStretch:`font-stretch`,fontStyle:`font-style`,fontVariant:`font-variant`,fontWeight:`font-weight`,glyphName:`glyph-name`,glyphOrientationHorizontal:`glyph-orientation-horizontal`,glyphOrientationVertical:`glyph-orientation-vertical`,hrefLang:`hreflang`,horizAdvX:`horiz-adv-x`,horizOriginX:`horiz-origin-x`,horizOriginY:`horiz-origin-y`,imageRendering:`image-rendering`,letterSpacing:`letter-spacing`,lightingColor:`lighting-color`,markerEnd:`marker-end`,markerMid:`marker-mid`,markerStart:`marker-start`,maskType:`mask-type`,navDown:`nav-down`,navDownLeft:`nav-down-left`,navDownRight:`nav-down-right`,navLeft:`nav-left`,navNext:`nav-next`,navPrev:`nav-prev`,navRight:`nav-right`,navUp:`nav-up`,navUpLeft:`nav-up-left`,navUpRight:`nav-up-right`,onAbort:`onabort`,onActivate:`onactivate`,onAfterPrint:`onafterprint`,onBeforePrint:`onbeforeprint`,onBegin:`onbegin`,onCancel:`oncancel`,onCanPlay:`oncanplay`,onCanPlayThrough:`oncanplaythrough`,onChange:`onchange`,onClick:`onclick`,onClose:`onclose`,onCopy:`oncopy`,onCueChange:`oncuechange`,onCut:`oncut`,onDblClick:`ondblclick`,onDrag:`ondrag`,onDragEnd:`ondragend`,onDragEnter:`ondragenter`,onDragExit:`ondragexit`,onDragLeave:`ondragleave`,onDragOver:`ondragover`,onDragStart:`ondragstart`,onDrop:`ondrop`,onDurationChange:`ondurationchange`,onEmptied:`onemptied`,onEnd:`onend`,onEnded:`onended`,onError:`onerror`,onFocus:`onfocus`,onFocusIn:`onfocusin`,onFocusOut:`onfocusout`,onHashChange:`onhashchange`,onInput:`oninput`,onInvalid:`oninvalid`,onKeyDown:`onkeydown`,onKeyPress:`onkeypress`,onKeyUp:`onkeyup`,onLoad:`onload`,onLoadedData:`onloadeddata`,onLoadedMetadata:`onloadedmetadata`,onLoadStart:`onloadstart`,onMessage:`onmessage`,onMouseDown:`onmousedown`,onMouseEnter:`onmouseenter`,onMouseLeave:`onmouseleave`,onMouseMove:`onmousemove`,onMouseOut:`onmouseout`,onMouseOver:`onmouseover`,onMouseUp:`onmouseup`,onMouseWheel:`onmousewheel`,onOffline:`onoffline`,onOnline:`ononline`,onPageHide:`onpagehide`,onPageShow:`onpageshow`,onPaste:`onpaste`,onPause:`onpause`,onPlay:`onplay`,onPlaying:`onplaying`,onPopState:`onpopstate`,onProgress:`onprogress`,onRateChange:`onratechange`,onRepeat:`onrepeat`,onReset:`onreset`,onResize:`onresize`,onScroll:`onscroll`,onSeeked:`onseeked`,onSeeking:`onseeking`,onSelect:`onselect`,onShow:`onshow`,onStalled:`onstalled`,onStorage:`onstorage`,onSubmit:`onsubmit`,onSuspend:`onsuspend`,onTimeUpdate:`ontimeupdate`,onToggle:`ontoggle`,onUnload:`onunload`,onVolumeChange:`onvolumechange`,onWaiting:`onwaiting`,onZoom:`onzoom`,overlinePosition:`overline-position`,overlineThickness:`overline-thickness`,paintOrder:`paint-order`,panose1:`panose-1`,pointerEvents:`pointer-events`,referrerPolicy:`referrerpolicy`,renderingIntent:`rendering-intent`,shapeRendering:`shape-rendering`,stopColor:`stop-color`,stopOpacity:`stop-opacity`,strikethroughPosition:`strikethrough-position`,strikethroughThickness:`strikethrough-thickness`,strokeDashArray:`stroke-dasharray`,strokeDashOffset:`stroke-dashoffset`,strokeLineCap:`stroke-linecap`,strokeLineJoin:`stroke-linejoin`,strokeMiterLimit:`stroke-miterlimit`,strokeOpacity:`stroke-opacity`,strokeWidth:`stroke-width`,tabIndex:`tabindex`,textAnchor:`text-anchor`,textDecoration:`text-decoration`,textRendering:`text-rendering`,transformOrigin:`transform-origin`,typeOf:`typeof`,underlinePosition:`underline-position`,underlineThickness:`underline-thickness`,unicodeBidi:`unicode-bidi`,unicodeRange:`unicode-range`,unitsPerEm:`units-per-em`,vAlphabetic:`v-alphabetic`,vHanging:`v-hanging`,vIdeographic:`v-ideographic`,vMathematical:`v-mathematical`,vectorEffect:`vector-effect`,vertAdvY:`vert-adv-y`,vertOriginX:`vert-origin-x`,vertOriginY:`vert-origin-y`,wordSpacing:`word-spacing`,writingMode:`writing-mode`,xHeight:`x-height`,playbackOrder:`playbackorder`,timelineBegin:`timelinebegin`},properties:{about:ft,accentHeight:N,accumulate:null,additive:null,alignmentBaseline:null,alphabetic:N,amplitude:N,arabicForm:null,ascent:N,attributeName:null,attributeType:null,azimuth:N,bandwidth:null,baselineShift:null,baseFrequency:null,baseProfile:null,bbox:null,begin:null,bias:N,by:null,calcMode:null,capHeight:N,className:P,clip:null,clipPath:null,clipPathUnits:null,clipRule:null,color:null,colorInterpolation:null,colorInterpolationFilters:null,colorProfile:null,colorRendering:null,content:null,contentScriptType:null,contentStyleType:null,crossOrigin:null,cursor:null,cx:null,cy:null,d:null,dataType:null,defaultAction:null,descent:N,diffuseConstant:N,direction:null,display:null,dur:null,divisor:N,dominantBaseline:null,download:M,dx:null,dy:null,edgeMode:null,editable:null,elevation:N,enableBackground:null,end:null,event:null,exponent:N,externalResourcesRequired:null,fill:null,fillOpacity:N,fillRule:null,filter:null,filterRes:null,filterUnits:null,floodColor:null,floodOpacity:null,focusable:null,focusHighlight:null,fontFamily:null,fontSize:null,fontSizeAdjust:null,fontStretch:null,fontStyle:null,fontVariant:null,fontWeight:null,format:null,fr:null,from:null,fx:null,fy:null,g1:dt,g2:dt,glyphName:dt,glyphOrientationHorizontal:null,glyphOrientationVertical:null,glyphRef:null,gradientTransform:null,gradientUnits:null,handler:null,hanging:N,hatchContentUnits:null,hatchUnits:null,height:null,href:null,hrefLang:null,horizAdvX:N,horizOriginX:N,horizOriginY:N,id:null,ideographic:N,imageRendering:null,initialVisibility:null,in:null,in2:null,intercept:N,k:N,k1:N,k2:N,k3:N,k4:N,kernelMatrix:ft,kernelUnitLength:null,keyPoints:null,keySplines:null,keyTimes:null,kerning:null,lang:null,lengthAdjust:null,letterSpacing:null,lightingColor:null,limitingConeAngle:N,local:null,markerEnd:null,markerMid:null,markerStart:null,markerHeight:null,markerUnits:null,markerWidth:null,mask:null,maskContentUnits:null,maskType:null,maskUnits:null,mathematical:null,max:null,media:null,mediaCharacterEncoding:null,mediaContentEncodings:null,mediaSize:N,mediaTime:null,method:null,min:null,mode:null,name:null,navDown:null,navDownLeft:null,navDownRight:null,navLeft:null,navNext:null,navPrev:null,navRight:null,navUp:null,navUpLeft:null,navUpRight:null,numOctaves:null,observer:null,offset:null,onAbort:null,onActivate:null,onAfterPrint:null,onBeforePrint:null,onBegin:null,onCancel:null,onCanPlay:null,onCanPlayThrough:null,onChange:null,onClick:null,onClose:null,onCopy:null,onCueChange:null,onCut:null,onDblClick:null,onDrag:null,onDragEnd:null,onDragEnter:null,onDragExit:null,onDragLeave:null,onDragOver:null,onDragStart:null,onDrop:null,onDurationChange:null,onEmptied:null,onEnd:null,onEnded:null,onError:null,onFocus:null,onFocusIn:null,onFocusOut:null,onHashChange:null,onInput:null,onInvalid:null,onKeyDown:null,onKeyPress:null,onKeyUp:null,onLoad:null,onLoadedData:null,onLoadedMetadata:null,onLoadStart:null,onMessage:null,onMouseDown:null,onMouseEnter:null,onMouseLeave:null,onMouseMove:null,onMouseOut:null,onMouseOver:null,onMouseUp:null,onMouseWheel:null,onOffline:null,onOnline:null,onPageHide:null,onPageShow:null,onPaste:null,onPause:null,onPlay:null,onPlaying:null,onPopState:null,onProgress:null,onRateChange:null,onRepeat:null,onReset:null,onResize:null,onScroll:null,onSeeked:null,onSeeking:null,onSelect:null,onShow:null,onStalled:null,onStorage:null,onSubmit:null,onSuspend:null,onTimeUpdate:null,onToggle:null,onUnload:null,onVolumeChange:null,onWaiting:null,onZoom:null,opacity:null,operator:null,order:null,orient:null,orientation:null,origin:null,overflow:null,overlay:null,overlinePosition:N,overlineThickness:N,paintOrder:null,panose1:null,path:null,pathLength:N,patternContentUnits:null,patternTransform:null,patternUnits:null,phase:null,ping:P,pitch:null,playbackOrder:null,pointerEvents:null,points:null,pointsAtX:N,pointsAtY:N,pointsAtZ:N,preserveAlpha:null,preserveAspectRatio:null,primitiveUnits:null,propagate:null,property:ft,r:null,radius:null,referrerPolicy:null,refX:null,refY:null,rel:ft,rev:ft,renderingIntent:null,repeatCount:null,repeatDur:null,requiredExtensions:ft,requiredFeatures:ft,requiredFonts:ft,requiredFormats:ft,resource:null,restart:null,result:null,rotate:null,rx:null,ry:null,scale:null,seed:null,shapeRendering:null,side:null,slope:null,snapshotTime:null,specularConstant:N,specularExponent:N,spreadMethod:null,spacing:null,startOffset:null,stdDeviation:null,stemh:null,stemv:null,stitchTiles:null,stopColor:null,stopOpacity:null,strikethroughPosition:N,strikethroughThickness:N,string:null,stroke:null,strokeDashArray:ft,strokeDashOffset:null,strokeLineCap:null,strokeLineJoin:null,strokeMiterLimit:N,strokeOpacity:N,strokeWidth:null,style:null,surfaceScale:N,syncBehavior:null,syncBehaviorDefault:null,syncMaster:null,syncTolerance:null,syncToleranceDefault:null,systemLanguage:ft,tabIndex:N,tableValues:null,target:null,targetX:N,targetY:N,textAnchor:null,textDecoration:null,textRendering:null,textLength:null,timelineBegin:null,title:null,transformBehavior:null,type:null,typeOf:ft,to:null,transform:null,transformOrigin:null,u1:null,u2:null,underlinePosition:N,underlineThickness:N,unicode:null,unicodeBidi:null,unicodeRange:null,unitsPerEm:N,values:null,vAlphabetic:N,vMathematical:N,vectorEffect:null,vHanging:N,vIdeographic:N,version:null,vertAdvY:N,vertOriginX:N,vertOriginY:N,viewBox:null,viewTarget:null,visibility:null,width:null,widths:null,wordSpacing:null,writingMode:null,x:null,x1:null,x2:null,xChannelSelector:null,xHeight:N,y:null,y1:null,y2:null,yChannelSelector:null,z:null,zoomAndPan:null},space:`svg`,transform:yt}),Ct=_t({properties:{xLinkActuate:null,xLinkArcRole:null,xLinkHref:null,xLinkRole:null,xLinkShow:null,xLinkTitle:null,xLinkType:null},space:`xlink`,transform(e,t){return`xlink:`+t.slice(5).toLowerCase()}}),wt=_t({attributes:{xmlnsxlink:`xmlns:xlink`},properties:{xmlnsXLink:null,xmlns:null},space:`xmlns`,transform:bt}),Tt=_t({properties:{xmlBase:null,xmlLang:null,xmlSpace:null},space:`xml`,transform(e,t){return`xml:`+t.slice(3).toLowerCase()}}),Et={classId:`classID`,dataType:`datatype`,itemId:`itemID`,strokeDashArray:`strokeDasharray`,strokeDashOffset:`strokeDashoffset`,strokeLineCap:`strokeLinecap`,strokeLineJoin:`strokeLinejoin`,strokeMiterLimit:`strokeMiterlimit`,typeOf:`typeof`,xLinkActuate:`xlinkActuate`,xLinkArcRole:`xlinkArcrole`,xLinkHref:`xlinkHref`,xLinkRole:`xlinkRole`,xLinkShow:`xlinkShow`,xLinkTitle:`xlinkTitle`,xLinkType:`xlinkType`,xmlnsXLink:`xmlnsXlink`},Dt=/[A-Z]/g,Ot=/-[a-z]/g,kt=/^data[-\w.:]+$/i;function At(e,t){let n=at(t),r=t,i=ot;if(n in e.normal)return e.property[e.normal[n]];if(n.length>4&&n.slice(0,4)===`data`&&kt.test(t)){if(t.charAt(4)===`-`){let e=t.slice(5).replace(Ot,Mt);r=`data`+e.charAt(0).toUpperCase()+e.slice(1)}else{let e=t.slice(4);if(!Ot.test(e)){let n=e.replace(Dt,jt);n.charAt(0)!==`-`&&(n=`-`+n),t=`data`+n}}i=ht}return new i(r,t)}function jt(e){return`-`+e.toLowerCase()}function Mt(e){return e.charAt(1).toUpperCase()}var Nt=it([vt,xt,Ct,wt,Tt],`html`),Pt=it([vt,St,Ct,wt,Tt],`svg`);function Ft(e){return e.join(` `).trim()}var It=o(((e,t)=>{var n=/\/\*[^*]*\*+([^/*][^*]*\*+)*\//g,r=/\n/g,i=/^\s*/,a=/^(\*?[-#/*\\\w]+(\[[0-9a-z_-]+\])?)\s*/,o=/^:\s*/,s=/^((?:'(?:\\'|.)*?'|"(?:\\"|.)*?"|\([^)]*?\)|[^};])+)/,c=/^[;\s]*/,l=/^\s+|\s+$/g;function u(e,t){if(typeof e!=`string`)throw TypeError(`First argument must be a string`);if(!e)return[];t||={};var l=1,u=1;function f(e){var t=e.match(r);t&&(l+=t.length);var n=e.lastIndexOf(`
 `);u=~n?e.length-n:u+e.length}function p(){var e={line:l,column:u};return function(t){return t.position=new m(e),_(),t}}function m(e){this.start=e,this.end={line:l,column:u},this.source=t.source}m.prototype.content=e;function h(n){var r=Error(t.source+`:`+l+`:`+u+`: `+n);if(r.reason=n,r.filename=t.source,r.line=l,r.column=u,r.source=e,!t.silent)throw r}function g(t){var n=t.exec(e);if(n){var r=n[0];return f(r),e=e.slice(r.length),n}}function _(){g(i)}function v(e){var t;for(e||=[];t=y();)t!==!1&&e.push(t);return e}function y(){var t=p();if(!(e.charAt(0)!=`/`||e.charAt(1)!=`*`)){for(var n=2;e.charAt(n)!=``&&(e.charAt(n)!=`*`||e.charAt(n+1)!=`/`);)++n;if(n+=2,e.charAt(n-1)===``)return h(`End of comment missing`);var r=e.slice(2,n-2);return u+=2,f(r),e=e.slice(n),u+=2,t({type:`comment`,comment:r})}}function b(){var e=p(),t=g(a);if(t){if(y(),!g(o))return h(`property missing ':'`);var r=g(s),i=e({type:`declaration`,property:d(t[0].replace(n,``)),value:r?d(r[0].replace(n,``)):``});return g(c),i}}function x(){var e=[];v(e);for(var t;t=b();)t!==!1&&(e.push(t),v(e));return e}return _(),x()}function d(e){return e?e.replace(l,``):``}t.exports=u})),Lt=o((e=>{var t=e&&e.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(e,"__esModule",{value:!0}),e.default=r;var n=t(It());function r(e,t){let r=null;if(!e||typeof e!=`string`)return r;let i=(0,n.default)(e),a=typeof t==`function`;return i.forEach(e=>{if(e.type!==`declaration`)return;let{property:n,value:i}=e;a?t(n,i,e):i&&(r||={},r[n]=i)}),r}})),Rt=o((e=>{Object.defineProperty(e,"__esModule",{value:!0}),e.camelCase=void 0;var t=/^--[a-zA-Z0-9_-]+$/,n=/-([a-z])/g,r=/^[^-]+$/,i=/^-(webkit|moz|ms|o|khtml)-/,a=/^-(ms)-/,o=function(e){return!e||r.test(e)||t.test(e)},s=function(e,t){return t.toUpperCase()},c=function(e,t){return`${t}-`};e.camelCase=function(e,t){return t===void 0&&(t={}),o(e)?e:(e=e.toLowerCase(),e=t.reactCompat?e.replace(a,c):e.replace(i,c),e.replace(n,s))}})),zt=o(((e,t)=>{var n=(e&&e.__importDefault||function(e){return e&&e.__esModule?e:{default:e}})(Lt()),r=Rt();function i(e,t){var i={};return!e||typeof e!=`string`||(0,n.default)(e,function(e,n){e&&n&&(i[(0,r.camelCase)(e,t)]=n)}),i}i.default=i,t.exports=i})),Bt=Ht(`end`),Vt=Ht(`start`);function Ht(e){return t;function t(t){let n=t&&t.position&&t.position[e]||{};if(typeof n.line==`number`&&n.line>0&&typeof n.column==`number`&&n.column>0)return{line:n.line,column:n.column,offset:typeof n.offset==`number`&&n.offset>-1?n.offset:void 0}}}function Ut(e){let t=Vt(e),n=Bt(e);if(t&&n)return{start:t,end:n}}function Wt(e){return!e||typeof e!=`object`?``:`position`in e||`type`in e?Kt(e.position):`start`in e||`end`in e?Kt(e):`line`in e||`column`in e?Gt(e):``}function Gt(e){return qt(e&&e.line)+`:`+qt(e&&e.column)}function Kt(e){return Gt(e&&e.start)+`-`+Gt(e&&e.end)}function qt(e){return e&&typeof e==`number`?e:1}var Jt=class extends Error{constructor(e,t,n){super(),typeof t==`string`&&(n=t,t=void 0);let r=``,i={},a=!1;if(t&&(i=`line`in t&&`column`in t||`start`in t&&`end`in t?{place:t}:`type`in t?{ancestors:[t],place:t.position}:{...t}),typeof e==`string`?r=e:!i.cause&&e&&(a=!0,r=e.message,i.cause=e),!i.ruleId&&!i.source&&typeof n==`string`){let e=n.indexOf(`:`);e===-1?i.ruleId=n:(i.source=n.slice(0,e),i.ruleId=n.slice(e+1))}if(!i.place&&i.ancestors&&i.ancestors){let e=i.ancestors[i.ancestors.length-1];e&&(i.place=e.position)}let o=i.place&&`start`in i.place?i.place.start:i.place;this.ancestors=i.ancestors||void 0,this.cause=i.cause||void 0,this.column=o?o.column:void 0,this.fatal=void 0,this.file=``,this.message=r,this.line=o?o.line:void 0,this.name=Wt(i.place)||`1:1`,this.place=i.place||void 0,this.reason=this.message,this.ruleId=i.ruleId||void 0,this.source=i.source||void 0,this.stack=a&&i.cause&&typeof i.cause.stack==`string`?i.cause.stack:``,this.actual=void 0,this.expected=void 0,this.note=void 0,this.url=void 0}};Jt.prototype.file=``,Jt.prototype.name=``,Jt.prototype.reason=``,Jt.prototype.message=``,Jt.prototype.stack=``,Jt.prototype.column=void 0,Jt.prototype.line=void 0,Jt.prototype.ancestors=void 0,Jt.prototype.cause=void 0,Jt.prototype.fatal=void 0,Jt.prototype.place=void 0,Jt.prototype.ruleId=void 0,Jt.prototype.source=void 0;var Yt=l(zt(),1),Xt={}.hasOwnProperty,Zt=new Map,Qt=/[A-Z]/g,$t=new Set([`table`,`tbody`,`thead`,`tfoot`,`tr`]),en=new Set([`td`,`th`]);function tn(e,t){if(!t||t.Fragment===void 0)throw TypeError("Expected `Fragment` in options");let n=t.filePath||void 0,r;if(t.development){if(typeof t.jsxDEV!=`function`)throw TypeError("Expected `jsxDEV` in options when `development: true`");r=pn(n,t.jsxDEV)}else{if(typeof t.jsx!=`function`)throw TypeError("Expected `jsx` in production options");if(typeof t.jsxs!=`function`)throw TypeError("Expected `jsxs` in production options");r=fn(n,t.jsx,t.jsxs)}let i={Fragment:t.Fragment,ancestors:[],components:t.components||{},create:r,elementAttributeNameCase:t.elementAttributeNameCase||`react`,evaluater:t.createEvaluater?t.createEvaluater():void 0,filePath:n,ignoreInvalidStyle:t.ignoreInvalidStyle||!1,passKeys:t.passKeys!==!1,passNode:t.passNode||!1,schema:t.space===`svg`?Pt:Nt,stylePropertyNameCase:t.stylePropertyNameCase||`dom`,tableCellAlignToStyle:t.tableCellAlignToStyle!==!1},a=nn(i,e,void 0);return a&&typeof a!=`string`?a:i.create(e,i.Fragment,{children:a||void 0},void 0)}function nn(e,t,n){if(t.type===`element`)return rn(e,t,n);if(t.type===`mdxFlowExpression`||t.type===`mdxTextExpression`)return an(e,t);if(t.type===`mdxJsxFlowElement`||t.type===`mdxJsxTextElement`)return sn(e,t,n);if(t.type===`mdxjsEsm`)return on(e,t);if(t.type===`root`)return cn(e,t,n);if(t.type===`text`)return ln(e,t)}function rn(e,t,n){let r=e.schema,i=r;t.tagName.toLowerCase()===`svg`&&r.space===`html`&&(i=Pt,e.schema=i),e.ancestors.push(t);let a=yn(e,t.tagName,!1),o=mn(e,t),s=gn(e,t);return $t.has(t.tagName)&&(s=s.filter(function(e){return typeof e!=`string`||!tt(e)})),un(e,o,a,t),dn(o,s),e.ancestors.pop(),e.schema=r,e.create(t,a,o,n)}function an(e,t){if(t.data&&t.data.estree&&e.evaluater){let n=t.data.estree.body[0];return n.type,e.evaluater.evaluateExpression(n.expression)}bn(e,t.position)}function on(e,t){if(t.data&&t.data.estree&&e.evaluater)return e.evaluater.evaluateProgram(t.data.estree);bn(e,t.position)}function sn(e,t,n){let r=e.schema,i=r;t.name===`svg`&&r.space===`html`&&(i=Pt,e.schema=i),e.ancestors.push(t);let a=t.name===null?e.Fragment:yn(e,t.name,!0),o=hn(e,t),s=gn(e,t);return un(e,o,a,t),dn(o,s),e.ancestors.pop(),e.schema=r,e.create(t,a,o,n)}function cn(e,t,n){let r={};return dn(r,gn(e,t)),e.create(t,e.Fragment,r,n)}function ln(e,t){return t.value}function un(e,t,n,r){typeof n!=`string`&&n!==e.Fragment&&e.passNode&&(t.node=r)}function dn(e,t){if(t.length>0){let n=t.length>1?t:t[0];n&&(e.children=n)}}function fn(e,t,n){return r;function r(e,r,i,a){let o=Array.isArray(i.children)?n:t;return a?o(r,i,a):o(r,i)}}function pn(e,t){return n;function n(n,r,i,a){let o=Array.isArray(i.children),s=Vt(n);return t(r,i,a,o,{columnNumber:s?s.column-1:void 0,fileName:e,lineNumber:s?s.line:void 0},void 0)}}function mn(e,t){let n={},r,i;for(i in t.properties)if(i!==`children`&&Xt.call(t.properties,i)){let a=_n(e,i,t.properties[i]);if(a){let[i,o]=a;e.tableCellAlignToStyle&&i===`align`&&typeof o==`string`&&en.has(t.tagName)?r=o:n[i]=o}}if(r){let t=n.style||={};t[e.stylePropertyNameCase===`css`?`text-align`:`textAlign`]=r}return n}function hn(e,t){let n={};for(let r of t.attributes)if(r.type===`mdxJsxExpressionAttribute`)if(r.data&&r.data.estree&&e.evaluater){let t=r.data.estree.body[0];t.type;let i=t.expression;i.type;let a=i.properties[0];a.type,Object.assign(n,e.evaluater.evaluateExpression(a.argument))}else bn(e,t.position);else{let i=r.name,a;if(r.value&&typeof r.value==`object`)if(r.value.data&&r.value.data.estree&&e.evaluater){let t=r.value.data.estree.body[0];t.type,a=e.evaluater.evaluateExpression(t.expression)}else bn(e,t.position);else a=r.value===null||r.value;n[i]=a}return n}function gn(e,t){let n=[],r=-1,i=e.passKeys?new Map:Zt;for(;++r<t.children.length;){let a=t.children[r],o;if(e.passKeys){let e=a.type===`element`?a.tagName:a.type===`mdxJsxFlowElement`||a.type===`mdxJsxTextElement`?a.name:void 0;if(e){let t=i.get(e)||0;o=e+`-`+t,i.set(e,t+1)}}let s=nn(e,a,o);s!==void 0&&n.push(s)}return n}function _n(e,t,n){let r=At(e.schema,t);if(!(n==null||typeof n==`number`&&Number.isNaN(n))){if(Array.isArray(n)&&(n=r.commaSeparated?Ye(n):Ft(n)),r.property===`style`){let t=typeof n==`object`?n:vn(e,String(n));return e.stylePropertyNameCase===`css`&&(t=xn(t)),[`style`,t]}return[e.elementAttributeNameCase===`react`&&r.space?Et[r.property]||r.property:r.attribute,n]}}function vn(e,t){try{return(0,Yt.default)(t,{reactCompat:!0})}catch(t){if(e.ignoreInvalidStyle)return{};let n=t,r=new Jt("Cannot parse `style` attribute",{ancestors:e.ancestors,cause:n,ruleId:`style`,source:`hast-util-to-jsx-runtime`});throw r.file=e.filePath||void 0,r.url=`https://github.com/syntax-tree/hast-util-to-jsx-runtime#cannot-parse-style-attribute`,r}}function yn(e,t,n){let r;if(!n)r={type:`Literal`,value:t};else if(t.includes(`.`)){let e=t.split(`.`),n=-1,i;for(;++n<e.length;){let t=$e(e[n])?{type:`Identifier`,name:e[n]}:{type:`Literal`,value:e[n]};i=i?{type:`MemberExpression`,object:i,property:t,computed:!!(n&&t.type===`Literal`),optional:!1}:t}r=i}else r=$e(t)&&!/^[a-z]/.test(t)?{type:`Identifier`,name:t}:{type:`Literal`,value:t};if(r.type===`Literal`){let t=r.value;return Xt.call(e.components,t)?e.components[t]:t}if(e.evaluater)return e.evaluater.evaluateExpression(r);bn(e)}function bn(e,t){let n=new Jt("Cannot handle MDX estrees without `createEvaluater`",{ancestors:e.ancestors,place:t,ruleId:`mdx-estree`,source:`hast-util-to-jsx-runtime`});throw n.file=e.filePath||void 0,n.url=`https://github.com/syntax-tree/hast-util-to-jsx-runtime#cannot-handle-mdx-estrees-without-createevaluater`,n}function xn(e){let t={},n;for(n in e)Xt.call(e,n)&&(t[Sn(n)]=e[n]);return t}function Sn(e){let t=e.replace(Qt,Cn);return t.slice(0,3)===`ms-`&&(t=`-`+t),t}function Cn(e){return`-`+e.toLowerCase()}var wn={action:[`form`],cite:[`blockquote`,`del`,`ins`,`q`],data:[`object`],formAction:[`button`,`input`],href:[`a`,`area`,`base`,`link`],icon:[`menuitem`],itemId:null,manifest:[`html`],ping:[`a`,`area`],poster:[`video`],src:[`audio`,`embed`,`iframe`,`img`,`input`,`script`,`source`,`track`,`video`]},Tn={};function En(e,t){let n=t||Tn;return Dn(e,typeof n.includeImageAlt!=`boolean`||n.includeImageAlt,typeof n.includeHtml!=`boolean`||n.includeHtml)}function Dn(e,t,n){if(kn(e)){if(`value`in e)return e.type===`html`&&!n?``:e.value;if(t&&`alt`in e&&e.alt)return e.alt;if(`children`in e)return On(e.children,t,n)}return Array.isArray(e)?On(e,t,n):``}function On(e,t,n){let r=[],i=-1;for(;++i<e.length;)r[i]=Dn(e[i],t,n);return r.join(``)}function kn(e){return!!(e&&typeof e==`object`)}var An=document.createElement(`i`);function jn(e){let t=`&`+e+`;`;An.innerHTML=t;let n=An.textContent;return n.charCodeAt(n.length-1)===59&&e!==`semi`?!1:n!==t&&n}function Mn(e,t,n,r){let i=e.length,a=0,o;if(t=t<0?-t>i?0:i+t:t>i?i:t,n=n>0?n:0,r.length<1e4)o=Array.from(r),o.unshift(t,n),e.splice(...o);else for(n&&e.splice(t,n);a<r.length;)o=r.slice(a,a+1e4),o.unshift(t,0),e.splice(...o),a+=1e4,t+=1e4}function Nn(e,t){return e.length>0?(Mn(e,e.length,0,t),e):t}var Pn={}.hasOwnProperty;function Fn(e){let t={},n=-1;for(;++n<e.length;)In(t,e[n]);return t}function In(e,t){let n;for(n in t){let r=(Pn.call(e,n)?e[n]:void 0)||(e[n]={}),i=t[n],a;if(i)for(a in i){Pn.call(r,a)||(r[a]=[]);let e=i[a];Ln(r[a],Array.isArray(e)?e:e?[e]:[])}}}function Ln(e,t){let n=-1,r=[];for(;++n<t.length;)(t[n].add===`after`?e:r).push(t[n]);Mn(e,0,0,r)}function Rn(e,t){let n=Number.parseInt(e,t);return n<9||n===11||n>13&&n<32||n>126&&n<160||n>55295&&n<57344||n>64975&&n<65008||(n&65535)==65535||(n&65535)==65534||n>1114111?`�`:String.fromCodePoint(n)}function zn(e){return e.replace(/[\t\n\r ]+/g,` `).replace(/^ | $/g,``).toLowerCase().toUpperCase()}var Bn=Yn(/[A-Za-z]/),Vn=Yn(/[\dA-Za-z]/),Hn=Yn(/[#-'*+\--9=?A-Z^-~]/);function Un(e){return e!==null&&(e<32||e===127)}var Wn=Yn(/\d/),Gn=Yn(/[\dA-Fa-f]/),Kn=Yn(/[!-/:-@[-`{-~]/);function F(e){return e!==null&&e<-2}function I(e){return e!==null&&(e<0||e===32)}function L(e){return e===-2||e===-1||e===32}var qn=Yn(/\p{P}|\p{S}/u),Jn=Yn(/\s/);function Yn(e){return t;function t(t){return t!==null&&t>-1&&e.test(String.fromCharCode(t))}}function Xn(e){let t=[],n=-1,r=0,i=0;for(;++n<e.length;){let a=e.charCodeAt(n),o=``;if(a===37&&Vn(e.charCodeAt(n+1))&&Vn(e.charCodeAt(n+2)))i=2;else if(a<128)/[!#$&-;=?-Z_a-z~]/.test(String.fromCharCode(a))||(o=String.fromCharCode(a));else if(a>55295&&a<57344){let t=e.charCodeAt(n+1);a<56320&&t>56319&&t<57344?(o=String.fromCharCode(a,t),i=1):o=`�`}else o=String.fromCharCode(a);o&&=(t.push(e.slice(r,n),encodeURIComponent(o)),r=n+i+1,``),i&&=(n+=i,0)}return t.join(``)+e.slice(r)}function R(e,t,n,r){let i=r?r-1:1/0,a=0;return o;function o(r){return L(r)?(e.enter(n),s(r)):t(r)}function s(r){return L(r)&&a++<i?(e.consume(r),s):(e.exit(n),t(r))}}var Zn={tokenize:Qn};function Qn(e){let t=e.attempt(this.parser.constructs.contentInitial,r,i),n;return t;function r(n){if(n===null){e.consume(n);return}return e.enter(`lineEnding`),e.consume(n),e.exit(`lineEnding`),R(e,t,`linePrefix`)}function i(t){return e.enter(`paragraph`),a(t)}function a(t){let r=e.enter(`chunkText`,{contentType:`text`,previous:n});return n&&(n.next=r),n=r,o(t)}function o(t){if(t===null){e.exit(`chunkText`),e.exit(`paragraph`),e.consume(t);return}return F(t)?(e.consume(t),e.exit(`chunkText`),a):(e.consume(t),o)}}var $n={tokenize:tr},er={tokenize:nr};function tr(e){let t=this,n=[],r=0,i,a,o;return s;function s(i){if(r<n.length){let a=n[r];return t.containerState=a[1],e.attempt(a[0].continuation,c,l)(i)}return l(i)}function c(e){if(r++,t.containerState._closeFlow){t.containerState._closeFlow=void 0,i&&v();let n=t.events.length,a=n,o;for(;a--;)if(t.events[a][0]===`exit`&&t.events[a][1].type===`chunkFlow`){o=t.events[a][1].end;break}_(r);let s=n;for(;s<t.events.length;)t.events[s][1].end={...o},s++;return Mn(t.events,a+1,0,t.events.slice(n)),t.events.length=s,l(e)}return s(e)}function l(a){if(r===n.length){if(!i)return f(a);if(i.currentConstruct&&i.currentConstruct.concrete)return m(a);t.interrupt=!!(i.currentConstruct&&!i._gfmTableDynamicInterruptHack)}return t.containerState={},e.check(er,u,d)(a)}function u(e){return i&&v(),_(r),f(e)}function d(e){return t.parser.lazy[t.now().line]=r!==n.length,o=t.now().offset,m(e)}function f(n){return t.containerState={},e.attempt(er,p,m)(n)}function p(e){return r++,n.push([t.currentConstruct,t.containerState]),f(e)}function m(n){if(n===null){i&&v(),_(0),e.consume(n);return}return i||=t.parser.flow(t.now()),e.enter(`chunkFlow`,{_tokenizer:i,contentType:`flow`,previous:a}),h(n)}function h(n){if(n===null){g(e.exit(`chunkFlow`),!0),_(0),e.consume(n);return}return F(n)?(e.consume(n),g(e.exit(`chunkFlow`)),r=0,t.interrupt=void 0,s):(e.consume(n),h)}function g(e,n){let s=t.sliceStream(e);if(n&&s.push(null),e.previous=a,a&&(a.next=e),a=e,i.defineSkip(e.start),i.write(s),t.parser.lazy[e.start.line]){let e=i.events.length;for(;e--;)if(i.events[e][1].start.offset<o&&(!i.events[e][1].end||i.events[e][1].end.offset>o))return;let n=t.events.length,a=n,s,c;for(;a--;)if(t.events[a][0]===`exit`&&t.events[a][1].type===`chunkFlow`){if(s){c=t.events[a][1].end;break}s=!0}for(_(r),e=n;e<t.events.length;)t.events[e][1].end={...c},e++;Mn(t.events,a+1,0,t.events.slice(n)),t.events.length=e}}function _(r){let i=n.length;for(;i-->r;){let r=n[i];t.containerState=r[1],r[0].exit.call(t,e)}n.length=r}function v(){i.write([null]),a=void 0,i=void 0,t.containerState._closeFlow=void 0}}function nr(e,t,n){return R(e,e.attempt(this.parser.constructs.document,t,n),`linePrefix`,this.parser.constructs.disable.null.includes(`codeIndented`)?void 0:4)}function rr(e){if(e===null||I(e)||Jn(e))return 1;if(qn(e))return 2}function ir(e,t,n){let r=[],i=-1;for(;++i<e.length;){let a=e[i].resolveAll;a&&!r.includes(a)&&(t=a(t,n),r.push(a))}return t}var ar={name:`attention`,resolveAll:or,tokenize:sr};function or(e,t){let n=-1,r,i,a,o,s,c,l,u;for(;++n<e.length;)if(e[n][0]===`enter`&&e[n][1].type===`attentionSequence`&&e[n][1]._close){for(r=n;r--;)if(e[r][0]===`exit`&&e[r][1].type===`attentionSequence`&&e[r][1]._open&&t.sliceSerialize(e[r][1]).charCodeAt(0)===t.sliceSerialize(e[n][1]).charCodeAt(0)){if((e[r][1]._close||e[n][1]._open)&&(e[n][1].end.offset-e[n][1].start.offset)%3&&!((e[r][1].end.offset-e[r][1].start.offset+e[n][1].end.offset-e[n][1].start.offset)%3))continue;c=e[r][1].end.offset-e[r][1].start.offset>1&&e[n][1].end.offset-e[n][1].start.offset>1?2:1;let d={...e[r][1].end},f={...e[n][1].start};cr(d,-c),cr(f,c),o={type:c>1?`strongSequence`:`emphasisSequence`,start:d,end:{...e[r][1].end}},s={type:c>1?`strongSequence`:`emphasisSequence`,start:{...e[n][1].start},end:f},a={type:c>1?`strongText`:`emphasisText`,start:{...e[r][1].end},end:{...e[n][1].start}},i={type:c>1?`strong`:`emphasis`,start:{...o.start},end:{...s.end}},e[r][1].end={...o.start},e[n][1].start={...s.end},l=[],e[r][1].end.offset-e[r][1].start.offset&&(l=Nn(l,[[`enter`,e[r][1],t],[`exit`,e[r][1],t]])),l=Nn(l,[[`enter`,i,t],[`enter`,o,t],[`exit`,o,t],[`enter`,a,t]]),l=Nn(l,ir(t.parser.constructs.insideSpan.null,e.slice(r+1,n),t)),l=Nn(l,[[`exit`,a,t],[`enter`,s,t],[`exit`,s,t],[`exit`,i,t]]),e[n][1].end.offset-e[n][1].start.offset?(u=2,l=Nn(l,[[`enter`,e[n][1],t],[`exit`,e[n][1],t]])):u=0,Mn(e,r-1,n-r+3,l),n=r+l.length-u-2;break}}for(n=-1;++n<e.length;)e[n][1].type===`attentionSequence`&&(e[n][1].type=`data`);return e}function sr(e,t){let n=this.parser.constructs.attentionMarkers.null,r=this.previous,i=rr(r),a;return o;function o(t){return a=t,e.enter(`attentionSequence`),s(t)}function s(o){if(o===a)return e.consume(o),s;let c=e.exit(`attentionSequence`),l=rr(o),u=!l||l===2&&i||n.includes(o),d=!i||i===2&&l||n.includes(r);return c._open=!!(a===42?u:u&&(i||!d)),c._close=!!(a===42?d:d&&(l||!u)),t(o)}}function cr(e,t){e.column+=t,e.offset+=t,e._bufferIndex+=t}var lr={name:`autolink`,tokenize:ur};function ur(e,t,n){let r=0;return i;function i(t){return e.enter(`autolink`),e.enter(`autolinkMarker`),e.consume(t),e.exit(`autolinkMarker`),e.enter(`autolinkProtocol`),a}function a(t){return Bn(t)?(e.consume(t),o):t===64?n(t):l(t)}function o(e){return e===43||e===45||e===46||Vn(e)?(r=1,s(e)):l(e)}function s(t){return t===58?(e.consume(t),r=0,c):(t===43||t===45||t===46||Vn(t))&&r++<32?(e.consume(t),s):(r=0,l(t))}function c(r){return r===62?(e.exit(`autolinkProtocol`),e.enter(`autolinkMarker`),e.consume(r),e.exit(`autolinkMarker`),e.exit(`autolink`),t):r===null||r===32||r===60||Un(r)?n(r):(e.consume(r),c)}function l(t){return t===64?(e.consume(t),u):Hn(t)?(e.consume(t),l):n(t)}function u(e){return Vn(e)?d(e):n(e)}function d(n){return n===46?(e.consume(n),r=0,u):n===62?(e.exit(`autolinkProtocol`).type=`autolinkEmail`,e.enter(`autolinkMarker`),e.consume(n),e.exit(`autolinkMarker`),e.exit(`autolink`),t):f(n)}function f(t){if((t===45||Vn(t))&&r++<63){let n=t===45?f:d;return e.consume(t),n}return n(t)}}var dr={partial:!0,tokenize:fr};function fr(e,t,n){return r;function r(t){return L(t)?R(e,i,`linePrefix`)(t):i(t)}function i(e){return e===null||F(e)?t(e):n(e)}}var pr={continuation:{tokenize:hr},exit:gr,name:`blockQuote`,tokenize:mr};function mr(e,t,n){let r=this;return i;function i(t){if(t===62){let n=r.containerState;return n.open||=(e.enter(`blockQuote`,{_container:!0}),!0),e.enter(`blockQuotePrefix`),e.enter(`blockQuoteMarker`),e.consume(t),e.exit(`blockQuoteMarker`),a}return n(t)}function a(n){return L(n)?(e.enter(`blockQuotePrefixWhitespace`),e.consume(n),e.exit(`blockQuotePrefixWhitespace`),e.exit(`blockQuotePrefix`),t):(e.exit(`blockQuotePrefix`),t(n))}}function hr(e,t,n){let r=this;return i;function i(t){return L(t)?R(e,a,`linePrefix`,r.parser.constructs.disable.null.includes(`codeIndented`)?void 0:4)(t):a(t)}function a(r){return e.attempt(pr,t,n)(r)}}function gr(e){e.exit(`blockQuote`)}var _r={name:`characterEscape`,tokenize:vr};function vr(e,t,n){return r;function r(t){return e.enter(`characterEscape`),e.enter(`escapeMarker`),e.consume(t),e.exit(`escapeMarker`),i}function i(r){return Kn(r)?(e.enter(`characterEscapeValue`),e.consume(r),e.exit(`characterEscapeValue`),e.exit(`characterEscape`),t):n(r)}}var yr={name:`characterReference`,tokenize:br};function br(e,t,n){let r=this,i=0,a,o;return s;function s(t){return e.enter(`characterReference`),e.enter(`characterReferenceMarker`),e.consume(t),e.exit(`characterReferenceMarker`),c}function c(t){return t===35?(e.enter(`characterReferenceMarkerNumeric`),e.consume(t),e.exit(`characterReferenceMarkerNumeric`),l):(e.enter(`characterReferenceValue`),a=31,o=Vn,u(t))}function l(t){return t===88||t===120?(e.enter(`characterReferenceMarkerHexadecimal`),e.consume(t),e.exit(`characterReferenceMarkerHexadecimal`),e.enter(`characterReferenceValue`),a=6,o=Gn,u):(e.enter(`characterReferenceValue`),a=7,o=Wn,u(t))}function u(s){if(s===59&&i){let i=e.exit(`characterReferenceValue`);return o===Vn&&!jn(r.sliceSerialize(i))?n(s):(e.enter(`characterReferenceMarker`),e.consume(s),e.exit(`characterReferenceMarker`),e.exit(`characterReference`),t)}return o(s)&&i++<a?(e.consume(s),u):n(s)}}var xr={partial:!0,tokenize:wr},Sr={concrete:!0,name:`codeFenced`,tokenize:Cr};function Cr(e,t,n){let r=this,i={partial:!0,tokenize:x},a=0,o=0,s;return c;function c(e){return l(e)}function l(t){let n=r.events[r.events.length-1];return a=n&&n[1].type===`linePrefix`?n[2].sliceSerialize(n[1],!0).length:0,s=t,e.enter(`codeFenced`),e.enter(`codeFencedFence`),e.enter(`codeFencedFenceSequence`),u(t)}function u(t){return t===s?(o++,e.consume(t),u):o<3?n(t):(e.exit(`codeFencedFenceSequence`),L(t)?R(e,d,`whitespace`)(t):d(t))}function d(n){return n===null||F(n)?(e.exit(`codeFencedFence`),r.interrupt?t(n):e.check(xr,h,b)(n)):(e.enter(`codeFencedFenceInfo`),e.enter(`chunkString`,{contentType:`string`}),f(n))}function f(t){return t===null||F(t)?(e.exit(`chunkString`),e.exit(`codeFencedFenceInfo`),d(t)):L(t)?(e.exit(`chunkString`),e.exit(`codeFencedFenceInfo`),R(e,p,`whitespace`)(t)):t===96&&t===s?n(t):(e.consume(t),f)}function p(t){return t===null||F(t)?d(t):(e.enter(`codeFencedFenceMeta`),e.enter(`chunkString`,{contentType:`string`}),m(t))}function m(t){return t===null||F(t)?(e.exit(`chunkString`),e.exit(`codeFencedFenceMeta`),d(t)):t===96&&t===s?n(t):(e.consume(t),m)}function h(t){return e.attempt(i,b,g)(t)}function g(t){return e.enter(`lineEnding`),e.consume(t),e.exit(`lineEnding`),_}function _(t){return a>0&&L(t)?R(e,v,`linePrefix`,a+1)(t):v(t)}function v(t){return t===null||F(t)?e.check(xr,h,b)(t):(e.enter(`codeFlowValue`),y(t))}function y(t){return t===null||F(t)?(e.exit(`codeFlowValue`),v(t)):(e.consume(t),y)}function b(n){return e.exit(`codeFenced`),t(n)}function x(e,t,n){let i=0;return a;function a(t){return e.enter(`lineEnding`),e.consume(t),e.exit(`lineEnding`),c}function c(t){return e.enter(`codeFencedFence`),L(t)?R(e,l,`linePrefix`,r.parser.constructs.disable.null.includes(`codeIndented`)?void 0:4)(t):l(t)}function l(t){return t===s?(e.enter(`codeFencedFenceSequence`),u(t)):n(t)}function u(t){return t===s?(i++,e.consume(t),u):i>=o?(e.exit(`codeFencedFenceSequence`),L(t)?R(e,d,`whitespace`)(t):d(t)):n(t)}function d(r){return r===null||F(r)?(e.exit(`codeFencedFence`),t(r)):n(r)}}}function wr(e,t,n){let r=this;return i;function i(t){return t===null?n(t):(e.enter(`lineEnding`),e.consume(t),e.exit(`lineEnding`),a)}function a(e){return r.parser.lazy[r.now().line]?n(e):t(e)}}var Tr={name:`codeIndented`,tokenize:Dr},Er={partial:!0,tokenize:Or};function Dr(e,t,n){let r=this;return i;function i(t){return e.enter(`codeIndented`),R(e,a,`linePrefix`,5)(t)}function a(e){let t=r.events[r.events.length-1];return t&&t[1].type===`linePrefix`&&t[2].sliceSerialize(t[1],!0).length>=4?o(e):n(e)}function o(t){return t===null?c(t):F(t)?e.attempt(Er,o,c)(t):(e.enter(`codeFlowValue`),s(t))}function s(t){return t===null||F(t)?(e.exit(`codeFlowValue`),o(t)):(e.consume(t),s)}function c(n){return e.exit(`codeIndented`),t(n)}}function Or(e,t,n){let r=this;return i;function i(t){return r.parser.lazy[r.now().line]?n(t):F(t)?(e.enter(`lineEnding`),e.consume(t),e.exit(`lineEnding`),i):R(e,a,`linePrefix`,5)(t)}function a(e){let a=r.events[r.events.length-1];return a&&a[1].type===`linePrefix`&&a[2].sliceSerialize(a[1],!0).length>=4?t(e):F(e)?i(e):n(e)}}var kr={name:`codeText`,previous:jr,resolve:Ar,tokenize:Mr};function Ar(e){let t=e.length-4,n=3,r,i;if((e[n][1].type===`lineEnding`||e[n][1].type===`space`)&&(e[t][1].type===`lineEnding`||e[t][1].type===`space`)){for(r=n;++r<t;)if(e[r][1].type===`codeTextData`){e[n][1].type=`codeTextPadding`,e[t][1].type=`codeTextPadding`,n+=2,t-=2;break}}for(r=n-1,t++;++r<=t;)i===void 0?r!==t&&e[r][1].type!==`lineEnding`&&(i=r):(r===t||e[r][1].type===`lineEnding`)&&(e[i][1].type=`codeTextData`,r!==i+2&&(e[i][1].end=e[r-1][1].end,e.splice(i+2,r-i-2),t-=r-i-2,r=i+2),i=void 0);return e}function jr(e){return e!==96||this.events[this.events.length-1][1].type===`characterEscape`}function Mr(e,t,n){let r=0,i,a;return o;function o(t){return e.enter(`codeText`),e.enter(`codeTextSequence`),s(t)}function s(t){return t===96?(e.consume(t),r++,s):(e.exit(`codeTextSequence`),c(t))}function c(t){return t===null?n(t):t===32?(e.enter(`space`),e.consume(t),e.exit(`space`),c):t===96?(a=e.enter(`codeTextSequence`),i=0,u(t)):F(t)?(e.enter(`lineEnding`),e.consume(t),e.exit(`lineEnding`),c):(e.enter(`codeTextData`),l(t))}function l(t){return t===null||t===32||t===96||F(t)?(e.exit(`codeTextData`),c(t)):(e.consume(t),l)}function u(n){return n===96?(e.consume(n),i++,u):i===r?(e.exit(`codeTextSequence`),e.exit(`codeText`),t(n)):(a.type=`codeTextData`,l(n))}}var Nr=class{constructor(e){this.left=e?[...e]:[],this.right=[]}get(e){if(e<0||e>=this.left.length+this.right.length)throw RangeError("Cannot access index `"+e+"` in a splice buffer of size `"+(this.left.length+this.right.length)+"`");return e<this.left.length?this.left[e]:this.right[this.right.length-e+this.left.length-1]}get length(){return this.left.length+this.right.length}shift(){return this.setCursor(0),this.right.pop()}slice(e,t){let n=t??1/0;return n<this.left.length?this.left.slice(e,n):e>this.left.length?this.right.slice(this.right.length-n+this.left.length,this.right.length-e+this.left.length).reverse():this.left.slice(e).concat(this.right.slice(this.right.length-n+this.left.length).reverse())}splice(e,t,n){let r=t||0;this.setCursor(Math.trunc(e));let i=this.right.splice(this.right.length-r,1/0);return n&&Pr(this.left,n),i.reverse()}pop(){return this.setCursor(1/0),this.left.pop()}push(e){this.setCursor(1/0),this.left.push(e)}pushMany(e){this.setCursor(1/0),Pr(this.left,e)}unshift(e){this.setCursor(0),this.right.push(e)}unshiftMany(e){this.setCursor(0),Pr(this.right,e.reverse())}setCursor(e){if(!(e===this.left.length||e>this.left.length&&this.right.length===0||e<0&&this.left.length===0))if(e<this.left.length){let t=this.left.splice(e,1/0);Pr(this.right,t.reverse())}else{let t=this.right.splice(this.left.length+this.right.length-e,1/0);Pr(this.left,t.reverse())}}};function Pr(e,t){let n=0;if(t.length<1e4)e.push(...t);else for(;n<t.length;)e.push(...t.slice(n,n+1e4)),n+=1e4}function Fr(e){let t={},n=-1,r,i,a,o,s,c,l,u=new Nr(e);for(;++n<u.length;){for(;n in t;)n=t[n];if(r=u.get(n),n&&r[1].type===`chunkFlow`&&u.get(n-1)[1].type===`listItemPrefix`&&(c=r[1]._tokenizer.events,a=0,a<c.length&&c[a][1].type===`lineEndingBlank`&&(a+=2),a<c.length&&c[a][1].type===`content`))for(;++a<c.length&&c[a][1].type!==`content`;)c[a][1].type===`chunkText`&&(c[a][1]._isInFirstContentOfListItem=!0,a++);if(r[0]===`enter`)r[1].contentType&&(Object.assign(t,Ir(u,n)),n=t[n],l=!0);else if(r[1]._container){for(a=n,i=void 0;a--;)if(o=u.get(a),o[1].type===`lineEnding`||o[1].type===`lineEndingBlank`)o[0]===`enter`&&(i&&(u.get(i)[1].type=`lineEndingBlank`),o[1].type=`lineEnding`,i=a);else if(!(o[1].type===`linePrefix`||o[1].type===`listItemIndent`))break;i&&(r[1].end={...u.get(i)[1].start},s=u.slice(i,n),s.unshift(r),u.splice(i,n-i+1,s))}}return Mn(e,0,1/0,u.slice(0)),!l}function Ir(e,t){let n=e.get(t)[1],r=e.get(t)[2],i=t-1,a=[],o=n._tokenizer;o||(o=r.parser[n.contentType](n.start),n._contentTypeTextTrailing&&(o._contentTypeTextTrailing=!0));let s=o.events,c=[],l={},u,d,f=-1,p=n,m=0,h=0,g=[h];for(;p;){for(;e.get(++i)[1]!==p;);a.push(i),p._tokenizer||(u=r.sliceStream(p),p.next||u.push(null),d&&o.defineSkip(p.start),p._isInFirstContentOfListItem&&(o._gfmTasklistFirstContentOfListItem=!0),o.write(u),p._isInFirstContentOfListItem&&(o._gfmTasklistFirstContentOfListItem=void 0)),d=p,p=p.next}for(p=n;++f<s.length;)s[f][0]===`exit`&&s[f-1][0]===`enter`&&s[f][1].type===s[f-1][1].type&&s[f][1].start.line!==s[f][1].end.line&&(h=f+1,g.push(h),p._tokenizer=void 0,p.previous=void 0,p=p.next);for(o.events=[],p?(p._tokenizer=void 0,p.previous=void 0):g.pop(),f=g.length;f--;){let t=s.slice(g[f],g[f+1]),n=a.pop();c.push([n,n+t.length-1]),e.splice(n,2,t)}for(c.reverse(),f=-1;++f<c.length;)l[m+c[f][0]]=m+c[f][1],m+=c[f][1]-c[f][0]-1;return l}var Lr={resolve:zr,tokenize:Br},Rr={partial:!0,tokenize:Vr};function zr(e){return Fr(e),e}function Br(e,t){let n;return r;function r(t){return e.enter(`content`),n=e.enter(`chunkContent`,{contentType:`content`}),i(t)}function i(t){return t===null?a(t):F(t)?e.check(Rr,o,a)(t):(e.consume(t),i)}function a(n){return e.exit(`chunkContent`),e.exit(`content`),t(n)}function o(t){return e.consume(t),e.exit(`chunkContent`),n.next=e.enter(`chunkContent`,{contentType:`content`,previous:n}),n=n.next,i}}function Vr(e,t,n){let r=this;return i;function i(t){return e.exit(`chunkContent`),e.enter(`lineEnding`),e.consume(t),e.exit(`lineEnding`),R(e,a,`linePrefix`)}function a(i){if(i===null||F(i))return n(i);let a=r.events[r.events.length-1];return!r.parser.constructs.disable.null.includes(`codeIndented`)&&a&&a[1].type===`linePrefix`&&a[2].sliceSerialize(a[1],!0).length>=4?t(i):e.interrupt(r.parser.constructs.flow,n,t)(i)}}function Hr(e,t,n,r,i,a,o,s,c){let l=c||1/0,u=0;return d;function d(t){return t===60?(e.enter(r),e.enter(i),e.enter(a),e.consume(t),e.exit(a),f):t===null||t===32||t===41||Un(t)?n(t):(e.enter(r),e.enter(o),e.enter(s),e.enter(`chunkString`,{contentType:`string`}),h(t))}function f(n){return n===62?(e.enter(a),e.consume(n),e.exit(a),e.exit(i),e.exit(r),t):(e.enter(s),e.enter(`chunkString`,{contentType:`string`}),p(n))}function p(t){return t===62?(e.exit(`chunkString`),e.exit(s),f(t)):t===null||t===60||F(t)?n(t):(e.consume(t),t===92?m:p)}function m(t){return t===60||t===62||t===92?(e.consume(t),p):p(t)}function h(i){return!u&&(i===null||i===41||I(i))?(e.exit(`chunkString`),e.exit(s),e.exit(o),e.exit(r),t(i)):u<l&&i===40?(e.consume(i),u++,h):i===41?(e.consume(i),u--,h):i===null||i===32||i===40||Un(i)?n(i):(e.consume(i),i===92?g:h)}function g(t){return t===40||t===41||t===92?(e.consume(t),h):h(t)}}function Ur(e,t,n,r,i,a){let o=this,s=0,c;return l;function l(t){return e.enter(r),e.enter(i),e.consume(t),e.exit(i),e.enter(a),u}function u(l){return s>999||l===null||l===91||l===93&&!c||l===94&&!s&&`_hiddenFootnoteSupport`in o.parser.constructs?n(l):l===93?(e.exit(a),e.enter(i),e.consume(l),e.exit(i),e.exit(r),t):F(l)?(e.enter(`lineEnding`),e.consume(l),e.exit(`lineEnding`),u):(e.enter(`chunkString`,{contentType:`string`}),d(l))}function d(t){return t===null||t===91||t===93||F(t)||s++>999?(e.exit(`chunkString`),u(t)):(e.consume(t),c||=!L(t),t===92?f:d)}function f(t){return t===91||t===92||t===93?(e.consume(t),s++,d):d(t)}}function Wr(e,t,n,r,i,a){let o;return s;function s(t){return t===34||t===39||t===40?(e.enter(r),e.enter(i),e.consume(t),e.exit(i),o=t===40?41:t,c):n(t)}function c(n){return n===o?(e.enter(i),e.consume(n),e.exit(i),e.exit(r),t):(e.enter(a),l(n))}function l(t){return t===o?(e.exit(a),c(o)):t===null?n(t):F(t)?(e.enter(`lineEnding`),e.consume(t),e.exit(`lineEnding`),R(e,l,`linePrefix`)):(e.enter(`chunkString`,{contentType:`string`}),u(t))}function u(t){return t===o||t===null||F(t)?(e.exit(`chunkString`),l(t)):(e.consume(t),t===92?d:u)}function d(t){return t===o||t===92?(e.consume(t),u):u(t)}}function Gr(e,t){let n;return r;function r(i){return F(i)?(e.enter(`lineEnding`),e.consume(i),e.exit(`lineEnding`),n=!0,r):L(i)?R(e,r,n?`linePrefix`:`lineSuffix`)(i):t(i)}}var Kr={name:`definition`,tokenize:Jr},qr={partial:!0,tokenize:Yr};function Jr(e,t,n){let r=this,i;return a;function a(t){return e.enter(`definition`),o(t)}function o(t){return Ur.call(r,e,s,n,`definitionLabel`,`definitionLabelMarker`,`definitionLabelString`)(t)}function s(t){return i=zn(r.sliceSerialize(r.events[r.events.length-1][1]).slice(1,-1)),t===58?(e.enter(`definitionMarker`),e.consume(t),e.exit(`definitionMarker`),c):n(t)}function c(t){return I(t)?Gr(e,l)(t):l(t)}function l(t){return Hr(e,u,n,`definitionDestination`,`definitionDestinationLiteral`,`definitionDestinationLiteralMarker`,`definitionDestinationRaw`,`definitionDestinationString`)(t)}function u(t){return e.attempt(qr,d,d)(t)}function d(t){return L(t)?R(e,f,`whitespace`)(t):f(t)}function f(a){return a===null||F(a)?(e.exit(`definition`),r.parser.defined.push(i),t(a)):n(a)}}function Yr(e,t,n){return r;function r(t){return I(t)?Gr(e,i)(t):n(t)}function i(t){return Wr(e,a,n,`definitionTitle`,`definitionTitleMarker`,`definitionTitleString`)(t)}function a(t){return L(t)?R(e,o,`whitespace`)(t):o(t)}function o(e){return e===null||F(e)?t(e):n(e)}}var Xr={name:`hardBreakEscape`,tokenize:Zr};function Zr(e,t,n){return r;function r(t){return e.enter(`hardBreakEscape`),e.consume(t),i}function i(r){return F(r)?(e.exit(`hardBreakEscape`),t(r)):n(r)}}var Qr={name:`headingAtx`,resolve:$r,tokenize:ei};function $r(e,t){let n=e.length-2,r=3,i,a;return e[r][1].type===`whitespace`&&(r+=2),n-2>r&&e[n][1].type===`whitespace`&&(n-=2),e[n][1].type===`atxHeadingSequence`&&(r===n-1||n-4>r&&e[n-2][1].type===`whitespace`)&&(n-=r+1===n?2:4),n>r&&(i={type:`atxHeadingText`,start:e[r][1].start,end:e[n][1].end},a={type:`chunkText`,start:e[r][1].start,end:e[n][1].end,contentType:`text`},Mn(e,r,n-r+1,[[`enter`,i,t],[`enter`,a,t],[`exit`,a,t],[`exit`,i,t]])),e}function ei(e,t,n){let r=0;return i;function i(t){return e.enter(`atxHeading`),a(t)}function a(t){return e.enter(`atxHeadingSequence`),o(t)}function o(t){return t===35&&r++<6?(e.consume(t),o):t===null||I(t)?(e.exit(`atxHeadingSequence`),s(t)):n(t)}function s(n){return n===35?(e.enter(`atxHeadingSequence`),c(n)):n===null||F(n)?(e.exit(`atxHeading`),t(n)):L(n)?R(e,s,`whitespace`)(n):(e.enter(`atxHeadingText`),l(n))}function c(t){return t===35?(e.consume(t),c):(e.exit(`atxHeadingSequence`),s(t))}function l(t){return t===null||t===35||I(t)?(e.exit(`atxHeadingText`),s(t)):(e.consume(t),l)}}var ti=`address.article.aside.base.basefont.blockquote.body.caption.center.col.colgroup.dd.details.dialog.dir.div.dl.dt.fieldset.figcaption.figure.footer.form.frame.frameset.h1.h2.h3.h4.h5.h6.head.header.hr.html.iframe.legend.li.link.main.menu.menuitem.nav.noframes.ol.optgroup.option.p.param.search.section.summary.table.tbody.td.tfoot.th.thead.title.tr.track.ul`.split(`.`),ni=[`pre`,`script`,`style`,`textarea`],ri={concrete:!0,name:`htmlFlow`,resolveTo:oi,tokenize:si},ii={partial:!0,tokenize:li},ai={partial:!0,tokenize:ci};function oi(e){let t=e.length;for(;t--&&!(e[t][0]===`enter`&&e[t][1].type===`htmlFlow`););return t>1&&e[t-2][1].type===`linePrefix`&&(e[t][1].start=e[t-2][1].start,e[t+1][1].start=e[t-2][1].start,e.splice(t-2,2)),e}function si(e,t,n){let r=this,i,a,o,s,c;return l;function l(e){return u(e)}function u(t){return e.enter(`htmlFlow`),e.enter(`htmlFlowData`),e.consume(t),d}function d(s){return s===33?(e.consume(s),f):s===47?(e.consume(s),a=!0,h):s===63?(e.consume(s),i=3,r.interrupt?t:O):Bn(s)?(e.consume(s),o=String.fromCharCode(s),g):n(s)}function f(a){return a===45?(e.consume(a),i=2,p):a===91?(e.consume(a),i=5,s=0,m):Bn(a)?(e.consume(a),i=4,r.interrupt?t:O):n(a)}function p(i){return i===45?(e.consume(i),r.interrupt?t:O):n(i)}function m(i){return i===`CDATA[`.charCodeAt(s++)?(e.consume(i),s===6?r.interrupt?t:D:m):n(i)}function h(t){return Bn(t)?(e.consume(t),o=String.fromCharCode(t),g):n(t)}function g(s){if(s===null||s===47||s===62||I(s)){let c=s===47,l=o.toLowerCase();return!c&&!a&&ni.includes(l)?(i=1,r.interrupt?t(s):D(s)):ti.includes(o.toLowerCase())?(i=6,c?(e.consume(s),_):r.interrupt?t(s):D(s)):(i=7,r.interrupt&&!r.parser.lazy[r.now().line]?n(s):a?v(s):y(s))}return s===45||Vn(s)?(e.consume(s),o+=String.fromCharCode(s),g):n(s)}function _(i){return i===62?(e.consume(i),r.interrupt?t:D):n(i)}function v(t){return L(t)?(e.consume(t),v):E(t)}function y(t){return t===47?(e.consume(t),E):t===58||t===95||Bn(t)?(e.consume(t),b):L(t)?(e.consume(t),y):E(t)}function b(t){return t===45||t===46||t===58||t===95||Vn(t)?(e.consume(t),b):x(t)}function x(t){return t===61?(e.consume(t),S):L(t)?(e.consume(t),x):y(t)}function S(t){return t===null||t===60||t===61||t===62||t===96?n(t):t===34||t===39?(e.consume(t),c=t,C):L(t)?(e.consume(t),S):w(t)}function C(t){return t===c?(e.consume(t),c=null,T):t===null||F(t)?n(t):(e.consume(t),C)}function w(t){return t===null||t===34||t===39||t===47||t===60||t===61||t===62||t===96||I(t)?x(t):(e.consume(t),w)}function T(e){return e===47||e===62||L(e)?y(e):n(e)}function E(t){return t===62?(e.consume(t),ee):n(t)}function ee(t){return t===null||F(t)?D(t):L(t)?(e.consume(t),ee):n(t)}function D(t){return t===45&&i===2?(e.consume(t),ie):t===60&&i===1?(e.consume(t),ae):t===62&&i===4?(e.consume(t),k):t===63&&i===3?(e.consume(t),O):t===93&&i===5?(e.consume(t),se):F(t)&&(i===6||i===7)?(e.exit(`htmlFlowData`),e.check(ii,ce,te)(t)):t===null||F(t)?(e.exit(`htmlFlowData`),te(t)):(e.consume(t),D)}function te(t){return e.check(ai,ne,ce)(t)}function ne(t){return e.enter(`lineEnding`),e.consume(t),e.exit(`lineEnding`),re}function re(t){return t===null||F(t)?te(t):(e.enter(`htmlFlowData`),D(t))}function ie(t){return t===45?(e.consume(t),O):D(t)}function ae(t){return t===47?(e.consume(t),o=``,oe):D(t)}function oe(t){if(t===62){let n=o.toLowerCase();return ni.includes(n)?(e.consume(t),k):D(t)}return Bn(t)&&o.length<8?(e.consume(t),o+=String.fromCharCode(t),oe):D(t)}function se(t){return t===93?(e.consume(t),O):D(t)}function O(t){return t===62?(e.consume(t),k):t===45&&i===2?(e.consume(t),O):D(t)}function k(t){return t===null||F(t)?(e.exit(`htmlFlowData`),ce(t)):(e.consume(t),k)}function ce(n){return e.exit(`htmlFlow`),t(n)}}function ci(e,t,n){let r=this;return i;function i(t){return F(t)?(e.enter(`lineEnding`),e.consume(t),e.exit(`lineEnding`),a):n(t)}function a(e){return r.parser.lazy[r.now().line]?n(e):t(e)}}function li(e,t,n){return r;function r(r){return e.enter(`lineEnding`),e.consume(r),e.exit(`lineEnding`),e.attempt(dr,t,n)}}var ui={name:`htmlText`,tokenize:di};function di(e,t,n){let r=this,i,a,o;return s;function s(t){return e.enter(`htmlText`),e.enter(`htmlTextData`),e.consume(t),c}function c(t){return t===33?(e.consume(t),l):t===47?(e.consume(t),x):t===63?(e.consume(t),y):Bn(t)?(e.consume(t),w):n(t)}function l(t){return t===45?(e.consume(t),u):t===91?(e.consume(t),a=0,m):Bn(t)?(e.consume(t),v):n(t)}function u(t){return t===45?(e.consume(t),p):n(t)}function d(t){return t===null?n(t):t===45?(e.consume(t),f):F(t)?(o=d,ae(t)):(e.consume(t),d)}function f(t){return t===45?(e.consume(t),p):d(t)}function p(e){return e===62?ie(e):e===45?f(e):d(e)}function m(t){return t===`CDATA[`.charCodeAt(a++)?(e.consume(t),a===6?h:m):n(t)}function h(t){return t===null?n(t):t===93?(e.consume(t),g):F(t)?(o=h,ae(t)):(e.consume(t),h)}function g(t){return t===93?(e.consume(t),_):h(t)}function _(t){return t===62?ie(t):t===93?(e.consume(t),_):h(t)}function v(t){return t===null||t===62?ie(t):F(t)?(o=v,ae(t)):(e.consume(t),v)}function y(t){return t===null?n(t):t===63?(e.consume(t),b):F(t)?(o=y,ae(t)):(e.consume(t),y)}function b(e){return e===62?ie(e):y(e)}function x(t){return Bn(t)?(e.consume(t),S):n(t)}function S(t){return t===45||Vn(t)?(e.consume(t),S):C(t)}function C(t){return F(t)?(o=C,ae(t)):L(t)?(e.consume(t),C):ie(t)}function w(t){return t===45||Vn(t)?(e.consume(t),w):t===47||t===62||I(t)?T(t):n(t)}function T(t){return t===47?(e.consume(t),ie):t===58||t===95||Bn(t)?(e.consume(t),E):F(t)?(o=T,ae(t)):L(t)?(e.consume(t),T):ie(t)}function E(t){return t===45||t===46||t===58||t===95||Vn(t)?(e.consume(t),E):ee(t)}function ee(t){return t===61?(e.consume(t),D):F(t)?(o=ee,ae(t)):L(t)?(e.consume(t),ee):T(t)}function D(t){return t===null||t===60||t===61||t===62||t===96?n(t):t===34||t===39?(e.consume(t),i=t,te):F(t)?(o=D,ae(t)):L(t)?(e.consume(t),D):(e.consume(t),ne)}function te(t){return t===i?(e.consume(t),i=void 0,re):t===null?n(t):F(t)?(o=te,ae(t)):(e.consume(t),te)}function ne(t){return t===null||t===34||t===39||t===60||t===61||t===96?n(t):t===47||t===62||I(t)?T(t):(e.consume(t),ne)}function re(e){return e===47||e===62||I(e)?T(e):n(e)}function ie(r){return r===62?(e.consume(r),e.exit(`htmlTextData`),e.exit(`htmlText`),t):n(r)}function ae(t){return e.exit(`htmlTextData`),e.enter(`lineEnding`),e.consume(t),e.exit(`lineEnding`),oe}function oe(t){return L(t)?R(e,se,`linePrefix`,r.parser.constructs.disable.null.includes(`codeIndented`)?void 0:4)(t):se(t)}function se(t){return e.enter(`htmlTextData`),o(t)}}var fi={name:`labelEnd`,resolveAll:gi,resolveTo:_i,tokenize:vi},pi={tokenize:yi},mi={tokenize:bi},hi={tokenize:xi};function gi(e){let t=-1,n=[];for(;++t<e.length;){let r=e[t][1];if(n.push(e[t]),r.type===`labelImage`||r.type===`labelLink`||r.type===`labelEnd`){let e=r.type===`labelImage`?4:2;r.type=`data`,t+=e}}return e.length!==n.length&&Mn(e,0,e.length,n),e}function _i(e,t){let n=e.length,r=0,i,a,o,s;for(;n--;)if(i=e[n][1],a){if(i.type===`link`||i.type===`labelLink`&&i._inactive)break;e[n][0]===`enter`&&i.type===`labelLink`&&(i._inactive=!0)}else if(o){if(e[n][0]===`enter`&&(i.type===`labelImage`||i.type===`labelLink`)&&!i._balanced&&(a=n,i.type!==`labelLink`)){r=2;break}}else i.type===`labelEnd`&&(o=n);let c={type:e[a][1].type===`labelLink`?`link`:`image`,start:{...e[a][1].start},end:{...e[e.length-1][1].end}},l={type:`label`,start:{...e[a][1].start},end:{...e[o][1].end}},u={type:`labelText`,start:{...e[a+r+2][1].end},end:{...e[o-2][1].start}};return s=[[`enter`,c,t],[`enter`,l,t]],s=Nn(s,e.slice(a+1,a+r+3)),s=Nn(s,[[`enter`,u,t]]),s=Nn(s,ir(t.parser.constructs.insideSpan.null,e.slice(a+r+4,o-3),t)),s=Nn(s,[[`exit`,u,t],e[o-2],e[o-1],[`exit`,l,t]]),s=Nn(s,e.slice(o+1)),s=Nn(s,[[`exit`,c,t]]),Mn(e,a,e.length,s),e}function vi(e,t,n){let r=this,i=r.events.length,a,o;for(;i--;)if((r.events[i][1].type===`labelImage`||r.events[i][1].type===`labelLink`)&&!r.events[i][1]._balanced){a=r.events[i][1];break}return s;function s(t){return a?a._inactive?d(t):(o=r.parser.defined.includes(zn(r.sliceSerialize({start:a.end,end:r.now()}))),e.enter(`labelEnd`),e.enter(`labelMarker`),e.consume(t),e.exit(`labelMarker`),e.exit(`labelEnd`),c):n(t)}function c(t){return t===40?e.attempt(pi,u,o?u:d)(t):t===91?e.attempt(mi,u,o?l:d)(t):o?u(t):d(t)}function l(t){return e.attempt(hi,u,d)(t)}function u(e){return t(e)}function d(e){return a._balanced=!0,n(e)}}function yi(e,t,n){return r;function r(t){return e.enter(`resource`),e.enter(`resourceMarker`),e.consume(t),e.exit(`resourceMarker`),i}function i(t){return I(t)?Gr(e,a)(t):a(t)}function a(t){return t===41?u(t):Hr(e,o,s,`resourceDestination`,`resourceDestinationLiteral`,`resourceDestinationLiteralMarker`,`resourceDestinationRaw`,`resourceDestinationString`,32)(t)}function o(t){return I(t)?Gr(e,c)(t):u(t)}function s(e){return n(e)}function c(t){return t===34||t===39||t===40?Wr(e,l,n,`resourceTitle`,`resourceTitleMarker`,`resourceTitleString`)(t):u(t)}function l(t){return I(t)?Gr(e,u)(t):u(t)}function u(r){return r===41?(e.enter(`resourceMarker`),e.consume(r),e.exit(`resourceMarker`),e.exit(`resource`),t):n(r)}}function bi(e,t,n){let r=this;return i;function i(t){return Ur.call(r,e,a,o,`reference`,`referenceMarker`,`referenceString`)(t)}function a(e){return r.parser.defined.includes(zn(r.sliceSerialize(r.events[r.events.length-1][1]).slice(1,-1)))?t(e):n(e)}function o(e){return n(e)}}function xi(e,t,n){return r;function r(t){return e.enter(`reference`),e.enter(`referenceMarker`),e.consume(t),e.exit(`referenceMarker`),i}function i(r){return r===93?(e.enter(`referenceMarker`),e.consume(r),e.exit(`referenceMarker`),e.exit(`reference`),t):n(r)}}var Si={name:`labelStartImage`,resolveAll:fi.resolveAll,tokenize:Ci};function Ci(e,t,n){let r=this;return i;function i(t){return e.enter(`labelImage`),e.enter(`labelImageMarker`),e.consume(t),e.exit(`labelImageMarker`),a}function a(t){return t===91?(e.enter(`labelMarker`),e.consume(t),e.exit(`labelMarker`),e.exit(`labelImage`),o):n(t)}function o(e){return e===94&&`_hiddenFootnoteSupport`in r.parser.constructs?n(e):t(e)}}var wi={name:`labelStartLink`,resolveAll:fi.resolveAll,tokenize:Ti};function Ti(e,t,n){let r=this;return i;function i(t){return e.enter(`labelLink`),e.enter(`labelMarker`),e.consume(t),e.exit(`labelMarker`),e.exit(`labelLink`),a}function a(e){return e===94&&`_hiddenFootnoteSupport`in r.parser.constructs?n(e):t(e)}}var Ei={name:`lineEnding`,tokenize:Di};function Di(e,t){return n;function n(n){return e.enter(`lineEnding`),e.consume(n),e.exit(`lineEnding`),R(e,t,`linePrefix`)}}var Oi={name:`thematicBreak`,tokenize:ki};function ki(e,t,n){let r=0,i;return a;function a(t){return e.enter(`thematicBreak`),o(t)}function o(e){return i=e,s(e)}function s(a){return a===i?(e.enter(`thematicBreakSequence`),c(a)):r>=3&&(a===null||F(a))?(e.exit(`thematicBreak`),t(a)):n(a)}function c(t){return t===i?(e.consume(t),r++,c):(e.exit(`thematicBreakSequence`),L(t)?R(e,s,`whitespace`)(t):s(t))}}var Ai={continuation:{tokenize:z},exit:Pi,name:`list`,tokenize:Ni},ji={partial:!0,tokenize:Fi},Mi={partial:!0,tokenize:B};function Ni(e,t,n){let r=this,i=r.events[r.events.length-1],a=i&&i[1].type===`linePrefix`?i[2].sliceSerialize(i[1],!0).length:0,o=0;return s;function s(t){let i=r.containerState.type||(t===42||t===43||t===45?`listUnordered`:`listOrdered`);if(i===`listUnordered`?!r.containerState.marker||t===r.containerState.marker:Wn(t)){if(r.containerState.type||(r.containerState.type=i,e.enter(i,{_container:!0})),i===`listUnordered`)return e.enter(`listItemPrefix`),t===42||t===45?e.check(Oi,n,l)(t):l(t);if(!r.interrupt||t===49)return e.enter(`listItemPrefix`),e.enter(`listItemValue`),c(t)}return n(t)}function c(t){return Wn(t)&&++o<10?(e.consume(t),c):(!r.interrupt||o<2)&&(r.containerState.marker?t===r.containerState.marker:t===41||t===46)?(e.exit(`listItemValue`),l(t)):n(t)}function l(t){return e.enter(`listItemMarker`),e.consume(t),e.exit(`listItemMarker`),r.containerState.marker=r.containerState.marker||t,e.check(dr,r.interrupt?n:u,e.attempt(ji,f,d))}function u(e){return r.containerState.initialBlankLine=!0,a++,f(e)}function d(t){return L(t)?(e.enter(`listItemPrefixWhitespace`),e.consume(t),e.exit(`listItemPrefixWhitespace`),f):n(t)}function f(n){return r.containerState.size=a+r.sliceSerialize(e.exit(`listItemPrefix`),!0).length,t(n)}}function z(e,t,n){let r=this;return r.containerState._closeFlow=void 0,e.check(dr,i,a);function i(n){return r.containerState.furtherBlankLines=r.containerState.furtherBlankLines||r.containerState.initialBlankLine,R(e,t,`listItemIndent`,r.containerState.size+1)(n)}function a(n){return r.containerState.furtherBlankLines||!L(n)?(r.containerState.furtherBlankLines=void 0,r.containerState.initialBlankLine=void 0,o(n)):(r.containerState.furtherBlankLines=void 0,r.containerState.initialBlankLine=void 0,e.attempt(Mi,t,o)(n))}function o(i){return r.containerState._closeFlow=!0,r.interrupt=void 0,R(e,e.attempt(Ai,t,n),`linePrefix`,r.parser.constructs.disable.null.includes(`codeIndented`)?void 0:4)(i)}}function B(e,t,n){let r=this;return R(e,i,`listItemIndent`,r.containerState.size+1);function i(e){let i=r.events[r.events.length-1];return i&&i[1].type===`listItemIndent`&&i[2].sliceSerialize(i[1],!0).length===r.containerState.size?t(e):n(e)}}function Pi(e){e.exit(this.containerState.type)}function Fi(e,t,n){let r=this;return R(e,i,`listItemPrefixWhitespace`,r.parser.constructs.disable.null.includes(`codeIndented`)?void 0:5);function i(e){let i=r.events[r.events.length-1];return!L(e)&&i&&i[1].type===`listItemPrefixWhitespace`?t(e):n(e)}}var Ii={name:`setextUnderline`,resolveTo:Li,tokenize:Ri};function Li(e,t){let n=e.length,r,i,a;for(;n--;)if(e[n][0]===`enter`){if(e[n][1].type===`content`){r=n;break}e[n][1].type===`paragraph`&&(i=n)}else e[n][1].type===`content`&&e.splice(n,1),!a&&e[n][1].type===`definition`&&(a=n);let o={type:`setextHeading`,start:{...e[r][1].start},end:{...e[e.length-1][1].end}};return e[i][1].type=`setextHeadingText`,a?(e.splice(i,0,[`enter`,o,t]),e.splice(a+1,0,[`exit`,e[r][1],t]),e[r][1].end={...e[a][1].end}):e[r][1]=o,e.push([`exit`,o,t]),e}function Ri(e,t,n){let r=this,i;return a;function a(t){let a=r.events.length,s;for(;a--;)if(r.events[a][1].type!==`lineEnding`&&r.events[a][1].type!==`linePrefix`&&r.events[a][1].type!==`content`){s=r.events[a][1].type===`paragraph`;break}return!r.parser.lazy[r.now().line]&&(r.interrupt||s)?(e.enter(`setextHeadingLine`),i=t,o(t)):n(t)}function o(t){return e.enter(`setextHeadingLineSequence`),s(t)}function s(t){return t===i?(e.consume(t),s):(e.exit(`setextHeadingLineSequence`),L(t)?R(e,c,`lineSuffix`)(t):c(t))}function c(r){return r===null||F(r)?(e.exit(`setextHeadingLine`),t(r)):n(r)}}var zi={tokenize:Bi};function Bi(e){let t=this,n=e.attempt(dr,r,e.attempt(this.parser.constructs.flowInitial,i,R(e,e.attempt(this.parser.constructs.flow,i,e.attempt(Lr,i)),`linePrefix`)));return n;function r(r){if(r===null){e.consume(r);return}return e.enter(`lineEndingBlank`),e.consume(r),e.exit(`lineEndingBlank`),t.currentConstruct=void 0,n}function i(r){if(r===null){e.consume(r);return}return e.enter(`lineEnding`),e.consume(r),e.exit(`lineEnding`),t.currentConstruct=void 0,n}}var Vi={resolveAll:Gi()},Hi=Wi(`string`),Ui=Wi(`text`);function Wi(e){return{resolveAll:Gi(e===`text`?Ki:void 0),tokenize:t};function t(t){let n=this,r=this.parser.constructs[e],i=t.attempt(r,a,o);return a;function a(e){return c(e)?i(e):o(e)}function o(e){if(e===null){t.consume(e);return}return t.enter(`data`),t.consume(e),s}function s(e){return c(e)?(t.exit(`data`),i(e)):(t.consume(e),s)}function c(e){if(e===null)return!0;let t=r[e],i=-1;if(t)for(;++i<t.length;){let e=t[i];if(!e.previous||e.previous.call(n,n.previous))return!0}return!1}}}function Gi(e){return t;function t(t,n){let r=-1,i;for(;++r<=t.length;)i===void 0?t[r]&&t[r][1].type===`data`&&(i=r,r++):(!t[r]||t[r][1].type!==`data`)&&(r!==i+2&&(t[i][1].end=t[r-1][1].end,t.splice(i+2,r-i-2),r=i+2),i=void 0);return e?e(t,n):t}}function Ki(e,t){let n=0;for(;++n<=e.length;)if((n===e.length||e[n][1].type===`lineEnding`)&&e[n-1][1].type===`data`){let r=e[n-1][1],i=t.sliceStream(r),a=i.length,o=-1,s=0,c;for(;a--;){let e=i[a];if(typeof e==`string`){for(o=e.length;e.charCodeAt(o-1)===32;)s++,o--;if(o)break;o=-1}else if(e===-2)c=!0,s++;else if(e!==-1){a++;break}}if(t._contentTypeTextTrailing&&n===e.length&&(s=0),s){let i={type:n===e.length||c||s<2?`lineSuffix`:`hardBreakTrailing`,start:{_bufferIndex:a?o:r.start._bufferIndex+o,_index:r.start._index+a,line:r.end.line,column:r.end.column-s,offset:r.end.offset-s},end:{...r.end}};r.end={...i.start},r.start.offset===r.end.offset?Object.assign(r,i):(e.splice(n,0,[`enter`,i,t],[`exit`,i,t]),n+=2)}n++}return e}var qi=s({attentionMarkers:()=>ta,contentInitial:()=>Yi,disable:()=>na,document:()=>Ji,flow:()=>Zi,flowInitial:()=>Xi,insideSpan:()=>ea,string:()=>Qi,text:()=>$i}),Ji={42:Ai,43:Ai,45:Ai,48:Ai,49:Ai,50:Ai,51:Ai,52:Ai,53:Ai,54:Ai,55:Ai,56:Ai,57:Ai,62:pr},Yi={91:Kr},Xi={[-2]:Tr,[-1]:Tr,32:Tr},Zi={35:Qr,42:Oi,45:[Ii,Oi],60:ri,61:Ii,95:Oi,96:Sr,126:Sr},Qi={38:yr,92:_r},$i={[-5]:Ei,[-4]:Ei,[-3]:Ei,33:Si,38:yr,42:ar,60:[lr,ui],91:wi,92:[Xr,_r],93:fi,95:ar,96:kr},ea={null:[ar,Vi]},ta={null:[42,95]},na={null:[]};function ra(e,t,n){let r={_bufferIndex:-1,_index:0,line:n&&n.line||1,column:n&&n.column||1,offset:n&&n.offset||0},i={},a=[],o=[],s=[],c={attempt:C(x),check:C(S),consume:v,enter:y,exit:b,interrupt:C(S,{interrupt:!0})},l={code:null,containerState:{},defineSkip:h,events:[],now:m,parser:e,previous:null,sliceSerialize:f,sliceStream:p,write:d},u=t.tokenize.call(l,c);return t.resolveAll&&a.push(t),l;function d(e){return o=Nn(o,e),g(),o[o.length-1]===null?(w(t,0),l.events=ir(a,l.events,l),l.events):[]}function f(e,t){return aa(p(e),t)}function p(e){return ia(o,e)}function m(){let{_bufferIndex:e,_index:t,line:n,column:i,offset:a}=r;return{_bufferIndex:e,_index:t,line:n,column:i,offset:a}}function h(e){i[e.line]=e.column,E()}function g(){let e;for(;r._index<o.length;){let t=o[r._index];if(typeof t==`string`)for(e=r._index,r._bufferIndex<0&&(r._bufferIndex=0);r._index===e&&r._bufferIndex<t.length;)_(t.charCodeAt(r._bufferIndex));else _(t)}}function _(e){u=u(e)}function v(e){F(e)?(r.line++,r.column=1,r.offset+=e===-3?2:1,E()):e!==-1&&(r.column++,r.offset++),r._bufferIndex<0?r._index++:(r._bufferIndex++,r._bufferIndex===o[r._index].length&&(r._bufferIndex=-1,r._index++)),l.previous=e}function y(e,t){let n=t||{};return n.type=e,n.start=m(),l.events.push([`enter`,n,l]),s.push(n),n}function b(e){let t=s.pop();return t.end=m(),l.events.push([`exit`,t,l]),t}function x(e,t){w(e,t.from)}function S(e,t){t.restore()}function C(e,t){return n;function n(n,r,i){let a,o,s,u;return Array.isArray(n)?f(n):`tokenize`in n?f([n]):d(n);function d(e){return t;function t(t){let n=t!==null&&e[t],r=t!==null&&e.null;return f([...Array.isArray(n)?n:n?[n]:[],...Array.isArray(r)?r:r?[r]:[]])(t)}}function f(e){return a=e,o=0,e.length===0?i:p(e[o])}function p(e){return n;function n(n){return u=T(),s=e,e.partial||(l.currentConstruct=e),e.name&&l.parser.constructs.disable.null.includes(e.name)?h(n):e.tokenize.call(t?Object.assign(Object.create(l),t):l,c,m,h)(n)}}function m(t){return e(s,u),r}function h(e){return u.restore(),++o<a.length?p(a[o]):i}}}function w(e,t){e.resolveAll&&!a.includes(e)&&a.push(e),e.resolve&&Mn(l.events,t,l.events.length-t,e.resolve(l.events.slice(t),l)),e.resolveTo&&(l.events=e.resolveTo(l.events,l))}function T(){let e=m(),t=l.previous,n=l.currentConstruct,i=l.events.length,a=Array.from(s);return{from:i,restore:o};function o(){r=e,l.previous=t,l.currentConstruct=n,l.events.length=i,s=a,E()}}function E(){r.line in i&&r.column<2&&(r.column=i[r.line],r.offset+=i[r.line]-1)}}function ia(e,t){let n=t.start._index,r=t.start._bufferIndex,i=t.end._index,a=t.end._bufferIndex,o;if(n===i)o=[e[n].slice(r,a)];else{if(o=e.slice(n,i),r>-1){let e=o[0];typeof e==`string`?o[0]=e.slice(r):o.shift()}a>0&&o.push(e[i].slice(0,a))}return o}function aa(e,t){let n=-1,r=[],i;for(;++n<e.length;){let a=e[n],o;if(typeof a==`string`)o=a;else switch(a){case-5:o=`\r`;break;case-4:o=`
 `;break;case-3:o=`\r
 `;break;case-2:o=t?` `:`	`;break;case-1:if(!t&&i)continue;o=` `;break;default:o=String.fromCharCode(a)}i=a===-2,r.push(o)}return r.join(``)}function oa(e){let t={constructs:Fn([qi,...(e||{}).extensions||[]]),content:n(Zn),defined:[],document:n($n),flow:n(zi),lazy:{},string:n(Hi),text:n(Ui)};return t;function n(e){return n;function n(n){return ra(t,e,n)}}}function sa(e){for(;!Fr(e););return e}var ca=/[\0\t\n\r]/g;function la(){let e=1,t=``,n=!0,r;return i;function i(i,a,o){let s=[],c,l,u,d,f;for(i=t+(typeof i==`string`?i.toString():new TextDecoder(a||void 0).decode(i)),u=0,t=``,n&&=(i.charCodeAt(0)===65279&&u++,void 0);u<i.length;){if(ca.lastIndex=u,c=ca.exec(i),d=c&&c.index!==void 0?c.index:i.length,f=i.charCodeAt(d),!c){t=i.slice(u);break}if(f===10&&u===d&&r)s.push(-3),r=void 0;else switch(r&&=(s.push(-5),void 0),u<d&&(s.push(i.slice(u,d)),e+=d-u),f){case 0:s.push(65533),e++;break;case 9:for(l=Math.ceil(e/4)*4,s.push(-2);e++<l;)s.push(-1);break;case 10:s.push(-4),e=1;break;default:r=!0,e=1}u=d+1}return o&&(r&&s.push(-5),t&&s.push(t),s.push(null)),s}}var ua=/\\([!-/:-@[-`{-~])|&(#(?:\d{1,7}|x[\da-f]{1,6})|[\da-z]{1,31});/gi;function da(e){return e.replace(ua,fa)}function fa(e,t,n){if(t)return t;if(n.charCodeAt(0)===35){let e=n.charCodeAt(1),t=e===120||e===88;return Rn(n.slice(t?2:1),t?16:10)}return jn(n)||e}var pa={}.hasOwnProperty;function ma(e,t,n){return t&&typeof t==`object`&&(n=t,t=void 0),ha(n)(sa(oa(n).document().write(la()(e,t,!0))))}function ha(e){let t={transforms:[],canContainEols:[`emphasis`,`fragment`,`heading`,`paragraph`,`strong`],enter:{autolink:a(we),autolinkProtocol:T,autolinkEmail:T,atxHeading:a(be),blockQuote:a(he),characterEscape:T,characterReference:T,codeFenced:a(ge),codeFencedFenceInfo:o,codeFencedFenceMeta:o,codeIndented:a(ge,o),codeText:a(_e,o),codeTextData:T,data:T,codeFlowValue:T,definition:a(ve),definitionDestinationString:o,definitionLabelString:o,definitionTitleString:o,emphasis:a(ye),hardBreakEscape:a(xe),hardBreakTrailing:a(xe),htmlFlow:a(Se,o),htmlFlowData:T,htmlText:a(Se,o),htmlTextData:T,image:a(Ce),label:o,link:a(we),listItem:a(Ee),listItemValue:f,listOrdered:a(Te,d),listUnordered:a(Te),paragraph:a(De),reference:le,referenceString:o,resourceDestinationString:o,resourceTitleString:o,setextHeading:a(be),strong:a(Oe),thematicBreak:a(Ae)},exit:{atxHeading:c(),atxHeadingSequence:x,autolink:c(),autolinkEmail:me,autolinkProtocol:pe,blockQuote:c(),characterEscapeValue:E,characterReferenceMarkerHexadecimal:de,characterReferenceMarkerNumeric:de,characterReferenceValue:fe,characterReference:A,codeFenced:c(g),codeFencedFence:h,codeFencedFenceInfo:p,codeFencedFenceMeta:m,codeFlowValue:E,codeIndented:c(_),codeText:c(re),codeTextData:E,data:E,definition:c(),definitionDestinationString:b,definitionLabelString:v,definitionTitleString:y,emphasis:c(),hardBreakEscape:c(D),hardBreakTrailing:c(D),htmlFlow:c(te),htmlFlowData:E,htmlText:c(ne),htmlTextData:E,image:c(ae),label:se,labelText:oe,lineEnding:ee,link:c(ie),listItem:c(),listOrdered:c(),listUnordered:c(),paragraph:c(),referenceString:ue,resourceDestinationString:O,resourceTitleString:k,resource:ce,setextHeading:c(w),setextHeadingLineSequence:C,setextHeadingText:S,strong:c(),thematicBreak:c()}};_a(t,(e||{}).mdastExtensions||[]);let n={};return r;function r(e){let r={type:`root`,children:[]},a={stack:[r],tokenStack:[],config:t,enter:s,exit:l,buffer:o,resume:u,data:n},c=[],d=-1;for(;++d<e.length;)(e[d][1].type===`listOrdered`||e[d][1].type===`listUnordered`)&&(e[d][0]===`enter`?c.push(d):d=i(e,c.pop(),d));for(d=-1;++d<e.length;){let n=t[e[d][0]];pa.call(n,e[d][1].type)&&n[e[d][1].type].call(Object.assign({sliceSerialize:e[d][2].sliceSerialize},a),e[d][1])}if(a.tokenStack.length>0){let e=a.tokenStack[a.tokenStack.length-1];(e[1]||ya).call(a,void 0,e[0])}for(r.position={start:ga(e.length>0?e[0][1].start:{line:1,column:1,offset:0}),end:ga(e.length>0?e[e.length-2][1].end:{line:1,column:1,offset:0})},d=-1;++d<t.transforms.length;)r=t.transforms[d](r)||r;return r}function i(e,t,n){let r=t-1,i=-1,a=!1,o,s,c,l;for(;++r<=n;){let t=e[r];switch(t[1].type){case`listUnordered`:case`listOrdered`:case`blockQuote`:t[0]===`enter`?i++:i--,l=void 0;break;case`lineEndingBlank`:t[0]===`enter`&&(o&&!l&&!i&&!c&&(c=r),l=void 0);break;case`linePrefix`:case`listItemValue`:case`listItemMarker`:case`listItemPrefix`:case`listItemPrefixWhitespace`:break;default:l=void 0}if(!i&&t[0]===`enter`&&t[1].type===`listItemPrefix`||i===-1&&t[0]===`exit`&&(t[1].type===`listUnordered`||t[1].type===`listOrdered`)){if(o){let i=r;for(s=void 0;i--;){let t=e[i];if(t[1].type===`lineEnding`||t[1].type===`lineEndingBlank`){if(t[0]===`exit`)continue;s&&(e[s][1].type=`lineEndingBlank`,a=!0),t[1].type=`lineEnding`,s=i}else if(!(t[1].type===`linePrefix`||t[1].type===`blockQuotePrefix`||t[1].type===`blockQuotePrefixWhitespace`||t[1].type===`blockQuoteMarker`||t[1].type===`listItemIndent`))break}c&&(!s||c<s)&&(o._spread=!0),o.end=Object.assign({},s?e[s][1].start:t[1].end),e.splice(s||r,0,[`exit`,o,t[2]]),r++,n++}if(t[1].type===`listItemPrefix`){let i={type:`listItem`,_spread:!1,start:Object.assign({},t[1].start),end:void 0};o=i,e.splice(r,0,[`enter`,i,t[2]]),r++,n++,c=void 0,l=!0}}}return e[t][1]._spread=a,n}function a(e,t){return n;function n(n){s.call(this,e(n),n),t&&t.call(this,n)}}function o(){this.stack.push({type:`fragment`,children:[]})}function s(e,t,n){this.stack[this.stack.length-1].children.push(e),this.stack.push(e),this.tokenStack.push([t,n||void 0]),e.position={start:ga(t.start),end:void 0}}function c(e){return t;function t(t){e&&e.call(this,t),l.call(this,t)}}function l(e,t){let n=this.stack.pop(),r=this.tokenStack.pop();if(r)r[0].type!==e.type&&(t?t.call(this,e,r[0]):(r[1]||ya).call(this,e,r[0]));else throw Error("Cannot close `"+e.type+"` ("+Wt({start:e.start,end:e.end})+`): it’s not open`);n.position.end=ga(e.end)}function u(){return En(this.stack.pop())}function d(){this.data.expectingFirstListItemValue=!0}function f(e){if(this.data.expectingFirstListItemValue){let t=this.stack[this.stack.length-2];t.start=Number.parseInt(this.sliceSerialize(e),10),this.data.expectingFirstListItemValue=void 0}}function p(){let e=this.resume(),t=this.stack[this.stack.length-1];t.lang=e}function m(){let e=this.resume(),t=this.stack[this.stack.length-1];t.meta=e}function h(){this.data.flowCodeInside||(this.buffer(),this.data.flowCodeInside=!0)}function g(){let e=this.resume(),t=this.stack[this.stack.length-1];t.value=e.replace(/^(\r?\n|\r)|(\r?\n|\r)$/g,``),this.data.flowCodeInside=void 0}function _(){let e=this.resume(),t=this.stack[this.stack.length-1];t.value=e.replace(/(\r?\n|\r)$/g,``)}function v(e){let t=this.resume(),n=this.stack[this.stack.length-1];n.label=t,n.identifier=zn(this.sliceSerialize(e)).toLowerCase()}function y(){let e=this.resume(),t=this.stack[this.stack.length-1];t.title=e}function b(){let e=this.resume(),t=this.stack[this.stack.length-1];t.url=e}function x(e){let t=this.stack[this.stack.length-1];t.depth||=this.sliceSerialize(e).length}function S(){this.data.setextHeadingSlurpLineEnding=!0}function C(e){let t=this.stack[this.stack.length-1];t.depth=this.sliceSerialize(e).codePointAt(0)===61?1:2}function w(){this.data.setextHeadingSlurpLineEnding=void 0}function T(e){let t=this.stack[this.stack.length-1].children,n=t[t.length-1];(!n||n.type!==`text`)&&(n=ke(),n.position={start:ga(e.start),end:void 0},t.push(n)),this.stack.push(n)}function E(e){let t=this.stack.pop();t.value+=this.sliceSerialize(e),t.position.end=ga(e.end)}function ee(e){let n=this.stack[this.stack.length-1];if(this.data.atHardBreak){let t=n.children[n.children.length-1];t.position.end=ga(e.end),this.data.atHardBreak=void 0;return}!this.data.setextHeadingSlurpLineEnding&&t.canContainEols.includes(n.type)&&(T.call(this,e),E.call(this,e))}function D(){this.data.atHardBreak=!0}function te(){let e=this.resume(),t=this.stack[this.stack.length-1];t.value=e}function ne(){let e=this.resume(),t=this.stack[this.stack.length-1];t.value=e}function re(){let e=this.resume(),t=this.stack[this.stack.length-1];t.value=e}function ie(){let e=this.stack[this.stack.length-1];if(this.data.inReference){let t=this.data.referenceType||`shortcut`;e.type+=`Reference`,e.referenceType=t,delete e.url,delete e.title}else delete e.identifier,delete e.label;this.data.referenceType=void 0}function ae(){let e=this.stack[this.stack.length-1];if(this.data.inReference){let t=this.data.referenceType||`shortcut`;e.type+=`Reference`,e.referenceType=t,delete e.url,delete e.title}else delete e.identifier,delete e.label;this.data.referenceType=void 0}function oe(e){let t=this.sliceSerialize(e),n=this.stack[this.stack.length-2];n.label=da(t),n.identifier=zn(t).toLowerCase()}function se(){let e=this.stack[this.stack.length-1],t=this.resume(),n=this.stack[this.stack.length-1];this.data.inReference=!0,n.type===`link`?n.children=e.children:n.alt=t}function O(){let e=this.resume(),t=this.stack[this.stack.length-1];t.url=e}function k(){let e=this.resume(),t=this.stack[this.stack.length-1];t.title=e}function ce(){this.data.inReference=void 0}function le(){this.data.referenceType=`collapsed`}function ue(e){let t=this.resume(),n=this.stack[this.stack.length-1];n.label=t,n.identifier=zn(this.sliceSerialize(e)).toLowerCase(),this.data.referenceType=`full`}function de(e){this.data.characterReferenceType=e.type}function fe(e){let t=this.sliceSerialize(e),n=this.data.characterReferenceType,r;n?(r=Rn(t,n===`characterReferenceMarkerNumeric`?10:16),this.data.characterReferenceType=void 0):r=jn(t);let i=this.stack[this.stack.length-1];i.value+=r}function A(e){let t=this.stack.pop();t.position.end=ga(e.end)}function pe(e){E.call(this,e);let t=this.stack[this.stack.length-1];t.url=this.sliceSerialize(e)}function me(e){E.call(this,e);let t=this.stack[this.stack.length-1];t.url=`mailto:`+this.sliceSerialize(e)}function he(){return{type:`blockquote`,children:[]}}function ge(){return{type:`code`,lang:null,meta:null,value:``}}function _e(){return{type:`inlineCode`,value:``}}function ve(){return{type:`definition`,identifier:``,label:null,title:null,url:``}}function ye(){return{type:`emphasis`,children:[]}}function be(){return{type:`heading`,depth:0,children:[]}}function xe(){return{type:`break`}}function Se(){return{type:`html`,value:``}}function Ce(){return{type:`image`,title:null,url:``,alt:null}}function we(){return{type:`link`,title:null,url:``,children:[]}}function Te(e){return{type:`list`,ordered:e.type===`listOrdered`,start:null,spread:e._spread,children:[]}}function Ee(e){return{type:`listItem`,spread:e._spread,checked:null,children:[]}}function De(){return{type:`paragraph`,children:[]}}function Oe(){return{type:`strong`,children:[]}}function ke(){return{type:`text`,value:``}}function Ae(){return{type:`thematicBreak`}}}function ga(e){return{line:e.line,column:e.column,offset:e.offset}}function _a(e,t){let n=-1;for(;++n<t.length;){let r=t[n];Array.isArray(r)?_a(e,r):va(e,r)}}function va(e,t){let n;for(n in t)if(pa.call(t,n))switch(n){case`canContainEols`:{let r=t[n];r&&e[n].push(...r);break}case`transforms`:{let r=t[n];r&&e[n].push(...r);break}case`enter`:case`exit`:{let r=t[n];r&&Object.assign(e[n],r);break}}}function ya(e,t){throw Error(e?"Cannot close `"+e.type+"` ("+Wt({start:e.start,end:e.end})+"): a different token (`"+t.type+"`, "+Wt({start:t.start,end:t.end})+`) is open`:"Cannot close document, a token (`"+t.type+"`, "+Wt({start:t.start,end:t.end})+`) is still open`)}function ba(e){let t=this;t.parser=n;function n(n){return ma(n,{...t.data(`settings`),...e,extensions:t.data(`micromarkExtensions`)||[],mdastExtensions:t.data(`fromMarkdownExtensions`)||[]})}}function xa(e,t){let n={type:`element`,tagName:`blockquote`,properties:{},children:e.wrap(e.all(t),!0)};return e.patch(t,n),e.applyData(t,n)}function Sa(e,t){let n={type:`element`,tagName:`br`,properties:{},children:[]};return e.patch(t,n),[e.applyData(t,n),{type:`text`,value:`
