@@ -7,13 +7,10 @@
 ## Overview
 Splitting large Markdown or text files into a table of contents.
 
-Scrolling through such long documents is a real chore. ⇩
-
-<img src="assets/splist_demo-001.png" alt="Long Document Example" width="50%">
-
-See how SPLIST splits a file in action ⇩
-
-![Splist Demo](assets/splist-gif.gif)
+<p align="left">
+  <img src="assets/splist_demo-001.png" alt="Long Document Example" height="280" style="margin-right: 15px;">
+  <img src="assets/splist-gif.gif" alt="Splist Demo" height="280">
+</p>
 
 It takes documents that have fallen into "scrolling hell" and safely, instantaneously carves them into separate files based on headings (`#`) or dividing emojis (`✂️`).
 
