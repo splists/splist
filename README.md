@@ -7,9 +7,6 @@
 
 ✨ **Try SPLIST instantly in your browser:** [https://splists.github.io/](https://splists.github.io/)
 
-<p align="center">
-<img src="demo_cases/demo_cases_img/demo00.png" width="400">
-</p>
 
 > 🌐 **Try it now in your browser!**
 > SPLIST is available as a full local Web UI at **[splists.github.io](https://splists.github.io/)**! No installation required—just drag and drop your markdown files to process them securely in your browser.
