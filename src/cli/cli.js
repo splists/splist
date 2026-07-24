@@ -51,6 +51,16 @@ Examples:
     process.exit(0);
 }
 
+// Handle version flag specifically if it's the only argument
+if (args.length === 1 && ['-v', '-V', '--version'].includes(args[0])) {
+    const pkg = require('../../package.json');
+    console.log(`🚀 SPLIST v${pkg.version}`);
+    if (args[0] === '-v') {
+        console.log(`\n💡 Note: When splitting a file, '-v' is used as a flag for the default folder conflict resolution (e.g., appending _v02).`);
+    }
+    process.exit(0);
+}
+
 const targetFile = args[0];
 
 // Validate target file existence
