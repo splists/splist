@@ -18,6 +18,9 @@ See how SPLIST splits a file in action ⇩
 It takes documents that have fallen into "scrolling hell" and safely, instantaneously carves them into separate files based on headings (`#`) or dividing emojis (`✂️`).
 
 ### Before: A single massive file (Raw)
+
+Before: A single massive file (Raw). Divided into ## units using a typical Markdown structure.
+
 ```markdown
   # My Project
   ## SECTION001
@@ -27,6 +30,10 @@ It takes documents that have fallen into "scrolling hell" and safely, instantane
 ```
 
 ### After: Auto-organized folders (Splisted!)
+
+- The original file name becomes the directory name.
+- The heading in the original text becomes the file name.
+- A sequential number is added to the PREFIX of the file name.
 
 ```text
 My_Project/
@@ -202,6 +209,7 @@ Parses Markdown heading hierarchy and splits it logically.
   * `-m, --mode <type>`: Split mode (`or`: add sequential numbers (default), `un`: no sequential numbers)
   * `-h, --header <level>`: Heading level to base the split on (e.g., `"###"`)
   * `-k, --keep`: Keeps the header hierarchy of the output files as-is without auto-promoting them
+  * `-ext, --extension <ext>`: Force the output file extension (e.g., `txt` or `.txt`)
   * `--conflict <option>`: Collision avoidance rules (see Common Options)
 
 
@@ -214,6 +222,7 @@ Physically cuts using dividing markers (specified strings).
 * **`<file>`**: Target text/Markdown file to split (Required)
 * **Options**:
   * `-m, --marker <string>`: Custom marker (e.g., `"==="`). When unspecified, `✂️`, `CUT`, and `cut` are applied.
+  * `-ext, --extension <ext>`: Force the output file extension (e.g., `md` or `.md`)
   * `--conflict <option>`: Collision avoidance rules (see Common Options)
 
 

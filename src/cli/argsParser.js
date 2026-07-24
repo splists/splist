@@ -6,7 +6,7 @@
 const path = require('path');
 
 // Regular expression for recognized options
-const OPTIONS_REGEX = /^(-*)(or|un|d|date|t|time|s|skip|f|force|toc|fmex|fm00|fm01|o|out|output|keep)$/i;
+const OPTIONS_REGEX = /^(-*)(or|un|d|date|t|time|s|skip|f|force|toc|fmex|fm00|fm01|o|out|output|keep|ext|extension)$/i;
 
 /**
  * Generates a config object from the command arguments entered in the terminal
@@ -29,7 +29,8 @@ const parseOptions = (args = [], targetFile = '') => {
         outDir: null,          // Output destination folder
         mode: defaultMode,     // Smart default based on extension
         keep: false,           // Disable heading auto-promotion
-        un: false              // Remove sequential numbers from filenames
+        un: false,             // Remove sequential numbers from filenames
+        ext: null              // Extension override
     };
 
     for (let i = 0; i < args.length; i++) {
@@ -96,6 +97,17 @@ const parseOptions = (args = [], targetFile = '') => {
                     break;
                 case 'un':
                     config.un = true;
+                    break;
+                case 'ext':
+                case 'extension':
+                    let extValue = valueFromDelimiter;
+                    if (extValue === null && i + 1 < args.length && !args[i + 1].match(OPTIONS_REGEX)) {
+                        extValue = args[i + 1];
+                        i++; // Skip next argument
+                    }
+                    if (extValue) {
+                        config.ext = extValue.startsWith('.') ? extValue : `.${extValue}`;
+                    }
                     break;
             }
         } else {

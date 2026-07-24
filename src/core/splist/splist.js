@@ -59,7 +59,8 @@ const runSplist = async (targetFile, config = {}, customOptions = {}) => {
         let title = phase3.getSafeTitle(rawTitleLine);
         if (customOptions.resolveTitle) title = customOptions.resolveTitle(title, lines, config) || title;
 
-        const fileName = config.un ? `${title}${ext}` : `${String(chunkIndex).padStart(2, '0')}_${title}${ext}`;
+        const finalExt = config.ext || ext;
+        const fileName = config.un ? `${title}${finalExt}` : `${String(chunkIndex).padStart(2, '0')}_${title}${finalExt}`;
         const filePath = path.join(outDir, fileName);
 
         // ──── [Phase 4-A] Save Chunk ────
@@ -67,7 +68,7 @@ const runSplist = async (targetFile, config = {}, customOptions = {}) => {
 
         // --- Markdown Heading Auto-Promotion (Lint > RAW) ---
         // Elevate the top heading of the chunk to H1, and shift all child headings accordingly.
-        if (!config.keep && ext.toLowerCase() === '.md') {
+        if (!config.keep && finalExt.toLowerCase() === '.md') {
             const linesArr = chunk.split('\n');
             const match = linesArr[0].match(/^(#+)\s/);
             if (match) {
