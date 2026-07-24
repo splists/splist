@@ -4,6 +4,7 @@
 ![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
+![Long Document Example](assets/splist_demo-001.png)
 ![Splist Demo](assets/splist-gif.gif)
 
 ## Overview
