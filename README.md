@@ -76,11 +76,28 @@ Please read the target file, decide the best splitting strategy (list or sp), an
 
 The `splist` command becomes globally executable from any directory on your PC. It works across all OS environments: Windows, Mac, and Linux.
 
+### Method 1: Install via npm (Recommended)
+You can easily install the latest version directly from the npm registry:
+```bash
+npm install -g @splists/splist
+```
+
+After installation, verify that it was installed successfully by checking the version:
+```bash
+splist -v
+```
+You should see an output confirming the version like this:
+```text
+🚀 SPLIST v2.1.1
+
+💡 Note: When splitting a file, '-v' is used as a flag for the default folder conflict resolution (e.g., appending _v02).
+```
+
+### Method 2: Local Installation (For Developers)
 1. Open your terminal and navigate to the root folder of the repository:
 ```bash
 cd path/to/splist
 ```
-
 2. Link (register) the package globally using npm:
 ```bash
 npm link
