@@ -57,5 +57,8 @@
     "node": ">=16.0.0"
   },
   "license": "MIT",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "@splists/splist": "^2.1.3"
+  }
 }

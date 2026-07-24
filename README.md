@@ -1,5 +1,6 @@
 # SPLIST (split & list)
-![npm version](https://img.shields.io/npm/v/@splists/splist.svg?color=blue)
+[![npm version](https://img.shields.io/npm/v/@splists/splist.svg?color=blue)](https://www.npmjs.com/package/@splists/splist)
+[![npm downloads](https://img.shields.io/npm/dm/@splists/splist.svg?color=success)](https://www.npmjs.com/package/@splists/splist)
 ![Node.js](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen)
 ![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
@@ -90,7 +91,13 @@ You should see an output confirming the version like this:
 💡 Note: When splitting a file, '-v' is used as a flag for the default folder conflict resolution (e.g., appending _v02).
 ```
 
-### Method 2: Local Installation (For Developers)
+### Method 2: Install directly from GitHub
+If you want to install directly from the GitHub repository (e.g., to get the absolute latest version or if it's not on the npm registry):
+```bash
+npm install -g github:splists/splist
+```
+
+### Method 3: Local Installation (For Developers)
 1. Open your terminal and navigate to the root folder of the repository:
 ```bash
 cd path/to/splist
