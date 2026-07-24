@@ -616,6 +616,15 @@ const runSplist = async (targetFile, config = {}, customOptions = {}) => {
     const tocEntries = [], ext = path.extname(targetFile) || '.md';
     let chunkIndex = 1;
 
+    const finalExt = config.ext || ext;
+
+    // Handle FrontMatter extract00 (save to dedicated file)
+    if (frontMatter && config.frontmatterMode === 'extract00') {
+        const fmFileName = `00_FrontMatter${finalExt}`;
+        fs.writeFileSync(path.join(outDir, fmFileName), frontMatter);
+        tocEntries.push(`- [FrontMatter](./${encodeURIComponent(fmFileName)})`);
+    }
+
     // ──── [ENGINE] Execution ────
     for await (const chunk of splistEngine(contentLines, rule)) {
         // ──── [Phase 3-B] Chunk Naming ────
@@ -625,7 +634,7 @@ const runSplist = async (targetFile, config = {}, customOptions = {}) => {
         let title = phase3.getSafeTitle(rawTitleLine);
         if (customOptions.resolveTitle) title = customOptions.resolveTitle(title, lines, config) || title;
 
-        const fileName = `${String(chunkIndex).padStart(2, '0')}_${title}${ext}`;
+        const fileName = config.un ? `${title}${finalExt}` : `${String(chunkIndex).padStart(2, '0')}_${title}${finalExt}`;
         const filePath = path.join(outDir, fileName);
 
         // ──── [Phase 4-A] Save Chunk ────
@@ -633,7 +642,7 @@ const runSplist = async (targetFile, config = {}, customOptions = {}) => {
 
         // --- Markdown Heading Auto-Promotion (Lint > RAW) ---
         // Elevate the top heading of the chunk to H1, and shift all child headings accordingly.
-        if (ext.toLowerCase() === '.md') {
+        if (!config.keep && finalExt.toLowerCase() === '.md') {
             const linesArr = chunk.split('\n');
             const match = linesArr[0].match(/^(#+)\s/);
             if (match) {
@@ -651,7 +660,10 @@ const runSplist = async (targetFile, config = {}, customOptions = {}) => {
             }
         }
 
-        if (config.frontmatterMode !== 'exclude' && frontMatter) finalContent = frontMatter + finalContent;
+        // Handle FrontMatter extract01 (attach to first chunk only)
+        if (frontMatter && config.frontmatterMode === 'extract01' && chunkIndex === 1) {
+            finalContent = frontMatter + finalContent;
+        }
         if (customOptions.transformChunk) {
             finalContent = customOptions.transformChunk(finalContent, { chunkIndex, title, outDir }) || finalContent;
         }

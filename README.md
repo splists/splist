@@ -3,6 +3,16 @@
 ![Node.js](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen)
 ![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+[![Browser](https://img.shields.io/badge/Browser-Try%20Now!-ff69b4.svg)](https://splists.github.io/)
+
+✨ **Try SPLIST instantly in your browser:** [https://splists.github.io/](https://splists.github.io/)
+
+<p align="center">
+<img src="demo_cases/demo_cases_img/demo00.png" width="400">
+</p>
+
+> 🌐 **Try it now in your browser!**
+> SPLIST is available as a full local Web UI at **[splists.github.io](https://splists.github.io/)**! No installation required—just drag and drop your markdown files to process them securely in your browser.
 
 ## Overview
 Splitting large Markdown or text files into a table of contents.

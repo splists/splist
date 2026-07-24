@@ -1,5 +1,7 @@
 # ✂️ SPLIST (Overview & Installation)
 
+✨ **Try SPLIST instantly in your browser:** [https://splists.github.io/](https://splists.github.io/)
+
 ## Welcome to SPLIST
 
 An ultra-fast, zero-dependency CLI toolset to split a single Markdown or text file into multiple beautifully organized files and automatically generate a dynamic Table of Contents (TOC).

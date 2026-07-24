@@ -1,10 +1,16 @@
-export function Header() {
+import pkg from '../../../package.json';
+
+interface HeaderProps {
+  onOpenDocs: () => void;
+}
+
+export function Header({ onOpenDocs }: HeaderProps) {
   return (
     <header className="app-header vscode-titlebar">
       <div className="titlebar-left">
         <img src="/favicon.png" alt="Splist Logo" className="app-logo-icon" style={{ width: '24px', height: '24px', borderRadius: '4px' }} />
-        <h1 className="app-title">SPLIST <span>WEB IDE</span></h1>
-        <span className="badge version-badge">V2.0.0</span>
+        <h1 className="app-title">SPLIST <span>BROWSER</span></h1>
+        <span className="badge version-badge">V{pkg.version.toUpperCase()}</span>
       </div>
 
       <div className="titlebar-center">
@@ -12,6 +18,13 @@ export function Header() {
       </div>
 
       <div className="titlebar-right">
+        <button
+          onClick={onOpenDocs}
+          className="docs-btn"
+          title="View Documentation"
+        >
+          📖 DOCS
+        </button>
         <a
           href="https://github.com/splists/splist"
           target="_blank"
