@@ -3,7 +3,7 @@
 [![Repo](https://img.shields.io/badge/Repo-splists%2Fsplist-D1D5DB?style=flat-square&labelColor=white)](https://github.com/splists/splist)
 [![Ver](https://img.shields.io/github/v/release/splists/splist.svg?label=Ver&color=D1D5DB&style=flat-square&labelColor=white)](https://github.com/splists/splist/releases)
 ![License: MIT](https://img.shields.io/badge/License-MIT-FDE047?style=flat-square&labelColor=white)
-[![GitHub Created At](https://img.shields.io/github/created-at/splists/splist.svg?color=D1D5DB&style=flat-square&labelColor=white)](https://github.com/splists/splist)[![GitHub Release Date](https://img.shields.io/github/release-date/splists/splist.svg?color=D1D5DB&style=flat-square&labelColor=white)](https://github.com/splists/splist/releases)
+[![GitHub Created At](https://img.shields.io/github/created-at/splists/splist.svg?color=D1D5DB&style=flat-square&labelColor=white)](https://github.com/splists/splist)[![GitHub Release Date](https://img.shields.io/github/release-date/splists/splist.svg?color=D1D5DB&style=flat-square&labelColor=white)](https://github.com/splists/splist/releases)[![GitHub issues](https://img.shields.io/github/issues/splists/splist.svg?color=FCA5A5&style=flat-square&labelColor=white)](https://github.com/splists/splist/issues)
 
 SPLIST splits long documents into separate files and reconstructs them.🌐 Split output results https://splists.github.io
 
@@ -20,6 +20,8 @@ npm i @splists/splist
 ```
 
 > 📖 **[Official Manual (USAGE.md)](https://github.com/splists/splist/blob/main/USAGE.md)** - *Detailed specifications and commands*
+
+> 🛡️ **Security & File Access:** This tool processes ONLY the specified target file. It does not access any other files.
 
 ## Overview
 Splitting large Markdown or text files into a table of contents.
@@ -327,6 +329,15 @@ Can be appended and used with either `list` or `sp` commands. If unspecified, se
 ---
 
 > For even more detailed specifications and troubleshooting, please read the **[Official Manual (USAGE.md)](https://github.com/splists/splist/blob/main/USAGE.md)**.
+
+## 🛡️ Security Policy & File System Access
+
+Because this is a CLI tool designed to read and split local files, it inherently utilizes Node.js's file system (`fs`) modules. However, we want to assure you of its safety:
+- **Strict Scope**: It operates *strictly* on the files you specify as command arguments. 
+- **No Side Effects**: It reads the specified target file, processes the text in memory, and writes the output to a newly generated subdirectory in your current workspace. 
+- **No External Access**: It absolutely does not access, read, or upload any other system files (such as SSH keys, `.env` files, or configurations) on your machine.
+
+*For more details on our ongoing security architecture improvements, see [Issue #22](https://github.com/splists/splist/issues/22).*
 
 ## 🧠 Architecture & Future Roadmap (For Contributors)
 
